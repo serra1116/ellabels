@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MobiLease PH - Payment Monitoring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" href="admin/payment-monitoring-style.css"/>
+</head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+  <span class="brand-text">Mobi<span>Lease</span> PH</span>
+  <div style="width:36px"></div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon"><img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img"></div>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+  </div>
+  <nav>
+    <ul class="sidebar-nav">
+      <li><a href="#"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+      <li><a href="#" ><i class="bi bi-person-check"></i> Renter Verification</a></li>
+      <li><a href="#"><i class="bi bi-shield-check"></i> Owner Verification</a></li>
+      <li><a href="#"><i class="bi bi-clipboard2-pulse"></i> Owner Verification Status</a></li>
+      <li><a href="#"><i class="bi bi-car-front"></i> Vehicle Approval</a></li>
+      <li><a href="#"><i class="bi bi-person-badge"></i> Driver Verification</a></li>
+      <li><a href="#" class="active"><i class="bi bi-credit-card-2-front"></i> Payment Monitoring</a></li>
+      <li><a href="#"><i class="bi bi-gear-wide-connected"></i> Admin Settings</a></li>
+    </ul>
+  </nav>
+  <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content">
+
+  <!-- Top Header -->
+  <div class="page-header">
+    <div class="header-top-row">
+      <h1 class="page-title">Admin Dashboard</h1>
+      <div class="header-right">
+        <span class="user-name">Admin User</span>
+        <div class="user-avatar">AU</div>
+        <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Heading -->
+  <div class="section-heading">
+    <h2>Payment &amp; Platform Fee Monitoring</h2>
+    <p>Track platform fees and user payment status</p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-icon teal"><i class="bi bi-cash-stack"></i></div>
+      <div>
+        <div class="summary-label">Total Platform Fees</div>
+        <div class="summary-value">&#8369;2,125</div>
+        <div class="summary-sub">Collected from paid tier users</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon blue"><i class="bi bi-graph-up-arrow"></i></div>
+      <div>
+        <div class="summary-label">Total Revenue</div>
+        <div class="summary-value">&#8369;58,100</div>
+        <div class="summary-sub">Across all user bookings</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon green"><i class="bi bi-person-check"></i></div>
+      <div>
+        <div class="summary-label">Users in Free Tier</div>
+        <div class="summary-value">1 user</div>
+        <div class="summary-sub">Within 5-booking quota</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon orange"><i class="bi bi-people-fill"></i></div>
+      <div>
+        <div class="summary-label">Users in Paid Tier</div>
+        <div class="summary-value">2 users</div>
+        <div class="summary-sub">Paying 5% platform fee</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Controls -->
+  <div class="filter-row">
+    <div class="filter-group">
+      <span class="filter-label">Filter by Type</span>
+      <select class="filter-select" id="filterType" onchange="applyFilters()">
+        <option value="all">All Users</option>
+        <option value="Renter">Renters</option>
+        <option value="Owner">Owners</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Filter by Status</span>
+      <select class="filter-select" id="filterStatus" onchange="applyFilters()">
+        <option value="all">All Statuses</option>
+        <option value="free">Free Tier</option>
+        <option value="paid">Paid Tier</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Platform Fee Structure Panel -->
+  <div class="fee-panel">
+    <div class="fee-panel-title">
+      <i class="bi bi-info-circle-fill"></i> Platform Fee Structure
+    </div>
+    <div class="fee-cols">
+      <!-- Renters & Owners -->
+      <div class="fee-col">
+        <div class="fee-col-title">
+          <i class="bi bi-people-fill"></i> For Renters &amp; Owners
+        </div>
+        <div class="fee-rule">
+          <div class="fee-rule-icon green"><i class="bi bi-check-lg"></i></div>
+          <span>First <strong>5 successful bookings</strong> = No platform fee</span>
+        </div>
+        <div class="fee-rule">
+          <div class="fee-rule-icon orange"><i class="bi bi-percent"></i></div>
+          <span>Starting from the <strong>6th booking</strong> = 5% platform fee</span>
+        </div>
+        <div class="fee-example">
+          <i class="bi bi-lightbulb-fill"></i>
+          Example: &#8369;2,000 booking &rarr; &#8369;100 fee
+        </div>
+      </div>
+      <!-- PayMongo / QR Rules -->
+      <div class="fee-col">
+        <div class="fee-col-title">
+          <i class="bi bi-qr-code"></i> PayMongo / QR Payment Rules
+        </div>
+        <div class="fee-rule">
+          <div class="fee-rule-icon blue"><i class="bi bi-arrow-down-circle"></i></div>
+          <span>Down payment = <strong>5% of total booking</strong></span>
+        </div>
+        <div class="fee-rule">
+          <div class="fee-rule-icon orange"><i class="bi bi-x-circle"></i></div>
+          <span><strong>Non-refundable</strong> if service not used</span>
+        </div>
+        <div class="fee-rule">
+          <div class="fee-rule-icon green"><i class="bi bi-check-circle"></i></div>
+          <span>Deducted from total <strong>upon completion</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Cards Container -->
+  <div id="userCardsContainer">
+
+    <!-- ── User Card: John Doe ── -->
+    <div class="user-card" data-role="Renter" data-status="free">
+      <div class="user-card-header">
+        <div class="user-info">
+          <div class="user-avatar-circle" style="background:#0369a1;">JD</div>
+          <div>
+            <div class="user-name-text">John Doe</div>
+            <div class="user-role"><i class="bi bi-person-fill"></i> Renter</div>
+          </div>
+        </div>
+        <span class="status-badge badge-free">
+          <i class="bi bi-shield-check"></i> Free Tier
+        </span>
+      </div>
+
+      <div class="user-stats-grid">
+        <div class="user-stat">
+          <div class="user-stat-label">Total Bookings</div>
+          <div class="user-stat-value">3</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Free Bookings Used</div>
+          <div class="user-stat-value">3 / 5</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Free Remaining</div>
+          <div class="user-stat-value green">2</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Total Revenue</div>
+          <div class="user-stat-value">&#8369;15,600</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Platform Fees</div>
+          <div class="user-stat-value green">&#8369;0</div>
+        </div>
+      </div>
+
+      <div class="quota-wrap">
+        <div class="quota-header">
+          <span class="quota-label"><i class="bi bi-bar-chart-fill" style="margin-right:0.3rem;"></i>Free Booking Quota Usage</span>
+          <span class="quota-count">3 / 5</span>
+        </div>
+        <div class="quota-bar-bg">
+          <div class="quota-bar-fill green" style="width: 60%;"></div>
+        </div>
+      </div>
+
+      <div class="notice-bar green">
+        <i class="bi bi-check-circle-fill"></i>
+        <div>
+          <strong>Free Tier Active</strong>
+          This user has 2 free bookings remaining before the 5% platform fee applies.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── User Card: Maria Santos ── -->
+    <div class="user-card" data-role="Owner" data-status="paid">
+      <div class="user-card-header">
+        <div class="user-info">
+          <div class="user-avatar-circle" style="background:#7c3aed;">MS</div>
+          <div>
+            <div class="user-name-text">Maria Santos</div>
+            <div class="user-role"><i class="bi bi-house-fill"></i> Owner</div>
+          </div>
+        </div>
+        <span class="status-badge badge-paid">
+          <i class="bi bi-percent"></i> Paid Tier (5%)
+        </span>
+      </div>
+
+      <div class="user-stats-grid">
+        <div class="user-stat">
+          <div class="user-stat-label">Total Bookings</div>
+          <div class="user-stat-value">7</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Free Bookings Used</div>
+          <div class="user-stat-value">5 / 5</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Free Remaining</div>
+          <div class="user-stat-value orange">0</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Total Revenue</div>
+          <div class="user-stat-value">&#8369;24,500</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Platform Fees</div>
+          <div class="user-stat-value orange">&#8369;1,225</div>
+        </div>
+      </div>
+
+      <div class="quota-wrap">
+        <div class="quota-header">
+          <span class="quota-label"><i class="bi bi-bar-chart-fill" style="margin-right:0.3rem;"></i>Free Booking Quota Usage</span>
+          <span class="quota-count">5 / 5</span>
+        </div>
+        <div class="quota-bar-bg">
+          <div class="quota-bar-fill orange" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="notice-bar orange">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div>
+          <strong>Paid Tier Active</strong>
+          This user is now paying 5% platform fee on all bookings.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── User Card: Michael Johnson ── -->
+    <div class="user-card" data-role="Renter" data-status="paid">
+      <div class="user-card-header">
+        <div class="user-info">
+          <div class="user-avatar-circle" style="background:#1e5a6e;">MJ</div>
+          <div>
+            <div class="user-name-text">Michael Johnson</div>
+            <div class="user-role"><i class="bi bi-person-fill"></i> Renter</div>
+          </div>
+        </div>
+        <span class="status-badge badge-paid">
+          <i class="bi bi-percent"></i> Paid Tier (5%)
+        </span>
+      </div>
+
+      <div class="user-stats-grid">
+        <div class="user-stat">
+          <div class="user-stat-label">Total Bookings</div>
+          <div class="user-stat-value">6</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Free Bookings Used</div>
+          <div class="user-stat-value">5 / 5</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Free Remaining</div>
+          <div class="user-stat-value orange">0</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Total Revenue</div>
+          <div class="user-stat-value">&#8369;18,000</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-label">Platform Fees</div>
+          <div class="user-stat-value orange">&#8369;900</div>
+        </div>
+      </div>
+
+      <div class="quota-wrap">
+        <div class="quota-header">
+          <span class="quota-label"><i class="bi bi-bar-chart-fill" style="margin-right:0.3rem;"></i>Free Booking Quota Usage</span>
+          <span class="quota-count">5 / 5</span>
+        </div>
+        <div class="quota-bar-bg">
+          <div class="quota-bar-fill orange" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="notice-bar orange">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div>
+          <strong>Paid Tier Active</strong>
+          This user is now paying 5% platform fee on all bookings.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /userCardsContainer -->
+
+  <!-- No Results Message -->
+  <div id="noResults" style="display:none; text-align:center; padding: 3rem 1rem; color:#94a3b8;">
+    <i class="bi bi-search" style="font-size:2.5rem; margin-bottom:0.75rem; display:block;"></i>
+    <div style="font-size:1rem; font-weight:600; color:#64748b;">No users match the selected filters.</div>
+    <div style="font-size:0.85rem; margin-top:0.3rem;">Try adjusting your filter criteria.</div>
+  </div>
+
+</main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="admin/payment-monitoring-script.js"></script>
+</body>
+</html>
+```

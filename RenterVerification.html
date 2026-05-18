@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MobiLease PH - Renter Verification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+ <link rel="stylesheet" href="admin/renter-verification-style.css">
+</head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+  <span class="brand-text">Mobi<span>Lease</span> PH</span>
+  <div style="width:36px"></div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon"><img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img"></div>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+  </div>
+  <nav>
+    <ul class="sidebar-nav">
+      <li><a href="#"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+      <li><a href="#" class="active"><i class="bi bi-person-check"></i> Renter Verification</a></li>
+      <li><a href="#"><i class="bi bi-shield-check"></i> Owner Verification</a></li>
+      <li><a href="#"><i class="bi bi-clipboard2-pulse"></i> Owner Verification Status</a></li>
+      <li><a href="#"><i class="bi bi-car-front"></i> Vehicle Approval</a></li>
+      <li><a href="#"><i class="bi bi-person-badge"></i> Driver Verification</a></li>
+      <li><a href="#"><i class="bi bi-credit-card-2-front"></i> Payment Monitoring</a></li>
+      <li><a href="#"><i class="bi bi-gear-wide-connected"></i> Admin Settings</a></li>
+    </ul>
+  </nav>
+  <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content">
+  <div class="page-header">
+    <div class="header-top-row">
+      <h1 class="page-title">Admin Dashboard</h1>
+      <div class="header-right">
+        <span class="user-name">Admin User</span>
+        <div class="user-avatar">AU</div>
+        <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Section Title -->
+  <div class="section-heading">
+    <h2>Renter Verification</h2>
+    <p>Review and approve renter applications</p>
+  </div>
+
+  <!-- Verification Flow Panel -->
+  <div class="flow-panel">
+    <div class="flow-panel-title"><i class="bi bi-diagram-3" style="margin-right:0.4rem;"></i>Verification Pipeline</div>
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-icon-wrap gray"><i class="bi bi-person-plus"></i></div>
+        <div class="step-label">Signup</div>
+        <div class="step-sub">User creates account</div>
+      </div>
+
+      <div class="flow-connector"></div>
+
+      <div class="flow-step">
+        <div class="step-icon-wrap green"><i class="bi bi-envelope-check"></i></div>
+        <div class="step-label">Email Verified</div>
+        <div class="step-sub">Link sent to email</div>
+        <span class="step-badge auto">Automatic</span>
+      </div>
+
+      <div class="flow-connector"></div>
+
+      <div class="flow-step">
+        <div class="step-icon-wrap green"><i class="bi bi-phone"></i></div>
+        <div class="step-label">Phone OTP</div>
+        <div class="step-sub">Code sent via SMS</div>
+        <span class="step-badge auto">Automatic</span>
+      </div>
+
+      <div class="flow-connector"></div>
+
+      <div class="flow-step">
+        <div class="step-icon-wrap blue"><i class="bi bi-cloud-arrow-up"></i></div>
+        <div class="step-label">Upload Docs</div>
+        <div class="step-sub">User uploads</div>
+        <span class="step-badge user">User Action</span>
+      </div>
+
+      <div class="flow-connector"></div>
+
+      <div class="flow-step">
+        <div class="step-icon-wrap orange"><i class="bi bi-eye"></i></div>
+        <div class="step-label">Admin Review</div>
+        <div class="step-sub">You approve</div>
+        <span class="step-badge manual">Manual</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="section-tabs">
+    <button class="tab-btn active-tab" onclick="switchTab('ready', this)">
+      <i class="bi bi-check-circle" style="margin-right:0.35rem;"></i>Ready for Admin Review (1)
+    </button>
+    <button class="tab-btn inactive-tab" onclick="switchTab('inprogress', this)">
+      <i class="bi bi-hourglass-split" style="margin-right:0.35rem;"></i>In Progress (2)
+    </button>
+  </div>
+
+  <!-- ══ TAB: READY FOR ADMIN REVIEW ══ -->
+  <div class="tab-panel active" id="tab-ready">
+    <div class="subsection-header">
+      <h3><i class="bi bi-check-circle-fill" style="color:#16a34a; margin-right:0.4rem;"></i>Ready for Admin Review <span style="background:#dcfce7;color:#16a34a;border-radius:999px;padding:0.1rem 0.6rem;font-size:0.8rem;">1</span></h3>
+      <p>Applications that completed automatic verification and uploaded documents.</p>
+    </div>
+
+    <!-- Applicant Card: Michael Johnson -->
+    <div class="applicant-card">
+      <div class="applicant-card-header">
+        <div class="applicant-info">
+          <div class="applicant-avatar">MJ</div>
+          <div>
+            <div class="applicant-name">Michael Johnson</div>
+            <div class="applicant-meta">
+              <span><i class="bi bi-calendar3"></i>2026-05-10</span>
+              <span><i class="bi bi-envelope"></i>michael@example.com</span>
+              <span><i class="bi bi-telephone"></i>+63 918 111 2222</span>
+            </div>
+          </div>
+        </div>
+        <span class="status-badge badge-pending"><i class="bi bi-hourglass-split" style="margin-right:0.3rem;"></i>Pending Admin Review</span>
+      </div>
+
+      <div class="card-sections">
+        <!-- User Details -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-person-lines-fill"></i> User Details</div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-person"></i></div>
+            <div>
+              <div class="detail-label">Full Name</div>
+              <div class="detail-value">Michael Johnson</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-calendar3"></i></div>
+            <div>
+              <div class="detail-label">Submission Date</div>
+              <div class="detail-value">2026-05-10</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value">michael@example.com</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-telephone"></i></div>
+            <div>
+              <div class="detail-label">Phone</div>
+              <div class="detail-value">+63 918 111 2222</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automatic Verification -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-robot"></i> Automatic Verification</div>
+          <div class="verify-row">
+            <div>
+              <div class="verify-label">Email Verification</div>
+              <div class="verify-sub">Verified Automatically</div>
+            </div>
+            <div class="verify-check">
+              <i class="bi bi-check-circle-fill check-green"></i>
+              <span class="verify-auto-tag">Auto</span>
+            </div>
+          </div>
+          <div class="verify-row">
+            <div>
+              <div class="verify-label">Phone OTP Verification</div>
+              <div class="verify-sub">Verified Automatically</div>
+            </div>
+            <div class="verify-check">
+              <i class="bi bi-check-circle-fill check-green"></i>
+              <span class="verify-auto-tag">Auto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Uploaded Documents -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-folder2-open"></i> Uploaded Documents</div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon purple"><i class="bi bi-credit-card"></i></div>
+              <div>
+                <div class="doc-name">Valid ID</div>
+                <div class="doc-status" style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right">
+              <i class="bi bi-check-circle-fill" style="color:#16a34a;"></i>
+              <button class="view-btn"><i class="bi bi-eye"></i> View &amp; Verify</button>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon purple"><i class="bi bi-card-list"></i></div>
+              <div>
+                <div class="doc-name">Driver's License</div>
+                <div class="doc-status" style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right">
+              <i class="bi bi-check-circle-fill" style="color:#16a34a;"></i>
+              <button class="view-btn"><i class="bi bi-eye"></i> View &amp; Verify</button>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon purple"><i class="bi bi-camera"></i></div>
+              <div>
+                <div class="doc-name">Selfie</div>
+                <div class="doc-status" style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right">
+              <i class="bi bi-check-circle-fill" style="color:#16a34a;"></i>
+              <button class="view-btn"><i class="bi bi-eye"></i> View &amp; Verify</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notice -->
+      <div class="notice-bar orange">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div>
+          <strong>Ready for Final Approval</strong>
+          Email verification, phone OTP, and all required documents are complete. This application is ready for your manual review and final decision.
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-row">
+        <button class="btn-approve"><i class="bi bi-check-lg"></i> Approve Renter</button>
+        <button class="btn-reject"><i class="bi bi-x-lg"></i> Reject Application</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: IN PROGRESS ══ -->
+  <div class="tab-panel" id="tab-inprogress">
+    <div class="subsection-header">
+      <h3><i class="bi bi-hourglass-split" style="color:#ca8a04; margin-right:0.4rem;"></i>In Progress <span style="background:#fef9c3;color:#ca8a04;border-radius:999px;padding:0.1rem 0.6rem;font-size:0.8rem;">2</span></h3>
+      <p>Applications still going through automatic verification or document upload.</p>
+    </div>
+
+    <!-- Applicant Card: Sarah Williams -->
+    <div class="applicant-card">
+      <div class="applicant-card-header">
+        <div class="applicant-info">
+          <div class="applicant-avatar" style="background:#7c3aed;">SW</div>
+          <div>
+            <div class="applicant-name">Sarah Williams</div>
+            <div class="applicant-meta">
+              <span><i class="bi bi-calendar3"></i>2026-05-09</span>
+              <span><i class="bi bi-envelope"></i>sarah@example.com</span>
+              <span><i class="bi bi-telephone"></i>+63 917 333 4444</span>
+            </div>
+          </div>
+        </div>
+        <span class="status-badge badge-uploading"><i class="bi bi-cloud-arrow-up" style="margin-right:0.3rem;"></i>Uploading Documents</span>
+      </div>
+
+      <div class="card-sections">
+        <!-- User Details -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-person-lines-fill"></i> User Details</div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-person"></i></div>
+            <div>
+              <div class="detail-label">Full Name</div>
+              <div class="detail-value">Sarah Williams</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-calendar3"></i></div>
+            <div>
+              <div class="detail-label">Submission Date</div>
+              <div class="detail-value">2026-05-09</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value">sarah@example.com</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-telephone"></i></div>
+            <div>
+              <div class="detail-label">Phone</div>
+              <div class="detail-value">+63 917 333 4444</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automatic Verification -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-robot"></i> Automatic Verification</div>
+          <div class="verify-row">
+            <div>
+              <div class="verify-label">Email Verification</div>
+              <div class="verify-sub">Verified Automatically</div>
+            </div>
+            <div class="verify-check">
+              <i class="bi bi-check-circle-fill check-green"></i>
+              <span class="verify-auto-tag">Auto</span>
+            </div>
+          </div>
+          <div class="verify-row">
+            <div>
+              <div class="verify-label">Phone OTP Verification</div>
+              <div class="verify-sub">Verified Automatically</div>
+            </div>
+            <div class="verify-check">
+              <i class="bi bi-check-circle-fill check-green"></i>
+              <span class="verify-auto-tag">Auto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-folder2-open"></i> Uploaded Documents</div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon purple"><i class="bi bi-credit-card"></i></div>
+              <div>
+                <div class="doc-name">Valid ID</div>
+                <div class="doc-status" style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right">
+              <i class="bi bi-check-circle-fill" style="color:#16a34a;"></i>
+              <button class="view-btn"><i class="bi bi-eye"></i> View &amp; Verify</button>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon gray"><i class="bi bi-card-list"></i></div>
+              <div>
+                <div class="doc-name">Driver's License</div>
+                <div class="doc-not-uploaded"><i class="bi bi-dash-circle"></i> Not uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right">
+              <i class="bi bi-dash-circle check-gray"></i>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon gray"><i class="bi bi-camera"></i></div>
+              <div>
+                <div class="doc-name">Selfie</div>
+                <div class="doc-not-uploaded"><i class="bi bi-dash-circle"></i> Not uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right">
+              <i class="bi bi-dash-circle check-gray"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-bar blue">
+        <i class="bi bi-info-circle-fill"></i>
+        <div>
+          <strong>Waiting for user to complete: Uploading Documents</strong>
+          This applicant has not yet uploaded all required documents. Admin review is not yet available.
+        </div>
+      </div>
+    </div>
+
+    <!-- Applicant Card: David Lee -->
+    <div class="applicant-card">
+      <div class="applicant-card-header">
+        <div class="applicant-info">
+          <div class="applicant-avatar" style="background:#0369a1;">DL</div>
+          <div>
+            <div class="applicant-name">David Lee</div>
+            <div class="applicant-meta">
+              <span><i class="bi bi-calendar3"></i>2026-05-09</span>
+              <span><i class="bi bi-envelope"></i>david@example.com</span>
+              <span><i class="bi bi-telephone"></i>+63 919 555 6666</span>
+            </div>
+          </div>
+        </div>
+        <span class="status-badge badge-otp"><i class="bi bi-phone" style="margin-right:0.3rem;"></i>Phone OTP Verification</span>
+      </div>
+
+      <div class="card-sections">
+        <!-- User Details -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-person-lines-fill"></i> User Details</div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-person"></i></div>
+            <div>
+              <div class="detail-label">Full Name</div>
+              <div class="detail-value">David Lee</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-calendar3"></i></div>
+            <div>
+              <div class="detail-label">Submission Date</div>
+              <div class="detail-value">2026-05-09</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value">david@example.com</div>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon"><i class="bi bi-telephone"></i></div>
+            <div>
+              <div class="detail-label">Phone</div>
+              <div class="detail-value">+63 919 555 6666</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verification -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-robot"></i> Automatic Verification</div>
+          <div class="verify-row">
+            <div>
+              <div class="verify-label">Email Verification</div>
+              <div class="verify-sub">Verified Automatically</div>
+            </div>
+            <div class="verify-check">
+              <i class="bi bi-check-circle-fill check-green"></i>
+              <span class="verify-auto-tag">Auto</span>
+            </div>
+          </div>
+          <div class="verify-row">
+            <div>
+              <div class="verify-label">Phone OTP Verification</div>
+              <div class="verify-sub">Waiting for OTP</div>
+            </div>
+            <div class="verify-check">
+              <i class="bi bi-clock check-gray" style="color:#f59e0b;"></i>
+              <span class="verify-wait-tag">Pending</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="card-section">
+          <div class="card-section-title"><i class="bi bi-folder2-open"></i> Uploaded Documents</div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon gray"><i class="bi bi-credit-card"></i></div>
+              <div>
+                <div class="doc-name">Valid ID</div>
+                <div class="doc-not-uploaded"><i class="bi bi-dash-circle"></i> Not uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right"><i class="bi bi-dash-circle check-gray"></i></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon gray"><i class="bi bi-card-list"></i></div>
+              <div>
+                <div class="doc-name">Driver's License</div>
+                <div class="doc-not-uploaded"><i class="bi bi-dash-circle"></i> Not uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right"><i class="bi bi-dash-circle check-gray"></i></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-left">
+              <div class="doc-icon gray"><i class="bi bi-camera"></i></div>
+              <div>
+                <div class="doc-name">Selfie</div>
+                <div class="doc-not-uploaded"><i class="bi bi-dash-circle"></i> Not uploaded</div>
+              </div>
+            </div>
+            <div class="doc-right"><i class="bi bi-dash-circle check-gray"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-bar blue">
+        <i class="bi bi-info-circle-fill"></i>
+        <div>
+          <strong>Waiting for user to complete: Phone OTP Verification</strong>
+          This applicant has not yet verified their phone number via OTP. Document upload is not yet available.
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin/renter-verification-script.js"></script>
+</body>
+</html>
+```

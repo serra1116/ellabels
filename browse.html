@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Cars - MobiLeasePH</title>
+    
+    <!-- External Dependencies -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="front-end/style/browse-style.css">
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+        <span class="brand-text">Mobi<span>Lease</span> PH</span>
+        <div style="width:36px"></div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon"><img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img"></div>
+            <span class="brand-text">Mobi<span>Lease</span> PH</span>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <li><a href="#"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+                <li><a href="#" class="active"><i class="bi bi-search"></i> Browse Cars</a></li>
+                <li><a href="#"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+                <li><a href="#"><i class="bi bi-chat-dots"></i> Messages</a></li>
+                <li><a href="#"><i class="bi bi-star"></i> Feedback</a></li>
+                <li><a href="#"><i class="bi bi-person-circle"></i> Profile</a></li>
+                <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-top-row">
+                <h1 class="page-title">Renter Dashboard</h1>
+                <div class="header-right">
+                    <span class="user-name">Maria Santos</span>
+                    <div class="user-avatar">MS</div>
+                    <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="header-content">
+                <h2 class="page-title">Browse Cars</h2>
+                <p class="page-subtitle">Find the perfect car for your trip across the Philippines</p>
+            </div>
+        </div>
+
+        <section class="search-section">
+            <form class="search-form" id="searchForm">
+                <div class="search-input-group">
+                    <i class="bi bi-car-front"></i>
+                    <input type="text" class="search-input" id="nameSearch" placeholder="Search by car name or model...">
+                </div>
+                <div class="search-input-group">
+                    <i class="bi bi-geo-alt"></i>
+                    <input type="text" class="search-input" id="locationSearch" placeholder="Search by city...">
+                </div>
+                <button type="submit" class="search-btn"><i class="bi bi-search"></i> Search</button>
+                <button type="button" class="clear-btn" id="clearBtn">Clear</button>
+            </form>
+            <div class="filter-pills">
+                <button class="filter-pill active" data-filter="all">All Cars</button>
+                <button class="filter-pill" data-filter="sedan">Sedan</button>
+                <button class="filter-pill" data-filter="suv">SUV</button>
+                <button class="filter-pill" data-filter="mpv">MPV</button>
+                <button class="filter-pill" data-filter="hatchback">Hatchback</button>
+                <button class="filter-pill" data-filter="pickup">Pickup</button>
+            </div>
+        </section>
+
+        <div class="results-info">
+            <p class="results-count">Showing <strong id="resultsCount">0</strong> cars in the Philippines</p>
+            <select class="sort-select" id="sortSelect">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+            </select>
+        </div>
+
+        <div class="car-grid" id="carGrid"></div>
+        
+        <div class="no-results" id="noResults" style="display:none;">
+            <i class="bi bi-search"></i>
+            <h3>No cars found</h3>
+            <p>Try adjusting your search or clearing the filters.</p>
+        </div>
+    </main>
+
+    <!-- Zoom Modal -->
+    <div class="zoom-overlay" id="zoomOverlay">
+        <button class="zoom-close" id="zoomClose"><i class="bi bi-x-lg"></i></button>
+        <div class="zoom-card" id="zoomCard">
+            <div class="zoom-image-wrap">
+                <span class="badge-type" id="zoomBadgeType"></span>
+                <span class="badge-status" id="zoomBadgeStatus">Available</span>
+                <img src="" alt="" class="zoom-image" id="zoomImage">
+                <button class="zoom-nav prev" id="zoomPrev"><i class="bi bi-chevron-left"></i></button>
+                <button class="zoom-nav next" id="zoomNext"><i class="bi bi-chevron-right"></i></button>
+            </div>
+            <div class="zoom-body">
+                <h2 class="zoom-car-name" id="zoomName"></h2>
+                <p class="zoom-car-location"><i class="bi bi-geo-alt-fill"></i><span id="zoomLocation"></span></p>
+                <div class="car-specs" id="zoomSpecs"></div>
+                <div class="feature-tags" id="zoomTags"></div>
+                <div class="price-rating-row">
+                    <div class="car-price"><span id="zoomPrice"></span><span class="day-label">/day</span></div>
+                    <div class="car-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <span class="rating-val" id="zoomRating"></span>
+                        <span id="zoomTrips"></span>
+                    </div>
+                </div>
+                <button class="book-btn">Book Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="front-end/script/browse-script.js"></script>
+</body>
+</html>

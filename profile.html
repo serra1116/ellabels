@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MobiLeasePH</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="front-end/style/profile-style.css">
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="bi bi-list"></i>
+        </button>
+        <span class="brand-text">Mobi<span>Lease</span> PH</span>
+        <div style="width:36px"></div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img">
+            </div>
+            <span class="brand-text">Mobi<span>Lease</span> PH</span>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <li><a href="#"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+                <li><a href="#"><i class="bi bi-search"></i> Browse Cars</a></li>
+                <li><a href="#"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+                <li><a href="#"><i class="bi bi-chat-dots"></i> Messages</a></li>
+                <li><a href="#"><i class="bi bi-star"></i> Feedback</a></li>
+                <li><a href="#" class="active"><i class="bi bi-person-circle"></i> Profile</a></li>
+                <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Header Bar -->
+        <div class="header-top-row">
+            <h1 class="page-title">Renter Dashboard</h1>
+            <div class="header-right">
+                <span class="user-name">Maria Santos</span>
+                <div class="user-avatar">MS</div>
+                <button class="logout-btn" title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Page Heading -->
+        <div class="page-heading-row">
+            <div>
+                <h2 class="section-title">My Profile</h2>
+                <p class="page-subtitle">Manage your personal information and account details.</p>
+            </div>
+        </div>
+
+        <!-- Profile Layout -->
+        <div class="profile-layout">
+
+            <!-- LEFT COLUMN: Avatar Card -->
+            <div class="profile-left">
+
+                <div class="avatar-card">
+                    <div class="avatar-upload-wrap">
+                        <div class="avatar-circle" id="avatarCircle">
+                            <span class="avatar-initials" id="avatarInitials">MS</span>
+                            <img src="" alt="Profile Photo" class="avatar-img" id="avatarImg">
+                        </div>
+                        <label class="avatar-edit-btn" for="avatarUpload" title="Change photo">
+                            <i class="bi bi-camera-fill"></i>
+                        </label>
+                        <input type="file" id="avatarUpload" accept="image/*" hidden>
+                    </div>
+
+                    <h3 class="avatar-name" id="avatarName">Maria Santos</h3>
+                    <p class="avatar-email" id="avatarEmail">maria.santos@email.com</p>
+
+                    <div class="avatar-badge-row">
+                        <span class="role-badge">
+                            <i class="bi bi-person-fill"></i> Renter
+                        </span>
+                        <span class="verified-badge">
+                            <i class="bi bi-patch-check-fill"></i> Verified
+                        </span>
+                    </div>
+
+                    <div class="avatar-stat-row">
+                        <div class="avatar-stat">
+                            <span class="avatar-stat-num">12</span>
+                            <span class="avatar-stat-label">Trips</span>
+                        </div>
+                        <div class="avatar-stat-divider"></div>
+                        <div class="avatar-stat">
+                            <span class="avatar-stat-num">4.8</span>
+                            <span class="avatar-stat-label">Avg. Rating</span>
+                        </div>
+                        <div class="avatar-stat-divider"></div>
+                        <div class="avatar-stat">
+                            <span class="avatar-stat-num">8</span>
+                            <span class="avatar-stat-label">Reviews</span>
+                        </div>
+                    </div>
+
+                    <div class="member-since">
+                        <i class="bi bi-calendar3"></i>
+                        Member since January 2025
+                    </div>
+                </div>
+
+                <!-- Verification Status Card -->
+                <div class="verification-card">
+                    <h4 class="verif-title">Verification Status</h4>
+
+                    <div class="verif-item verified">
+                        <div class="verif-icon-wrap verified">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div class="verif-info">
+                            <span class="verif-label">Email Address</span>
+                            <span class="verif-status-text verified">Verified</span>
+                        </div>
+                        <i class="bi bi-check-circle-fill verif-check verified"></i>
+                    </div>
+
+                    <div class="verif-item verified">
+                        <div class="verif-icon-wrap verified">
+                            <i class="bi bi-phone-fill"></i>
+                        </div>
+                        <div class="verif-info">
+                            <span class="verif-label">Phone Number</span>
+                            <span class="verif-status-text verified">Verified</span>
+                        </div>
+                        <i class="bi bi-check-circle-fill verif-check verified"></i>
+                    </div>
+
+                    <div class="verif-item pending">
+                        <div class="verif-icon-wrap pending">
+                            <i class="bi bi-card-text"></i>
+                        </div>
+                        <div class="verif-info">
+                            <span class="verif-label">Government ID</span>
+                            <span class="verif-status-text pending">Pending Review</span>
+                        </div>
+                        <button class="verif-action-btn">Upload</button>
+                    </div>
+
+                    <div class="verif-item unverified">
+                        <div class="verif-icon-wrap unverified">
+                            <i class="bi bi-car-front-fill"></i>
+                        </div>
+                        <div class="verif-info">
+                            <span class="verif-label">Driver's License</span>
+                            <span class="verif-status-text unverified">Not Submitted</span>
+                        </div>
+                        <button class="verif-action-btn">Upload</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Edit Forms -->
+            <div class="profile-right">
+
+                <!-- Tab Navigation -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-tab="personal">
+                        <i class="bi bi-person-lines-fill"></i> Personal Info
+                    </button>
+                    <button class="profile-tab" data-tab="contact">
+                        <i class="bi bi-telephone-fill"></i> Contact Details
+                    </button>
+                    <button class="profile-tab" data-tab="security">
+                        <i class="bi bi-shield-lock-fill"></i> Security
+                    </button>
+                </div>
+
+                <!-- TAB PANEL: Personal Info -->
+                <div class="tab-panel active" id="tab-personal">
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-title-wrap">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-person-lines-fill"></i>
+                                </div>
+                                <div>
+                                    <h3 class="form-card-title">Personal Information</h3>
+                                    <p class="form-card-subtitle">Update your name and personal details.</p>
+                                </div>
+                            </div>
+                            <button class="edit-toggle-btn" id="editPersonalBtn" onclick="toggleEdit('personal')">
+                                <i class="bi bi-pencil-fill"></i> Edit
+                            </button>
+                        </div>
+
+                        <form id="personalForm" class="profile-form" novalidate>
+                            <div class="form-row-double">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" class="form-input" value="Maria" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" class="form-input" value="Santos" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="displayName">Display Name</label>
+                                <input type="text" id="displayName" class="form-input" value="Maria Santos" disabled>
+                                <p class="input-hint">This is the name shown on your public profile and reviews.</p>
+                            </div>
+
+                            <div class="form-row-double">
+                                <div class="form-group">
+                                    <label for="birthDate">Date of Birth</label>
+                                    <input type="date" id="birthDate" class="form-input" value="1995-04-12" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" class="form-input form-select" disabled>
+                                        <option value="">Select gender</option>
+                                        <option value="female" selected>Female</option>
+                                        <option value="male">Male</option>
+                                        <option value="nonbinary">Non-binary</option>
+                                        <option value="prefer_not">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bio">Short Bio</label>
+                                <textarea id="bio" class="form-input form-textarea" rows="3" maxlength="250" disabled>Avid traveler based in Cebu City. Love exploring new places around the Philippines.</textarea>
+                                <div class="char-counter">
+                                    <span id="bioCharCount">0</span>/250
+                                </div>
+                            </div>
+
+                            <div class="form-actions" id="personalActions" style="display:none;">
+                                <button type="submit" class="save-btn">
+                                    <i class="bi bi-check-lg"></i> Save Changes
+                                </button>
+                                <button type="button" class="cancel-btn" onclick="cancelEdit('personal')">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB PANEL: Contact Details -->
+                <div class="tab-panel" id="tab-contact">
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-title-wrap">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </div>
+                                <div>
+                                    <h3 class="form-card-title">Contact Details</h3>
+                                    <p class="form-card-subtitle">Keep your contact information up to date.</p>
+                                </div>
+                            </div>
+                            <button class="edit-toggle-btn" id="editContactBtn" onclick="toggleEdit('contact')">
+                                <i class="bi bi-pencil-fill"></i> Edit
+                            </button>
+                        </div>
+
+                        <form id="contactForm" class="profile-form" novalidate>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <div class="input-with-badge">
+                                    <input type="email" id="email" class="form-input" value="maria.santos@email.com" disabled>
+                                    <span class="input-badge verified">
+                                        <i class="bi bi-patch-check-fill"></i> Verified
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <div class="input-with-badge">
+                                    <input type="tel" id="phone" class="form-input" value="+63 917 123 4567" disabled>
+                                    <span class="input-badge verified">
+                                        <i class="bi bi-patch-check-fill"></i> Verified
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Home Address</label>
+                                <input type="text" id="address" class="form-input" value="123 Mango Avenue, Cebu City" disabled>
+                            </div>
+
+                            <div class="form-row-double">
+                                <div class="form-group">
+                                    <label for="city">City / Municipality</label>
+                                    <input type="text" id="city" class="form-input" value="Cebu City" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="province">Province</label>
+                                    <input type="text" id="province" class="form-input" value="Cebu" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emergencyContact">Emergency Contact</label>
+                                <input type="text" id="emergencyContact" class="form-input" value="Juan Santos — +63 918 765 4321" disabled>
+                                <p class="input-hint">Name and phone number of your emergency contact person.</p>
+                            </div>
+
+                            <div class="form-actions" id="contactActions" style="display:none;">
+                                <button type="submit" class="save-btn">
+                                    <i class="bi bi-check-lg"></i> Save Changes
+                                </button>
+                                <button type="button" class="cancel-btn" onclick="cancelEdit('contact')">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB PANEL: Security -->
+                <div class="tab-panel" id="tab-security">
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-title-wrap">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-shield-lock-fill"></i>
+                                </div>
+                                <div>
+                                    <h3 class="form-card-title">Password & Security</h3>
+                                    <p class="form-card-subtitle">Manage your password and account security.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="securityForm" class="profile-form" novalidate>
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <div class="password-wrap">
+                                    <input type="password" id="currentPassword" class="form-input" placeholder="Enter your current password">
+                                    <button type="button" class="pw-toggle" data-target="currentPassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <div class="password-wrap">
+                                    <input type="password" id="newPassword" class="form-input" placeholder="Enter a new password">
+                                    <button type="button" class="pw-toggle" data-target="newPassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <!-- Password Strength -->
+                                <div class="pw-strength-wrap" id="pwStrengthWrap" style="display:none;">
+                                    <div class="pw-strength-bar">
+                                        <div class="pw-strength-fill" id="pwStrengthFill"></div>
+                                    </div>
+                                    <span class="pw-strength-label" id="pwStrengthLabel"></span>
+                                </div>
+                                <ul class="pw-rules" id="pwRules">
+                                    <li id="rule-length"><i class="bi bi-x-circle-fill"></i> At least 8 characters</li>
+                                    <li id="rule-upper"><i class="bi bi-x-circle-fill"></i> One uppercase letter</li>
+                                    <li id="rule-number"><i class="bi bi-x-circle-fill"></i> One number</li>
+                                    <li id="rule-special"><i class="bi bi-x-circle-fill"></i> One special character</li>
+                                </ul>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <div class="password-wrap">
+                                    <input type="password" id="confirmPassword" class="form-input" placeholder="Re-enter your new password">
+                                    <button type="button" class="pw-toggle" data-target="confirmPassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <p class="input-hint" id="confirmHint" style="display:none;"></p>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="save-btn" id="changePasswordBtn" disabled>
+                                    <i class="bi bi-shield-check"></i> Update Password
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Danger Zone -->
+                        <div class="danger-zone">
+                            <h4 class="danger-zone-title">
+                                <i class="bi bi-exclamation-triangle-fill"></i> Danger Zone
+                            </h4>
+                            <p class="danger-zone-text">
+                                Permanently delete your account and all associated data. This action cannot be undone.
+                            </p>
+                            <button class="delete-account-btn" id="deleteAccountBtn">
+                                <i class="bi bi-trash3-fill"></i> Delete My Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end profile-right -->
+
+        </div>
+        <!-- end profile-layout -->
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast-wrap" id="toastWrap">
+        <div class="toast-inner" id="toastInner">
+            <i class="bi bi-check-circle-fill toast-icon"></i>
+            <span class="toast-msg" id="toastMsg">Changes saved successfully.</span>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="confirm-modal">
+            <div class="confirm-icon-wrap danger">
+                <i class="bi bi-trash3-fill"></i>
+            </div>
+            <h3 class="confirm-title">Delete Account?</h3>
+            <p class="confirm-msg">
+                This will permanently remove your account, bookings, reviews, and all personal data. 
+                This action <strong>cannot be undone</strong>.
+            </p>
+            <div class="confirm-actions">
+                <button class="confirm-delete-btn" id="confirmDeleteBtn">Yes, Delete Account</button>
+                <button class="confirm-cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="front-end/script/profile-script.js"></script>
+</body>
+</html>
