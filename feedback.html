@@ -11,18 +11,14 @@
 </head>
 <body>
 
-    <!-- Mobile Header -->
     <header class="mobile-header">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="bi bi-list"></i>
-        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
         <span class="brand-text">Mobi<span>Lease</span> PH</span>
         <div style="width:36px"></div>
     </header>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand">
             <div class="brand-icon">
@@ -31,140 +27,46 @@
             <span class="brand-text">Mobi<span>Lease</span> PH</span>
         </div>
         <nav>
-            <ul class="sidebar-nav">
-                <li><a href="#"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
-                <li><a href="#"><i class="bi bi-search"></i> Browse Cars</a></li>
-                <li><a href="#"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
-                <li><a href="#"><i class="bi bi-chat-dots"></i> Messages</a></li>
-                <li><a href="#" class="active"><i class="bi bi-star"></i> Feedback</a></li>
-                <li><a href="#"><i class="bi bi-person-circle"></i> Profile</a></li>
-                <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
-            </ul>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+            <li><a href="browse.html"><i class="bi bi-search"></i> Browse Cars</a></li>
+            <li><a href="booking.html"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+            <li><a href="feedback.html" class="active"><i class="bi bi-star"></i> Feedback</a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li><a href="contracts.html"><i class="bi bi-clipboard-data"></i> Contracts</a></li>
+            <li><a href="safety.html"><i class="bi bi-shield-check"></i> Safety</a></li>
+            <li><a href="rewards.html"><i class="bi bi-award"></i> Points System & Rewards</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
         </nav>
         <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
 
-        <!-- Top Header Bar -->
         <div class="header-top-row">
             <h1 class="page-title">Renter Dashboard</h1>
             <div class="header-right">
                 <span class="user-name">Maria Santos</span>
                 <div class="user-avatar">MS</div>
-                <button class="logout-btn" title="Logout">
-                    <i class="bi bi-box-arrow-right"></i>
-                </button>
+            <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i></button>
             </div>
         </div>
 
-        <!-- ═══════════════════════════════
-             VIEW 1: Trip Selection
-        ════════════════════════════════ -->
+        <!-- VIEW 1: Trip Selection -->
         <div id="tripSelectionView">
             <h2 class="section-title">Trip Feedback</h2>
             <p class="page-subtitle">Share your experience after a completed trip.</p>
 
             <div class="selection-container">
                 <p class="selection-instruction">Select a completed trip to review:</p>
-
-                <div class="trips-list">
-
-                    <!-- Trip 1 — With Driver -->
-                    <div class="selectable-trip-card"
-                         onclick="showFeedbackForm('Toyota Innova 2024', '2026-03-20 to 2026-03-22', '48 hrs', 'pictures/innova.png', 'Cebu City', false, 'Juan Dela Cruz')">
-                        <div class="trip-card-left">
-                            <div class="trip-car-icon">
-                                <i class="bi bi-car-front-fill"></i>
-                            </div>
-                            <div class="trip-details">
-                                <h3 class="card-car-name">Toyota Innova 2024</h3>
-                                <p class="card-trip-date">
-                                    <i class="bi bi-calendar3"></i>
-                                    2026-03-20 to 2026-03-22
-                                </p>
-                                <p class="card-trip-meta">
-                                    <i class="bi bi-clock"></i> 48 hrs
-                                    &nbsp;&bull;&nbsp;
-                                    <i class="bi bi-geo-alt-fill"></i> Cebu City
-                                </p>
-                            </div>
-                        </div>
-                        <div class="trip-card-right">
-                            <span class="trip-type-badge with-driver">
-                                <i class="bi bi-person-fill"></i> With Driver
-                            </span>
-                            <span class="completed-badge">Completed</span>
-                            <i class="bi bi-chevron-right chevron-icon"></i>
-                        </div>
-                    </div>
-
-                    <!-- Trip 2 — With Driver -->
-                    <div class="selectable-trip-card"
-                         onclick="showFeedbackForm('Honda CR-V 2023', '2026-02-10 to 2026-02-13', '72 hrs', 'pictures/crv.jpg', 'Quezon City', false, 'Pedro Reyes')">
-                        <div class="trip-card-left">
-                            <div class="trip-car-icon">
-                                <i class="bi bi-car-front-fill"></i>
-                            </div>
-                            <div class="trip-details">
-                                <h3 class="card-car-name">Honda CR-V 2023</h3>
-                                <p class="card-trip-date">
-                                    <i class="bi bi-calendar3"></i>
-                                    2026-02-10 to 2026-02-13
-                                </p>
-                                <p class="card-trip-meta">
-                                    <i class="bi bi-clock"></i> 72 hrs
-                                    &nbsp;&bull;&nbsp;
-                                    <i class="bi bi-geo-alt-fill"></i> Quezon City
-                                </p>
-                            </div>
-                        </div>
-                        <div class="trip-card-right">
-                            <span class="trip-type-badge with-driver">
-                                <i class="bi bi-person-fill"></i> With Driver
-                            </span>
-                            <span class="completed-badge">Completed</span>
-                            <i class="bi bi-chevron-right chevron-icon"></i>
-                        </div>
-                    </div>
-
-                    <!-- Trip 3 — Self-Drive -->
-                    <div class="selectable-trip-card"
-                         onclick="showFeedbackForm('Toyota Vios 2024', '2026-01-05 to 2026-01-06', '24 hrs', 'pictures/vios.jpg', 'Makati City', true, '')">
-                        <div class="trip-card-left">
-                            <div class="trip-car-icon">
-                                <i class="bi bi-car-front-fill"></i>
-                            </div>
-                            <div class="trip-details">
-                                <h3 class="card-car-name">Toyota Vios 2024</h3>
-                                <p class="card-trip-date">
-                                    <i class="bi bi-calendar3"></i>
-                                    2026-01-05 to 2026-01-06
-                                </p>
-                                <p class="card-trip-meta">
-                                    <i class="bi bi-clock"></i> 24 hrs
-                                    &nbsp;&bull;&nbsp;
-                                    <i class="bi bi-geo-alt-fill"></i> Makati City
-                                </p>
-                            </div>
-                        </div>
-                        <div class="trip-card-right">
-                            <span class="trip-type-badge self-drive">
-                                <i class="bi bi-person-arms-up"></i> Self-Drive
-                            </span>
-                            <span class="completed-badge">Completed</span>
-                            <i class="bi bi-chevron-right chevron-icon"></i>
-                        </div>
-                    </div>
-
+                <div class="trips-list" id="tripsList">
+                    <!-- rendered from shared data -->
                 </div>
             </div>
         </div>
 
-        <!-- ═══════════════════════════════
-             VIEW 2: Feedback Form
-        ════════════════════════════════ -->
+        <!-- VIEW 2: Feedback Form -->
         <div id="feedbackFormView" style="display:none;">
             <div class="form-view-header">
                 <button class="back-btn-top" onclick="hideFeedbackForm()">
@@ -178,28 +80,19 @@
 
             <div class="feedback-container">
                 <div class="feedback-card">
-
-                    <!-- Trip Info Header inside the card -->
                     <div class="trip-info-header">
                         <div class="trip-info-left">
-                            <div class="trip-info-icon">
-                                <i class="bi bi-car-front-fill"></i>
-                            </div>
+                            <div class="trip-info-icon"><i class="bi bi-car-front-fill"></i></div>
                             <div>
-                                <h2 id="displayCarName" class="form-car-name">Toyota Innova 2024</h2>
-                                <p id="displayTripMeta" class="trip-meta-text">
-                                    2026-03-20 to 2026-03-22 &bull; 48 hrs &bull; Cebu City
-                                </p>
+                                <h2 id="displayCarName" class="form-car-name">Toyota Vios 2024</h2>
+                                <p id="displayTripMeta" class="trip-meta-text"></p>
                             </div>
                         </div>
-                        <span class="trip-status-tag">
-                            <i class="bi bi-check-circle-fill"></i> Trip Completed
-                        </span>
+                        <span class="trip-status-tag"><i class="bi bi-check-circle-fill"></i> Trip Completed</span>
                     </div>
 
                     <hr class="divider">
 
-                    <!-- Progress Hint -->
                     <div class="progress-hint" id="progressHint">
                         <i class="bi bi-info-circle"></i>
                         Rate all categories and write a review to enable submission.
@@ -207,98 +100,49 @@
 
                     <form id="feedbackForm">
 
-                        <!-- ── Vehicle Ratings ── -->
-                        <p class="form-section-label">
-                            <i class="bi bi-car-front-fill"></i> Vehicle Ratings
-                        </p>
+                        <p class="form-section-label"><i class="bi bi-car-front-fill"></i> Vehicle Ratings</p>
 
                         <div class="rating-grid">
-
                             <div class="rating-group">
-                                <div class="rating-label-row">
-                                    <label>Overall Experience</label>
-                                    <span class="rating-text-value" id="ratingLabel-overall">Not rated</span>
-                                </div>
+                                <div class="rating-label-row"><label>Overall Experience</label><span class="rating-text-value" id="ratingLabel-overall">Not rated</span></div>
                                 <div class="star-rating" data-category="overall">
-                                    <i class="bi bi-star" data-value="1"></i>
-                                    <i class="bi bi-star" data-value="2"></i>
-                                    <i class="bi bi-star" data-value="3"></i>
-                                    <i class="bi bi-star" data-value="4"></i>
-                                    <i class="bi bi-star" data-value="5"></i>
+                                    <i class="bi bi-star" data-value="1"></i><i class="bi bi-star" data-value="2"></i><i class="bi bi-star" data-value="3"></i><i class="bi bi-star" data-value="4"></i><i class="bi bi-star" data-value="5"></i>
                                 </div>
                             </div>
-
                             <div class="rating-group">
-                                <div class="rating-label-row">
-                                    <label>Vehicle Condition</label>
-                                    <span class="rating-text-value" id="ratingLabel-condition">Not rated</span>
-                                </div>
+                                <div class="rating-label-row"><label>Vehicle Condition</label><span class="rating-text-value" id="ratingLabel-condition">Not rated</span></div>
                                 <div class="star-rating" data-category="condition">
-                                    <i class="bi bi-star" data-value="1"></i>
-                                    <i class="bi bi-star" data-value="2"></i>
-                                    <i class="bi bi-star" data-value="3"></i>
-                                    <i class="bi bi-star" data-value="4"></i>
-                                    <i class="bi bi-star" data-value="5"></i>
+                                    <i class="bi bi-star" data-value="1"></i><i class="bi bi-star" data-value="2"></i><i class="bi bi-star" data-value="3"></i><i class="bi bi-star" data-value="4"></i><i class="bi bi-star" data-value="5"></i>
                                 </div>
                             </div>
-
                             <div class="rating-group">
-                                <div class="rating-label-row">
-                                    <label>Cleanliness</label>
-                                    <span class="rating-text-value" id="ratingLabel-cleanliness">Not rated</span>
-                                </div>
+                                <div class="rating-label-row"><label>Cleanliness</label><span class="rating-text-value" id="ratingLabel-cleanliness">Not rated</span></div>
                                 <div class="star-rating" data-category="cleanliness">
-                                    <i class="bi bi-star" data-value="1"></i>
-                                    <i class="bi bi-star" data-value="2"></i>
-                                    <i class="bi bi-star" data-value="3"></i>
-                                    <i class="bi bi-star" data-value="4"></i>
-                                    <i class="bi bi-star" data-value="5"></i>
+                                    <i class="bi bi-star" data-value="1"></i><i class="bi bi-star" data-value="2"></i><i class="bi bi-star" data-value="3"></i><i class="bi bi-star" data-value="4"></i><i class="bi bi-star" data-value="5"></i>
                                 </div>
                             </div>
-
                             <div class="rating-group">
-                                <div class="rating-label-row">
-                                    <label>Listing Accuracy</label>
-                                    <span class="rating-text-value" id="ratingLabel-accuracy">Not rated</span>
-                                </div>
+                                <div class="rating-label-row"><label>Listing Accuracy</label><span class="rating-text-value" id="ratingLabel-accuracy">Not rated</span></div>
                                 <div class="star-rating" data-category="accuracy">
-                                    <i class="bi bi-star" data-value="1"></i>
-                                    <i class="bi bi-star" data-value="2"></i>
-                                    <i class="bi bi-star" data-value="3"></i>
-                                    <i class="bi bi-star" data-value="4"></i>
-                                    <i class="bi bi-star" data-value="5"></i>
+                                    <i class="bi bi-star" data-value="1"></i><i class="bi bi-star" data-value="2"></i><i class="bi bi-star" data-value="3"></i><i class="bi bi-star" data-value="4"></i><i class="bi bi-star" data-value="5"></i>
                                 </div>
                             </div>
-
                             <div class="rating-group">
-                                <div class="rating-label-row">
-                                    <label>Owner Communication</label>
-                                    <span class="rating-text-value" id="ratingLabel-communication">Not rated</span>
-                                </div>
+                                <div class="rating-label-row"><label>Owner Communication</label><span class="rating-text-value" id="ratingLabel-communication">Not rated</span></div>
                                 <div class="star-rating" data-category="communication">
-                                    <i class="bi bi-star" data-value="1"></i>
-                                    <i class="bi bi-star" data-value="2"></i>
-                                    <i class="bi bi-star" data-value="3"></i>
-                                    <i class="bi bi-star" data-value="4"></i>
-                                    <i class="bi bi-star" data-value="5"></i>
+                                    <i class="bi bi-star" data-value="1"></i><i class="bi bi-star" data-value="2"></i><i class="bi bi-star" data-value="3"></i><i class="bi bi-star" data-value="4"></i><i class="bi bi-star" data-value="5"></i>
                                 </div>
                             </div>
-
                         </div>
 
-                        <!-- ── Driver Section (hidden for self-drive) ── -->
                         <div id="driverSection">
                             <hr class="divider" style="margin-top:0;">
-                            <p class="form-section-label">
-                                <i class="bi bi-person-fill"></i> Driver Rating
-                            </p>
-
-                            <!-- Driver Rating -->
+                            <p class="form-section-label"><i class="bi bi-person-fill"></i> Driver Rating</p>
                             <div class="driver-rating-group">
                                 <div class="driver-name-row">
-                                    <div class="driver-avatar-sm" id="driverAvatarSm">JD</div>
+                                    <div class="driver-avatar-sm" id="driverAvatarSm">RC</div>
                                     <div>
-                                        <div class="driver-name-text" id="driverNameDisplay">Juan Dela Cruz</div>
+                                        <div class="driver-name-text" id="driverNameDisplay">Ricardo Cruz</div>
                                         <div class="driver-role-text">Assigned Driver</div>
                                     </div>
                                 </div>
@@ -307,67 +151,38 @@
                                     <span class="rating-text-value" id="ratingLabel-driver">Not rated</span>
                                 </div>
                                 <div class="star-rating" data-category="driver">
-                                    <i class="bi bi-star" data-value="1"></i>
-                                    <i class="bi bi-star" data-value="2"></i>
-                                    <i class="bi bi-star" data-value="3"></i>
-                                    <i class="bi bi-star" data-value="4"></i>
-                                    <i class="bi bi-star" data-value="5"></i>
+                                    <i class="bi bi-star" data-value="1"></i><i class="bi bi-star" data-value="2"></i><i class="bi bi-star" data-value="3"></i><i class="bi bi-star" data-value="4"></i><i class="bi bi-star" data-value="5"></i>
                                 </div>
                             </div>
-
-                            <!-- Driver Comment -->
                             <div class="driver-review-group" style="margin-top:1rem;">
-                                <label for="driverReviewText">
-                                    Driver Review
-                                    <span style="font-weight:400; color:var(--text-muted); font-size:0.8rem;">(optional)</span>
-                                </label>
-                                <textarea
-                                    id="driverReviewText"
-                                    placeholder="Share your experience with the driver — punctuality, professionalism, helpfulness..."
-                                    rows="3"
-                                    maxlength="500">
-                                </textarea>
-                                <div class="driver-char-counter">
-                                    <span id="driverCharCount">0</span>/500 characters
-                                </div>
+                                <label for="driverReviewText">Driver Review <span style="font-weight:400;color:var(--text-muted);font-size:0.8rem;">(optional)</span></label>
+                                <textarea id="driverReviewText" placeholder="Share your experience with the driver..." rows="3" maxlength="500"></textarea>
+                                <div class="driver-char-counter"><span id="driverCharCount">0</span>/500 characters</div>
                             </div>
                         </div>
 
-                        <!-- Self-Drive Notice (shown instead of driver section) -->
                         <div class="self-drive-notice" id="selfDriveNotice">
-                            <i class="bi bi-info-circle-fill" style="color:#94a3b8; flex-shrink:0;"></i>
+                            <i class="bi bi-info-circle-fill" style="color:#94a3b8;flex-shrink:0;"></i>
                             Driver rating is not applicable for self-drive trips.
                         </div>
 
                         <hr class="divider">
 
-                        <!-- ── Written Review ── -->
-                        <p class="form-section-label">
-                            <i class="bi bi-pencil-fill"></i> Your Review
-                        </p>
-
+                        <p class="form-section-label"><i class="bi bi-pencil-fill"></i> Your Review</p>
                         <div class="review-group">
                             <label for="reviewText">Written Review</label>
-                            <textarea
-                                id="reviewText"
-                                placeholder="Tell us about your overall experience with this vehicle and the owner..."
-                                rows="5"
-                                maxlength="1000">
-                            </textarea>
+                            <textarea id="reviewText" placeholder="Tell us about your overall experience..." rows="5" maxlength="1000"></textarea>
                             <div class="char-counter">
                                 <span id="charCount">0</span>/1000 characters
                                 <span id="charMin" class="char-min">(minimum 10 characters)</span>
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="feedback-actions">
                             <button type="submit" id="submitBtn" class="submit-btn" disabled>
                                 <i class="bi bi-send-fill"></i> Submit Feedback
                             </button>
-                            <button type="button" class="back-btn-form" onclick="hideFeedbackForm()">
-                                Cancel
-                            </button>
+                            <button type="button" class="back-btn-form" onclick="hideFeedbackForm()">Cancel</button>
                         </div>
 
                     </form>
@@ -375,33 +190,22 @@
             </div>
         </div>
 
-        <!-- ═══════════════════════════════
-             VIEW 3: Empty State
-             (sibling of the two views above)
-        ════════════════════════════════ -->
+        <!-- VIEW 3: Empty State -->
         <div id="emptyStateView" style="display:none;">
             <div class="empty-state-wrap">
-
                 <div class="empty-icon-ring">
                     <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="empty-svg">
                         <circle cx="40" cy="40" r="36" stroke="#d4e9ef" stroke-width="5"/>
                         <circle cx="40" cy="40" r="36" stroke="#1e5a6e" stroke-width="5"
-                            stroke-dasharray="226" stroke-dashoffset="226"
-                            class="empty-svg-ring"/>
+                            stroke-dasharray="226" stroke-dashoffset="226" class="empty-svg-ring"/>
                         <polyline points="25,41 35,52 56,30"
                             stroke="#1e5a6e" stroke-width="5"
                             stroke-linecap="round" stroke-linejoin="round"
-                            stroke-dasharray="60" stroke-dashoffset="60"
-                            class="empty-svg-check"/>
+                            stroke-dasharray="60" stroke-dashoffset="60" class="empty-svg-check"/>
                     </svg>
                 </div>
-
                 <h2 class="empty-title">All Caught Up!</h2>
-                <p class="empty-subtitle">
-                    You have no pending trip feedback to submit.<br>
-                    Great job sharing your experience with the community.
-                </p>
-
+                <p class="empty-subtitle">You have no pending trip feedback to submit.<br>Great job sharing your experience with the community.</p>
                 <div class="empty-stat-row">
                     <div class="empty-stat">
                         <span class="empty-stat-num" id="totalReviewedCount">0</span>
@@ -413,40 +217,126 @@
                         <span class="empty-stat-label">Avg. Rating Given</span>
                     </div>
                 </div>
-
                 <p class="empty-cta-text">Complete more trips to leave new feedback.</p>
-                <a href="#" class="empty-browse-btn">
-                    <i class="bi bi-search"></i> Browse Cars
-                </a>
+                <a href="browse.html" class="empty-browse-btn"><i class="bi bi-search"></i> Browse Cars</a>
             </div>
         </div>
 
     </main>
 
-    <!-- ═══════════════════════════════
-         Success Modal
-    ════════════════════════════════ -->
+    <!-- Success Modal -->
     <div class="success-overlay" id="successOverlay">
         <div class="success-modal">
-            <div class="success-icon-wrap">
-                <i class="bi bi-check-lg"></i>
-            </div>
+            <div class="success-icon-wrap"><i class="bi bi-check-lg"></i></div>
             <h3 class="success-title">Feedback Submitted!</h3>
             <p class="success-msg">
                 Thank you, <strong>Maria</strong>! Your review for
-                <strong id="successCarName">Toyota Innova 2024</strong> has been submitted successfully.
+                <strong id="successCarName"></strong> has been submitted successfully.
             </p>
             <div class="success-summary" id="successSummary"></div>
             <div class="success-driver-summary" id="successDriverSummary">
                 <strong><i class="bi bi-person-fill"></i> Driver Review</strong>
                 <span id="successDriverText"></span>
             </div>
-            <button class="success-btn" onclick="finishFeedback()">
-                Back to Dashboard
-            </button>
+            <button class="success-btn" onclick="finishFeedback()">Back to Trips</button>
         </div>
     </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="front-end/script/mobilease-data.js"></script>
     <script src="front-end/script/feedback-script.js"></script>
+    <script>
+    /* ── Render pending trips from shared data ── */
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+            sidebar.classList.toggle('open'); overlay.classList.toggle('show');
+        });
+        overlay?.addEventListener('click', () => {
+            sidebar.classList.remove('open'); overlay.classList.remove('show');
+        });
+
+        renderTripsList();
+    });
+
+    function renderTripsList() {
+        const pending = window.MOBILEASE.getFeedbackPending();
+        const list = document.getElementById('tripsList');
+
+        if (pending.length === 0) {
+            document.getElementById('tripSelectionView').style.display = 'none';
+            document.getElementById('emptyStateView').style.display = 'block';
+            const allCompleted = window.MOBILEASE.bookings.filter(b => b.status === 'completed');
+            document.getElementById('totalReviewedCount').textContent =
+                allCompleted.filter(b => b.feedbackSubmitted).length;
+            return;
+        }
+
+        list.innerHTML = pending.map(b => {
+            const durationLabel = b.duration;
+            const typeLabel = b.driveType === 'driver' ? 'With Driver' : 'Self-Drive';
+            const typeIcon  = b.driveType === 'driver' ? 'bi-person-fill' : 'bi-person-arms-up';
+            const typeClass = b.driveType === 'driver' ? 'with-driver' : 'self-drive';
+
+            return `
+            <div class="selectable-trip-card" onclick="loadBookingFeedback('${b.id}')">
+                <div class="trip-card-left">
+                    <div class="trip-car-icon"><i class="bi bi-car-front-fill"></i></div>
+                    <div class="trip-details">
+                        <h3 class="card-car-name">${b.vehicle}</h3>
+                        <p class="card-trip-date"><i class="bi bi-calendar3"></i> ${b.startDisplay} to ${b.endDisplay}</p>
+                        <p class="card-trip-meta">
+                            <i class="bi bi-clock"></i> ${durationLabel}
+                            &nbsp;&bull;&nbsp;
+                            <i class="bi bi-geo-alt-fill"></i> ${b.location}
+                            &nbsp;&bull;&nbsp;
+                            <i class="bi bi-tag"></i> ${b.id}
+                        </p>
+                    </div>
+                </div>
+                <div class="trip-card-right">
+                    <span class="trip-type-badge ${typeClass}">
+                        <i class="bi ${typeIcon}"></i> ${typeLabel}
+                    </span>
+                    <span class="completed-badge">Completed</span>
+                    <i class="bi bi-chevron-right chevron-icon"></i>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    /* Active booking ID being reviewed */
+    let _currentBookingId = null;
+
+    function loadBookingFeedback(bookingId) {
+        _currentBookingId = bookingId;
+        const b = window.MOBILEASE.bookings.find(x => x.id === bookingId);
+        if (!b) return;
+        const isSelf = b.driveType === 'self';
+        showFeedbackForm(
+            b.vehicle,
+            `${b.startDisplay} to ${b.endDisplay}`,
+            b.duration,
+            b.image,
+            b.location,
+            isSelf,
+            isSelf ? '' : (b.driverName || '')
+        );
+    }
+
+    /* After submission, mark done in data store */
+    const _origFinish = window.finishFeedback;
+    window.finishFeedback = function() {
+        if (_currentBookingId) {
+            window.MOBILEASE.markFeedbackDone(_currentBookingId);
+            _currentBookingId = null;
+        }
+        document.getElementById('successOverlay').classList.remove('show');
+        document.getElementById('feedbackFormView').style.display = 'none';
+        renderTripsList();
+        document.getElementById('tripSelectionView').style.display = 'block';
+    };
+    </script>
 </body>
 </html>

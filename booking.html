@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - MobiLeasePH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="front-end/style/dashboard-style.css">
+    <style>
+        .bookings-list { display: flex; flex-direction: column; gap: 1.25rem; }
+        .booking-detail-card {
+            display: flex; background: #fff; border: 1px solid #e2e8f0;
+            border-radius: 16px; padding: 24px; gap: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,.04); width: 100%;
+            box-sizing: border-box; align-items: flex-start; transition: box-shadow .2s;
+        }
+        .booking-detail-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+        .booking-detail-card.cancelled-card { opacity: 0.82; border-left: 4px solid #ef4444; }
+
+        .vehicle-image-container { width:150px; height:110px; border-radius:12px; overflow:hidden; background:#f1f5f9; flex-shrink:0; }
+        .vehicle-card-img { width:100%; height:100%; object-fit:cover; }
+
+        .card-main-content { display:flex; flex-direction:column; flex-grow:1; gap:14px; }
+        .card-header-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+        .title-location-group { display:flex; flex-direction:column; gap:6px; }
+        .vehicle-name { margin:0; font-size:1.25rem; font-weight:800; color:#0f172a; }
+        .location-badge { display:flex; align-items:center; gap:5px; color:#64748b; font-size:.88rem; }
+
+        .actions-group { display:flex; flex-direction:column; align-items:flex-end; gap:10px; flex-shrink:0; }
+        .status-pill { padding:5px 14px; border-radius:20px; font-size:.8rem; font-weight:700; text-transform:capitalize; }
+        .status-confirmed { background:#e2f7ed; color:#10b981; }
+        .status-pending   { background:#fff3cd; color:#92400e; }
+        .status-completed { background:#f1f5f9; color:#64748b; }
+        .status-cancelled { background:#fee2e2; color:#dc2626; }
+
+        .contract-link { display:flex; align-items:center; gap:6px; color:#1d65ff; text-decoration:none; font-size:.85rem; font-weight:600; }
+        .contract-link:hover { text-decoration:underline; }
+
+        .booking-data-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        @media(max-width:768px){ .booking-data-grid { grid-template-columns:repeat(2,1fr); } }
+        .data-column { display:flex; flex-direction:column; gap:4px; }
+        .data-label { font-size:.8rem; color:#94a3b8; font-weight:600; text-transform:uppercase; letter-spacing:.03em; }
+        .data-value { font-size:1rem; font-weight:600; color:#1e293b; }
+
+        .card-footer-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .driver-badge { display:flex; align-items:center; gap:6px; background:#eff6ff; color:#1d4ed8; padding:7px 14px; border-radius:8px; font-size:.83rem; font-weight:600; }
+        .addon-tag { display:flex; align-items:center; gap:5px; background:#f8fafc; border:1px solid #e2e8f0; color:#475569; padding:6px 12px; border-radius:8px; font-size:.8rem; font-weight:500; }
+
+        .cancel-btn {
+            margin-left: auto; padding: 7px 16px; background: none;
+            border: 1.5px solid #ef4444; color: #ef4444;
+            border-radius: 8px; font-size: .82rem; font-weight: 700;
+            cursor: pointer; transition: .2s; font-family: inherit;
+        }
+        .cancel-btn:hover { background:#fee2e2; }
+
+        .cancellation-reason {
+            display: flex; align-items: flex-start; gap: 8px;
+            background: #fff5f5; border: 1px solid #fecaca;
+            border-radius: 10px; padding: 10px 14px;
+            font-size: .82rem; color: #b91c1c; font-weight: 500; margin-top: 4px;
+        }
+        .cancellation-reason i { flex-shrink: 0; margin-top: 2px; }
+
+        /* Cancelled section header */
+        .section-divider {
+            display: flex; align-items: center; gap: 12px;
+            margin: 1.75rem 0 1rem;
+        }
+        .section-divider-line { flex: 1; height: 1px; background: #e2e8f0; }
+        .section-divider-label {
+            font-size: .82rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .06em; color: #94a3b8; white-space: nowrap;
+        }
+
+        .filter-bar { display:flex; gap:8px; margin-bottom:1.25rem; flex-wrap:wrap; }
+        .filter-chip { padding:7px 18px; border-radius:20px; border:1.5px solid #e2e8f0; background:#fff; color:#64748b; font-size:.85rem; font-weight:600; cursor:pointer; transition:.2s; font-family:inherit; }
+        .filter-chip.active, .filter-chip:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+
+        @media(max-width:600px){
+            .booking-detail-card { flex-direction:column; }
+            .vehicle-image-container { width:100%; height:180px; }
+            .card-header-row { flex-direction:column; }
+            .actions-group { align-items:flex-start; }
+        }
+
+        /* Cancelled stats badge */
+        .stat-icon.icon-red { background:#fee2e2; color:#dc2626; }
+    </style>
+</head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    <div style="width:36px"></div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img">
+        </div>
+        <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    </div>
+    <nav>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+            <li><a href="browse.html"><i class="bi bi-search"></i> Browse Cars</a></li>
+            <li><a href="booking.html" class="active"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+            <li><a href="feedback.html"><i class="bi bi-star"></i> Feedback</a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li><a href="contracts.html"><i class="bi bi-clipboard-data"></i> Contracts</a></li>
+            <li><a href="safety.html"><i class="bi bi-shield-check"></i> Safety</a></li>
+            <li><a href="rewards.html"><i class="bi bi-award"></i> Points System & Rewards</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+    </nav>
+    <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
+
+<main class="main-content page-view active" id="page-browse">
+    <div class="page-header">
+        <div class="header-top-row">
+            <h1 class="page-title">Renter Dashboard</h1>
+            <div class="header-right">
+                <span class="user-name">Maria Santos</span>
+                <div class="user-avatar">MS</div>
+                <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="header-content">
+            <h2 class="page-title">My Bookings</h2>
+            <p class="page-subtitle">View and manage all your car rental bookings.</p>
+        </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <section class="stats-container" style="margin-bottom:1.5rem;" id="statsContainer">
+        <!-- rendered by JS -->
+    </section>
+
+    <!-- Filter Chips -->
+    <div class="filter-bar">
+        <button class="filter-chip active" data-status="all">All</button>
+        <button class="filter-chip" data-status="confirmed">Confirmed</button>
+        <button class="filter-chip" data-status="pending">Pending</button>
+        <button class="filter-chip" data-status="completed">Completed</button>
+        <button class="filter-chip" data-status="cancelled">Cancelled</button>
+    </div>
+
+    <!-- BOOKINGS LIST (active bookings) -->
+    <div class="bookings-list" id="bookingsList"></div>
+
+    <!-- CANCELLED SECTION (always rendered, hidden by filter) -->
+    <div id="cancelledSection">
+        <div class="section-divider">
+            <div class="section-divider-line"></div>
+            <span class="section-divider-label"><i class="bi bi-x-circle" style="color:#ef4444;"></i> &nbsp;Cancelled Bookings</span>
+            <div class="section-divider-line"></div>
+        </div>
+        <div class="bookings-list" id="cancelledList"></div>
+    </div>
+
+</main>
+
+<script src="front-end/script/mobilease-data.js"></script>
+<script src="front-end/script/dashboard-script.js"></script>
+<script>
+/* ══ Render bookings from shared data ══ */
+document.addEventListener('DOMContentLoaded', () => {
+    const bookings = window.MOBILEASE.bookings;
+    const stats    = window.MOBILEASE.getStats();
+
+    /* Stats */
+    document.getElementById('statsContainer').innerHTML = `
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#e0f2fe;color:#0284c7;"><i class="bi bi-calendar-check"></i></div>
+            <div class="stat-info"><span class="stat-label">Total Bookings</span><span class="stat-value">${bookings.length}</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#e2f7ed;color:#10b981;"><i class="bi bi-check-circle"></i></div>
+            <div class="stat-info"><span class="stat-label">Active</span><span class="stat-value">${stats.active.length}</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#f1f5f9;color:#64748b;"><i class="bi bi-flag-fill"></i></div>
+            <div class="stat-info"><span class="stat-label">Completed</span><span class="stat-value">${stats.completed.length}</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-red"><i class="bi bi-x-circle"></i></div>
+            <div class="stat-info"><span class="stat-label">Cancelled</span><span class="stat-value">${stats.cancelled.length}</span></div>
+        </div>`;
+
+    /* Render a single booking card */
+    function renderCard(b) {
+        const isCancelled = b.status === 'cancelled';
+        const isCompleted = b.status === 'completed';
+        const isPending   = b.status === 'pending';
+        const isConfirmed = b.status === 'confirmed';
+
+        const statusClass = {
+            confirmed: 'status-confirmed',
+            pending:   'status-pending',
+            completed: 'status-completed',
+            cancelled: 'status-cancelled'
+        }[b.status] || '';
+
+        const statusLabel = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+
+        const driverHtml = b.driveType === 'driver'
+            ? `<div class="driver-badge"><i class="bi bi-person-badge-fill"></i> With Driver — ${b.driverName}</div>`
+            : `<div class="driver-badge" style="background:#f0fdf4;color:#16a34a;"><i class="bi bi-car-front-fill"></i> Self-Drive</div>`;
+
+        const addonsHtml = (b.addons || []).map(a =>
+            `<div class="addon-tag"><i class="bi bi-tag"></i> ${a}</div>`).join('');
+
+        const cancelReasonHtml = isCancelled && b.cancelReason
+            ? `<div class="cancellation-reason"><i class="bi bi-info-circle-fill"></i><span><strong>Reason:</strong> ${b.cancelReason}</span></div>`
+            : '';
+
+        const footerActionHtml = isCancelled
+            ? `<a href="browse.html" style="margin-left:auto;padding:7px 16px;background:var(--primary);color:#fff;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;"><i class="bi bi-search"></i> Browse Again</a>`
+            : isCompleted
+            ? `<a href="feedback.html" style="margin-left:auto;padding:7px 16px;background:var(--primary);color:#fff;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;"><i class="bi bi-star"></i> Leave Feedback</a>`
+            : (isConfirmed || isPending)
+            ? `<button class="cancel-btn" data-id="${b.id}"><i class="bi bi-x-circle"></i> Cancel Booking</button>`
+            : '';
+
+        const contractHtml = !isCancelled
+            ? `<a href="${b.contractLink}" class="contract-link"><i class="bi bi-file-earmark-pdf"></i> View Contract</a>`
+            : '';
+
+        return `
+        <div class="booking-detail-card ${isCancelled ? 'cancelled-card' : ''}" data-status="${b.status}" data-id="${b.id}">
+            <div class="vehicle-image-container">
+                <img src="${b.image}" alt="${b.vehicle}" class="vehicle-card-img" onerror="this.src='${b.fallback}'">
+            </div>
+            <div class="card-main-content">
+                <div class="card-header-row">
+                    <div class="title-location-group">
+                        <h2 class="vehicle-name">${b.vehicle}</h2>
+                        <div class="location-badge"><i class="bi bi-geo-alt-fill" style="color:var(--primary);"></i> ${b.location}</div>
+                    </div>
+                    <div class="actions-group">
+                        <span class="status-pill ${statusClass}">${statusLabel}</span>
+                        ${contractHtml}
+                    </div>
+                </div>
+                <div class="booking-data-grid">
+                    <div class="data-column"><span class="data-label">Booking ID</span><span class="data-value">${b.id}</span></div>
+                    <div class="data-column"><span class="data-label">Start Date</span><span class="data-value">${b.startDisplay}</span></div>
+                    <div class="data-column"><span class="data-label">End Date</span><span class="data-value">${b.endDisplay}</span></div>
+                    <div class="data-column"><span class="data-label">Duration</span><span class="data-value">${b.duration}</span></div>
+                    <div class="data-column"><span class="data-label">Pick-up Time</span><span class="data-value">${b.pickupTime}</span></div>
+                    <div class="data-column"><span class="data-label">Drop-off Time</span><span class="data-value">${b.dropoffTime}</span></div>
+                    <div class="data-column"><span class="data-label">Total Amount</span><span class="data-value" style="color:var(--primary);font-weight:800;">${b.amount}</span></div>
+                    <div class="data-column"><span class="data-label">Owner</span><span class="data-value">${b.owner}</span></div>
+                </div>
+                ${cancelReasonHtml}
+                <div class="card-footer-row">
+                    ${driverHtml}
+                    ${addonsHtml}
+                    ${footerActionHtml}
+                </div>
+            </div>
+        </div>`;
+    }
+
+    /* Split into active vs cancelled */
+    const activeBookings    = bookings.filter(b => b.status !== 'cancelled');
+    const cancelledBookings = bookings.filter(b => b.status === 'cancelled');
+
+    document.getElementById('bookingsList').innerHTML   = activeBookings.map(renderCard).join('');
+    document.getElementById('cancelledList').innerHTML  = cancelledBookings.map(renderCard).join('');
+
+    /* Hide cancelled section if empty */
+    if (cancelledBookings.length === 0) {
+        document.getElementById('cancelledSection').style.display = 'none';
+    }
+
+    /* ── Filter chips ── */
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const status = chip.dataset.status;
+
+            /* active booking cards */
+            document.querySelectorAll('#bookingsList .booking-detail-card').forEach(card => {
+                card.style.display = (status === 'all' || card.dataset.status === status) ? 'flex' : 'none';
+            });
+
+            /* cancelled section visibility */
+            const cancelledSection = document.getElementById('cancelledSection');
+            if (status === 'all' || status === 'cancelled') {
+                cancelledSection.style.display = cancelledBookings.length ? 'block' : 'none';
+                document.querySelectorAll('#cancelledList .booking-detail-card').forEach(c => c.style.display = 'flex');
+            } else {
+                cancelledSection.style.display = 'none';
+            }
+        });
+    });
+
+    /* ── Cancel buttons (live bookings) ── */
+    document.getElementById('bookingsList').addEventListener('click', e => {
+        const btn = e.target.closest('.cancel-btn');
+        if (!btn) return;
+        const bookingId = btn.dataset.id;
+        const reason = prompt('Please provide a reason for cancellation (optional):') || 'Cancelled by renter';
+        if (!confirm('Are you sure you want to cancel this booking?\nNote: Cancellations within 24 hours of pick-up are non-refundable.')) return;
+
+        /* Update data store */
+        const booking = window.MOBILEASE.bookings.find(b => b.id === bookingId);
+        if (booking) {
+            booking.status = 'cancelled';
+            booking.cancelReason = reason;
+        }
+
+        /* Re-render */
+        location.reload(); /* simple full re-render; in a real SPA you'd update the DOM */
+    });
+
+    /* ── Sidebar & logout ── */
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+    });
+    overlay?.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+    });
+    document.getElementById('logoutBtn')?.addEventListener('click', e => {
+        e.preventDefault();
+        if (confirm('Are you sure you want to log out?')) window.location.href = 'SignIn.html';
+    });
+});
+</script>
+</body>
+</html>

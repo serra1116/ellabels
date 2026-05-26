@@ -4,89 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Cars - MobiLeasePH</title>
-    
-    <!-- External Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="front-end/style/browse-style.css">
 </head>
 <body>
 
-    <!-- Mobile Header -->
-    <header class="mobile-header">
-        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
-        <span class="brand-text">Mobi<span>Lease</span> PH</span>
-        <div style="width:36px"></div>
-    </header>
+<!-- Mobile Header -->
+<header class="mobile-header">
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    <div style="width:36px"></div>
+</header>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
-            <div class="brand-icon"><img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img"></div>
+<!-- Shared Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+            <div class="brand-icon">
+                <img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img">
+            </div>
             <span class="brand-text">Mobi<span>Lease</span> PH</span>
         </div>
-        <nav>
-            <ul class="sidebar-nav">
-                <li><a href="#"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
-                <li><a href="#" class="active"><i class="bi bi-search"></i> Browse Cars</a></li>
-                <li><a href="#"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
-                <li><a href="#"><i class="bi bi-chat-dots"></i> Messages</a></li>
-                <li><a href="#"><i class="bi bi-star"></i> Feedback</a></li>
-                <li><a href="#"><i class="bi bi-person-circle"></i> Profile</a></li>
-                <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
-            </ul>
-        </nav>
-        <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
-    </aside>
+    <nav>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+            <li><a href="browse.html" class="active" id="navBrowse"><i class="bi bi-search"></i> Browse Cars</a></li>
+            <li><a href="booking.html"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+            <li><a href="feedback.html"><i class="bi bi-star"></i> Feedback</a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li><a href="contracts.html"><i class="bi bi-clipboard-data"></i> Contracts</a></li>
+            <li><a href="safety.html"><i class="bi bi-shield-check"></i> Safety</a></li>
+            <li><a href="rewards.html"><i class="bi bi-award"></i> Points System & Rewards</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+    </nav>
+    <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="page-header">
-            <div class="header-top-row">
-                <h1 class="page-title">Renter Dashboard</h1>
-                <div class="header-right">
-                    <span class="user-name">Maria Santos</span>
-                    <div class="user-avatar">MS</div>
-                    <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
-                </div>
-            </div>
-
-            <div class="header-content">
-                <h2 class="page-title">Browse Cars</h2>
-                <p class="page-subtitle">Find the perfect car for your trip across the Philippines</p>
+<!-- ══════════════════════════════════════
+     PAGE 1 — BROWSE CARS
+══════════════════════════════════════ -->
+<main class="main-content page-view active" id="page-browse">
+    <div class="page-header">
+        <div class="header-top-row">
+            <h1 class="page-title">Renter Dashboard</h1>
+            <div class="header-right">
+                <span class="user-name">Maria Santos</span>
+                <div class="user-avatar">MS</div>
+            <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i></button>
             </div>
         </div>
+        <div class="header-content">
+            <h2 class="page-title">Browse Cars</h2>
+            <p class="page-subtitle">Find the perfect car for your trip across the Philippines</p>
+        </div>
+    </div>
 
-        <section class="search-section">
-            <form class="search-form" id="searchForm">
-                <div class="search-input-group">
-                    <i class="bi bi-car-front"></i>
-                    <input type="text" class="search-input" id="nameSearch" placeholder="Search by car name or model...">
-                </div>
-                <div class="search-input-group">
-                    <i class="bi bi-geo-alt"></i>
-                    <input type="text" class="search-input" id="locationSearch" placeholder="Search by city...">
-                </div>
-                <button type="submit" class="search-btn"><i class="bi bi-search"></i> Search</button>
-                <button type="button" class="clear-btn" id="clearBtn">Clear</button>
-            </form>
-            <div class="filter-pills">
-                <button class="filter-pill active" data-filter="all">All Cars</button>
-                <button class="filter-pill" data-filter="sedan">Sedan</button>
-                <button class="filter-pill" data-filter="suv">SUV</button>
-                <button class="filter-pill" data-filter="mpv">MPV</button>
-                <button class="filter-pill" data-filter="hatchback">Hatchback</button>
-                <button class="filter-pill" data-filter="pickup">Pickup</button>
+    <section class="search-section">
+        <form class="search-form" id="searchForm">
+            <div class="search-input-group">
+                <i class="bi bi-car-front"></i>
+                <input type="text" class="search-input" id="nameSearch" placeholder="Search by car name or model...">
             </div>
-        </section>
+            <div class="search-input-group">
+                <i class="bi bi-geo-alt"></i>
+                <input type="text" class="search-input" id="locationSearch" placeholder="Search by city...">
+            </div>
+            <button type="submit" class="search-btn"><i class="bi bi-search"></i> Search</button>
+            <button type="button" class="clear-btn" id="clearBtn">Clear</button>
+        </form>
+        <div class="filter-pills">
+            <button class="filter-pill active" data-filter="all">All Cars</button>
+            <button class="filter-pill" data-filter="sedan">Sedan</button>
+            <button class="filter-pill" data-filter="suv">SUV</button>
+            <button class="filter-pill" data-filter="mpv">MPV</button>
+            <button class="filter-pill" data-filter="hatchback">Hatchback</button>
+            <button class="filter-pill" data-filter="pickup">Pickup</button>
+        </div>
+    </section>
 
-        <div class="results-info">
-            <p class="results-count">Showing <strong id="resultsCount">0</strong> cars in the Philippines</p>
+    <div class="results-info">
+        <p class="results-count">Showing <strong id="resultsCount">0</strong> cars in the Philippines</p>
+        <div class="sort-controls">
+            <select class="sort-select" id="seatsFilter">
+                <option value="all">Any Passengers</option>
+                <option value="5">5 Passengers</option>
+                <option value="7">7 Passengers</option>
+                <option value="8">8 Passengers</option>
+            </select>
             <select class="sort-select" id="sortSelect">
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -94,47 +102,1624 @@
                 <option value="rating">Top Rated</option>
             </select>
         </div>
+    </div>
 
-        <div class="car-grid" id="carGrid"></div>
-        
-        <div class="no-results" id="noResults" style="display:none;">
-            <i class="bi bi-search"></i>
-            <h3>No cars found</h3>
-            <p>Try adjusting your search or clearing the filters.</p>
+    <div class="car-grid" id="carGrid"></div>
+    <div class="no-results" id="noResults" style="display:none;">
+        <i class="bi bi-search"></i>
+        <h3>No cars found</h3>
+        <p>Try adjusting your search or clearing the filters.</p>
+    </div>
+</main>
+
+<!-- Zoom Modal -->
+<div class="zoom-overlay" id="zoomOverlay">
+    <button class="zoom-close" id="zoomClose"><i class="bi bi-x-lg"></i></button>
+    <div class="zoom-card" id="zoomCard">
+        <div class="zoom-image-wrap">
+            <span class="badge-type" id="zoomBadgeType"></span>
+            <span class="badge-status" id="zoomBadgeStatus">Available</span>
+            <img src="" alt="" class="zoom-image" id="zoomImage">
+            <button class="zoom-nav prev" id="zoomPrev"><i class="bi bi-chevron-left"></i></button>
+            <button class="zoom-nav next" id="zoomNext"><i class="bi bi-chevron-right"></i></button>
         </div>
-    </main>
-
-    <!-- Zoom Modal -->
-    <div class="zoom-overlay" id="zoomOverlay">
-        <button class="zoom-close" id="zoomClose"><i class="bi bi-x-lg"></i></button>
-        <div class="zoom-card" id="zoomCard">
-            <div class="zoom-image-wrap">
-                <span class="badge-type" id="zoomBadgeType"></span>
-                <span class="badge-status" id="zoomBadgeStatus">Available</span>
-                <img src="" alt="" class="zoom-image" id="zoomImage">
-                <button class="zoom-nav prev" id="zoomPrev"><i class="bi bi-chevron-left"></i></button>
-                <button class="zoom-nav next" id="zoomNext"><i class="bi bi-chevron-right"></i></button>
-            </div>
-            <div class="zoom-body">
-                <h2 class="zoom-car-name" id="zoomName"></h2>
-                <p class="zoom-car-location"><i class="bi bi-geo-alt-fill"></i><span id="zoomLocation"></span></p>
-                <div class="car-specs" id="zoomSpecs"></div>
-                <div class="feature-tags" id="zoomTags"></div>
-                <div class="price-rating-row">
-                    <div class="car-price"><span id="zoomPrice"></span><span class="day-label">/day</span></div>
-                    <div class="car-rating">
-                        <i class="bi bi-star-fill"></i>
-                        <span class="rating-val" id="zoomRating"></span>
-                        <span id="zoomTrips"></span>
-                    </div>
+        <div class="zoom-body">
+            <h2 class="zoom-car-name" id="zoomName"></h2>
+            <p class="zoom-car-location"><i class="bi bi-geo-alt-fill"></i><span id="zoomLocation"></span></p>
+            <div class="car-specs" id="zoomSpecs"></div>
+            <div class="feature-tags" id="zoomTags"></div>
+            <div class="price-rating-row">
+                <div class="car-price"><span id="zoomPrice"></span><span class="day-label">/day</span></div>
+                <div class="car-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <span class="rating-val" id="zoomRating"></span>
+                    <span id="zoomTrips"></span>
                 </div>
-                <button class="book-btn">Book Now</button>
             </div>
+            <button class="book-btn" id="zoomBookBtn">Book Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — BOOKING PAGE
+══════════════════════════════════════ -->
+<main class="main-content page-view" id="page-booking">
+    <div class="header-top-row">
+        <h1 class="page-title">Renter Dashboard</h1>
+        <div class="header-right">
+            <span class="user-name">Maria Santos</span>
+            <div class="user-avatar">MS</div>
+            <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="front-end/script/browse-script.js"></script>
+    <button class="booking-back-btn" id="backToBrowse">
+        <i class="bi bi-arrow-left"></i> Back to Browse Cars
+    </button>
+
+    <div class="booking-layout">
+        <!-- ══ LEFT COLUMN ══ -->
+        <div class="booking-left">
+
+            <!-- Car Hero -->
+            <div class="booking-car-hero">
+                <div class="booking-car-image-wrap">
+                    <img src="" alt="" class="booking-car-image" id="bookingCarImage">
+                    <div class="booking-car-image-overlay"></div>
+                    <div class="booking-car-image-info">
+                        <div>
+                            <div class="booking-car-title" id="bookingCarName"></div>
+                            <div class="booking-car-loc"><i class="bi bi-geo-alt-fill"></i><span id="bookingCarLoc"></span></div>
+                        </div>
+                        <div class="booking-price-badge">
+                            <div class="amount" id="bookingCarPrice"></div>
+                            <div class="label">per day</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="booking-car-meta">
+                    <div class="booking-specs-row" id="bookingSpecsRow"></div>
+                    <div class="booking-features" id="bookingFeatures"></div>
+                </div>
+            </div>
+
+
+
+            <!-- ════════ BOOKING DETAILS ════════ -->
+            <div class="booking-section-card">
+                <div class="booking-section-title"><i class="bi bi-calendar2-check"></i> Booking Details</div>
+
+                <!-- 1. DATES & TIMES -->
+                <div class="bdetail-sublabel"><i class="bi bi-calendar3"></i> Rental Period</div>
+                <div class="bdetail-grid-2-auto">
+                    <div class="bdetail-field" style="margin-bottom:0;">
+                        <label class="bdetail-label">Start Date</label>
+                        <input type="date" class="bdetail-input" id="bdStartDate">
+                    </div>
+                    <div class="bdetail-field" style="margin-bottom:0;">
+                        <label class="bdetail-label">End Date</label>
+                        <input type="date" class="bdetail-input" id="bdEndDate">
+                    </div>
+                    <div class="bdetail-field" style="margin-bottom:0;">
+                        <label class="bdetail-label">Pick-up Time</label>
+                        <input type="time" class="bdetail-input" id="bdPickupTime" value="08:00">
+                    </div>
+                    <div class="bdetail-field" style="margin-bottom:0;">
+                        <label class="bdetail-label">Drop-off Time</label>
+                        <input type="time" class="bdetail-input" id="bdDropoffTime" value="08:00">
+                    </div>
+                </div>
+
+                <!-- Duration display -->
+                <div id="bdDurationDisplay" style="display:flex;align-items:center;gap:0.5rem;background:#f0f9ff;border:1px solid #bfdbef;border-radius:10px;padding:0.65rem 1rem;margin-bottom:1.2rem;font-size:0.85rem;color:var(--primary);font-weight:700;">
+                    <i class="bi bi-clock-history"></i>
+                    <span id="bdDurationText">1 day rental</span>
+                </div>
+
+                <hr class="bdetail-divider">
+
+                <!-- 2. LOCATIONS -->
+                <div class="bdetail-sublabel"><i class="bi bi-geo-alt"></i> Pick-up &amp; Drop-off</div>
+
+                <div class="bdetail-field">
+                    <label class="bdetail-label">Pick-up Location</label>
+                    <div class="bdetail-icon-wrap">
+                        <i class="bi bi-geo-alt-fill input-icon"></i>
+                        <input type="text" class="bdetail-input" id="bdPickupLoc" placeholder="Enter pick-up address...">
+                    </div>
+                </div>
+
+                <div class="bdetail-checkbox-row" id="sameLocRow" onclick="toggleSameLoc()">
+                    <input type="checkbox" id="bdSameLoc">
+                    <label for="bdSameLoc">Drop-off location is the same as pick-up location</label>
+                </div>
+
+                <div id="bdDropoffLocWrap" class="bdetail-field" style="margin-top:0.85rem;">
+                    <label class="bdetail-label">Drop-off Location</label>
+                    <div class="bdetail-icon-wrap">
+                        <i class="bi bi-geo-alt input-icon"></i>
+                        <input type="text" class="bdetail-input" id="bdDropoffLoc" placeholder="Enter drop-off address...">
+                    </div>
+                </div>
+
+                <hr class="bdetail-divider">
+
+                <!-- 3. DRIVER OPTION -->
+                <div class="bdetail-sublabel"><i class="bi bi-person-badge"></i> Driver Option</div>
+                <div class="driver-option-group">
+                    <div class="driver-option-card selected" id="driverOptWith" onclick="selectDriverOpt('with')">
+                        <div class="selected-dot"><i class="bi bi-check-lg"></i></div>
+                        <div class="driver-option-icon"><i class="bi bi-person-badge-fill"></i></div>
+                        <div class="driver-option-title">With Driver</div>
+                        <div class="driver-option-sub">Professional driver included</div>
+                    </div>
+                    <div class="driver-option-card" id="driverOptSelf" onclick="selectDriverOpt('self')">
+                        <div class="selected-dot"><i class="bi bi-check-lg"></i></div>
+                        <div class="driver-option-icon"><i class="bi bi-car-front-fill"></i></div>
+                        <div class="driver-option-title">Self-Drive</div>
+                        <div class="driver-option-sub">Drive it yourself</div>
+                    </div>
+                </div>
+
+                <!-- Driver Info (shown when With Driver is selected) -->
+                <div id="driverInfoCard" class="driver-info-card">
+                    <div class="driver-avatar">RC</div>
+                    <div style="flex:1;">
+                        <div class="driver-name">Ricardo Cruz</div>
+                        <div class="driver-meta">
+                            <span><i class="bi bi-star-fill" style="color:var(--star-color);"></i> 4.9</span>
+                            <span><i class="bi bi-calendar2-check"></i> 5 yrs exp.</span>
+                            <span><i class="bi bi-shield-check" style="color:#028a5d;"></i> Licensed</span>
+                        </div>
+                        <div style="font-size:0.72rem;color:#64748b;margin-top:0.25rem;">Languages: Filipino, English</div>
+                    </div>
+                    <div class="driver-rate">
+                        <div class="rate-amount">+&#8369;800</div>
+                        <div class="rate-label">per day</div>
+                    </div>
+                </div>
+
+                <hr class="bdetail-divider">
+
+                <!-- 4. CAR FEATURES -->
+                <div class="bdetail-sublabel"><i class="bi bi-stars"></i> Car Features</div>
+                <div class="features-display" id="bdCarFeatures">
+                    <!-- Populated by JS -->
+                </div>
+
+                <hr class="bdetail-divider">
+
+                <!-- 5. ADD-ONS -->
+                <div class="bdetail-sublabel"><i class="bi bi-plus-circle"></i> Add-ons</div>
+                <div class="addon-grid" id="bdAddonsGrid">
+                    <label class="addon-item" id="addon-gps">
+                        <input type="checkbox" data-addon="GPS Navigation" data-price="200" onchange="updateAddon(this)">
+                        <i class="bi bi-map addon-icon"></i>
+                        <div class="addon-text">
+                            <div class="addon-name">GPS Navigation</div>
+                            <div class="addon-price">+&#8369;200/day</div>
+                        </div>
+                    </label>
+                    <label class="addon-item" id="addon-carseat">
+                        <input type="checkbox" data-addon="Baby Car Seat" data-price="150" onchange="updateAddon(this)">
+                        <i class="bi bi-person-arms-up addon-icon"></i>
+                        <div class="addon-text">
+                            <div class="addon-name">Baby Car Seat</div>
+                            <div class="addon-price">+&#8369;150/day</div>
+                        </div>
+                    </label>
+                    <label class="addon-item" id="addon-wifi">
+                        <input type="checkbox" data-addon="Pocket WiFi" data-price="150" onchange="updateAddon(this)">
+                        <i class="bi bi-wifi addon-icon"></i>
+                        <div class="addon-text">
+                            <div class="addon-name">Pocket WiFi</div>
+                            <div class="addon-price">+&#8369;150/day</div>
+                        </div>
+                    </label>
+                    <label class="addon-item" id="addon-cooler">
+                        <input type="checkbox" data-addon="Travel Cooler" data-price="100" onchange="updateAddon(this)">
+                        <i class="bi bi-snow2 addon-icon"></i>
+                        <div class="addon-text">
+                            <div class="addon-name">Travel Cooler</div>
+                            <div class="addon-price">+&#8369;100/day</div>
+                        </div>
+                    </label>
+                    <label class="addon-item" id="addon-dashcam">
+                        <input type="checkbox" data-addon="Dashcam Rental" data-price="100" onchange="updateAddon(this)">
+                        <i class="bi bi-camera-video addon-icon"></i>
+                        <div class="addon-text">
+                            <div class="addon-name">Dashcam Rental</div>
+                            <div class="addon-price">+&#8369;100/day</div>
+                        </div>
+                    </label>
+                    <label class="addon-item" id="addon-umbrella">
+                        <input type="checkbox" data-addon="Emergency Kit" data-price="80" onchange="updateAddon(this)">
+                        <i class="bi bi-bag-plus addon-icon"></i>
+                        <div class="addon-text">
+                            <div class="addon-name">Emergency Kit</div>
+                            <div class="addon-price">+&#8369;80/day</div>
+                        </div>
+                    </label>
+                </div>
+
+                <hr class="bdetail-divider">
+
+                <!-- 6. CAR RULES -->
+                <div class="bdetail-sublabel"><i class="bi bi-shield-check"></i> Car Rules &amp; Policies</div>
+                <ul class="rules-list">
+                    <li class="rule-item rule-allowed">
+                        <i class="bi bi-check-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>Fuel Policy</strong>Return the car with the same fuel level as when received.</div>
+                    </li>
+                    <li class="rule-item rule-allowed">
+                        <i class="bi bi-check-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>Mileage</strong>Unlimited mileage included for all rentals across the Philippines.</div>
+                    </li>
+                    <li class="rule-item rule-not-allowed">
+                        <i class="bi bi-x-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>No Smoking</strong>Strictly no smoking inside the vehicle at any time.</div>
+                    </li>
+                    <li class="rule-item rule-not-allowed">
+                        <i class="bi bi-x-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>No Pets</strong>Animals are not permitted inside the vehicle.</div>
+                    </li>
+                    <li class="rule-item rule-not-allowed">
+                        <i class="bi bi-x-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>No Sub-Rental</strong>The renter may not lend or sub-rent the vehicle to a third party.</div>
+                    </li>
+                    <li class="rule-item rule-allowed">
+                        <i class="bi bi-check-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>Late Return Fee</strong>A fee of &#8369;200/hour applies for returns past the agreed drop-off time.</div>
+                    </li>
+                    <li class="rule-item rule-allowed">
+                        <i class="bi bi-check-circle-fill rule-icon"></i>
+                        <div class="rule-text"><strong>Free Cancellation</strong>Cancel up to 24 hours before the start date for a full refund.</div>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- END BOOKING DETAILS CARD -->
+
+        </div>
+        <!-- ══ END LEFT COLUMN ══ -->
+
+        <!-- ══ RIGHT COLUMN — BOOKING SUMMARY ══ -->
+        <div>
+            <div class="summary-panel">
+                <div class="summary-panel-title">
+                    <i class="bi bi-clipboard2-check"></i> Booking Summary
+                </div>
+
+                
+                <!-- Car thumb -->
+                <div class="summary-car-row">
+                    <img src="" alt="" class="summary-car-thumb" id="summaryCarThumb"
+                         onerror="this.src='https://placehold.co/120x90/1e5a6e/fff?text=Car'">
+                    <div>
+                        <div class="summary-car-name" id="summaryCarName">—</div>
+                        <div class="summary-car-loc"><i class="bi bi-geo-alt-fill" style="color:var(--primary);font-size:0.7rem;"></i><span id="summaryCarLoc">—</span></div>
+                    </div>
+                </div>
+
+                <!-- Rental Period -->
+                <div class="summary-section-label">Rental Period</div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Start</span>
+                    <span class="sdr-val" id="summaryStartDate">—</span>
+                </div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">End</span>
+                    <span class="sdr-val" id="summaryEndDate">—</span>
+                </div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Pick-up Time</span>
+                    <span class="sdr-val" id="summaryPickupTime">—</span>
+                </div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Drop-off Time</span>
+                    <span class="sdr-val" id="summaryDropoffTime">—</span>
+                </div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Duration</span>
+                    <span class="sdr-val" id="summaryDuration">—</span>
+                </div>
+
+                <!-- Locations -->
+                <div class="summary-section-label" style="margin-top:0.9rem;">Locations</div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Pick-up</span>
+                    <span class="sdr-val" id="summaryPickupLoc">—</span>
+                </div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Drop-off</span>
+                    <span class="sdr-val" id="summaryDropoffLoc">—</span>
+                </div>
+
+                <!-- Driver -->
+                <div class="summary-section-label" style="margin-top:0.9rem;">Driver Option</div>
+                <div class="summary-detail-row">
+                    <span class="sdr-label">Option</span>
+                    <span class="sdr-val" id="summaryDriverOpt">With Driver</span>
+                </div>
+                <div class="summary-detail-row" id="summaryDriverNameRow">
+                    <span class="sdr-label">Driver</span>
+                    <span class="sdr-val">Ricardo Cruz</span>
+                </div>
+
+                <!-- Add-ons -->
+                <div class="summary-section-label" style="margin-top:0.9rem;">Add-ons</div>
+                <div id="summaryAddonsList">
+                    <div class="summary-detail-row" style="color:#94a3b8;font-size:0.8rem;">
+                        <span>No add-ons selected</span><span></span>
+                    </div>
+                </div>
+
+                <!-- Price Breakdown -->
+                <div class="summary-price-box">
+                    <div class="sprice-row">
+                        <span id="summaryDailyLabel">Daily Rate</span>
+                        <span id="summaryDailySub">—</span>
+                    </div>
+                    <div class="sprice-row" id="summaryDriverRow">
+                        <span>Driver Fee</span>
+                        <span id="summaryDriverFeeVal">—</span>
+                    </div>
+                    <div class="sprice-row" id="summaryAddonsRow" style="display:none;">
+                        <span>Add-ons</span>
+                        <span id="summaryAddonTotal">—</span>
+                    </div>
+                    <div class="sprice-row">
+                        <span>Service Fee (8%)</span>
+                        <span id="summaryServiceFee">—</span>
+                    </div>
+                    <div class="sprice-row">
+                        <span>Insurance</span>
+                        <span>+&#8369;200</span>
+                    </div>
+                    <div class="sprice-row total">
+                        <span>Total</span>
+                        <span id="summaryTotal">—</span>
+                    </div>
+                </div>
+
+                <button class="continue-btn" id="continueBtn">
+                    <i class="bi bi-arrow-right-circle-fill"></i> Review Booking
+                </button>
+                <p class="booking-note"><i class="bi bi-shield-lock-fill" style="color:#028a5d;"></i> Secure &amp; encrypted payment</p>
+
+                <!-- Ratings & Reviews -->
+                <div class="booking-section-card" style="margin-top:1.75rem;">
+                        <div class="booking-section-title"><i class="bi bi-star-fill"></i> Ratings &amp; Reviews</div>
+                            <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid #f1f5f9;">
+                                <div style="text-align:center;">
+                                    <div style="font-size:3rem;font-weight:800;color:#0f172a;line-height:1;" id="bookingRatingBig"></div>
+                                    <div style="display:flex;gap:3px;justify-content:center;margin:0.3rem 0;" id="bookingStarRow"></div>
+                                    <div style="font-size:0.75rem;color:#94a3b8;" id="bookingTripCount"></div>
+                                </div>
+                                <div style="flex:1;"><div id="ratingBarsWrap"></div>
+                            </div>
+                        </div>
+                                <div id="reviewsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- ══════════════════════════════════════
+     PAGE 3 — BOOKING SUMMARY (WITH DRIVER)
+══════════════════════════════════════ -->
+<main class="main-content page-view" id="page-booking-summary">
+    <div class="header-top-row">
+        <h1 class="page-title">Renter Dashboard</h1>
+        <div class="header-right">
+            <span class="user-name">Maria Santos</span>
+            <div class="user-avatar">MS</div>
+            <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="p3-wrapper">
+
+        <!-- Header Banner -->
+        <div class="p3-header-card">
+            <div class="p3-header-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+            <div>
+                <div class="p3-header-title">Review Your Booking</div>
+                <div class="p3-header-sub">Please review all details carefully before proceeding to payment.</div>
+            </div>
+        </div>
+
+        <!-- Car & Rental Info -->
+        <div class="p3-section-card">
+            <div class="p3-section-title"><i class="bi bi-car-front-fill"></i> Car &amp; Rental Details</div>
+
+            <!-- Car thumb row -->
+            <div class="p3-car-row">
+                <img src="" alt="" class="p3-car-thumb" id="p3CarThumb"
+                     onerror="this.src='https://placehold.co/160x120/1e5a6e/fff?text=Car'">
+                <div>
+                    <div class="p3-car-name" id="p3CarName">—</div>
+                    <div class="p3-car-loc"><i class="bi bi-geo-alt-fill" style="color:var(--primary);"></i><span id="p3CarLoc">—</span></div>
+                </div>
+            </div>
+
+            <div class="p3-row">
+                <span class="p3-label">Start Date &amp; Time</span>
+                <span class="p3-val" id="p3StartDateTime">—</span>
+            </div>
+            <div class="p3-row">
+                <span class="p3-label">End Date &amp; Time</span>
+                <span class="p3-val" id="p3EndDateTime">—</span>
+            </div>
+            <div class="p3-row">
+                <span class="p3-label">Duration</span>
+                <span class="p3-val" id="p3Duration">—</span>
+            </div>
+            <div class="p3-row">
+                <span class="p3-label">Pick-up Location</span>
+                <span class="p3-val" id="p3PickupLoc">—</span>
+            </div>
+            <div class="p3-row">
+                <span class="p3-label">Drop-off Location</span>
+                <span class="p3-val" id="p3DropoffLoc">—</span>
+            </div>
+        </div>
+
+        <!-- Driver Info -->
+        <div class="p3-section-card">
+            <div class="p3-section-title"><i class="bi bi-person-badge-fill"></i> Assigned Driver</div>
+            <div class="p3-driver-highlight">
+                <div class="p3-driver-avatar">RC</div>
+                <div style="flex:1;">
+                    <div class="p3-driver-name">Ricardo Cruz</div>
+                    <div class="p3-driver-meta">
+                        <span><i class="bi bi-star-fill" style="color:var(--star-color);"></i> 4.9 rating</span>
+                        <span><i class="bi bi-calendar2-check"></i> 5 yrs exp.</span>
+                        <span><i class="bi bi-shield-check" style="color:#028a5d;"></i> Licensed</span>
+                    </div>
+                    <div style="font-size:0.72rem;color:#64748b;margin-top:0.25rem;">Languages: Filipino, English</div>
+                </div>
+                <div style="text-align:right;flex-shrink:0;">
+                    <div style="font-size:1rem;font-weight:800;color:var(--primary);" id="p3DriverFeeDisplay">—</div>
+                    <div style="font-size:0.7rem;color:#94a3b8;">driver fee</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add-ons Summary (hidden if none) -->
+        <div class="p3-section-card" id="p3AddonsCard">
+            <div class="p3-section-title"><i class="bi bi-plus-circle-fill"></i> Selected Add-ons</div>
+            <div id="p3AddonsList"></div>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="p3-section-card">
+            <div class="p3-section-title"><i class="bi bi-receipt"></i> Price Breakdown</div>
+            <div class="p3-price-box">
+                <div class="p3-price-row">
+                    <span id="p3DailyLabel">Daily Rate</span>
+                    <span id="p3DailySub">—</span>
+                </div>
+                <div class="p3-price-row">
+                    <span>Driver Fee</span>
+                    <span id="p3DriverFee">—</span>
+                </div>
+                <div class="p3-price-row" id="p3AddonsRow" style="display:none;">
+                    <span>Add-ons</span>
+                    <span id="p3AddonTotal">—</span>
+                </div>
+                <div class="p3-price-row">
+                    <span>Service Fee (8%)</span>
+                    <span id="p3ServiceFee">—</span>
+                </div>
+                <div class="p3-price-row">
+                    <span>Insurance</span>
+                    <span>+&#8369;200</span>
+                </div>
+                <div class="p3-price-row total">
+                    <span>Total Amount</span>
+                    <span id="p3Total">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="p3-actions">
+            <button class="p3-back-btn" id="p3BackBtn">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <button class="p3-pay-btn" id="p3ContinuePayBtn">
+                <i class="bi bi-credit-card-fill"></i> Continue to Payment
+            </button>
+        </div>
+        <p class="p3-secure-note">
+            <i class="bi bi-shield-lock-fill" style="color:#028a5d;"></i> Secure &amp; encrypted payment
+        </p>
+
+    </div>
+</main>
+<!-- ══════════════════════════════════════
+     PAGE 4A — SELF-DRIVE DRIVER VERIFICATION
+══════════════════════════════════════ -->
+<main class="main-content page-view" id="page-self-drive-verify">
+    <div class="header-top-row">
+        <h1 class="page-title">Renter Dashboard</h1>
+        <div class="header-right">
+            <span class="user-name">Maria Santos</span>
+            <div class="user-avatar">MS</div>
+            <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="p4a-wrapper">
+
+        <!-- Header Banner -->
+        <div class="p4a-header-card">
+            <div class="p4a-header-icon"><i class="bi bi-person-vcard-fill"></i></div>
+            <div>
+                <div class="p4a-header-title">Driver Verification</div>
+                <div class="p4a-header-sub">Self-Drive — Please provide your license details to proceed</div>
+            </div>
+        </div>
+
+        <!-- Step Bar -->
+        <div class="p4a-step-bar">
+            <div class="p4a-step done" id="p4aStep1">
+                <div class="p4a-step-circle"><i class="bi bi-check-lg"></i></div>
+                <span class="p4a-step-label">Details and Summary</span>
+            </div>
+            <div class="p4a-step-line done"></div>
+            <div class="p4a-step active" id="p4aStep2">
+                <div class="p4a-step-circle">2</div>
+                <span class="p4a-step-label">Verification</span>
+            </div>
+            <div class="p4a-step-line" id="p4aStepLine2"></div>
+            <div class="p4a-step" id="p4aStep3">
+                <div class="p4a-step-circle">3</div>
+                <span class="p4a-step-label">Payment</span>
+            </div>
+        </div>
+
+        <!-- ACCOUNT VERIFICATION STATUS NOTICE -->
+        <div class="p4a-section-card">
+            <div class="p4a-section-title">
+                <i class="bi bi-shield-check"></i> Account Verification Status
+            </div>
+            <div class="p4a-section-desc">
+                Self-drive rentals require a verified renter account and a valid Philippine driver's license.
+            </div>
+
+            <!-- UNVERIFIED STATE (default shown) -->
+            <div class="p4a-verify-box unverified" id="p4aUnverifiedBox">
+                <div class="p4a-verify-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                <div>
+                    <div class="p4a-verify-title">Account Not Verified</div>
+                    <div class="p4a-verify-msg">
+                        Your account has not been verified yet. You must complete account verification before you can proceed with a self-drive rental.
+                        Please go to your Profile settings to submit your verification documents.
+                    </div>
+                    <button class="p4a-verify-account-btn" onclick="simulateAccountVerified()">
+                        <i class="bi bi-arrow-right-circle"></i> Verify My Account
+                    </button>
+                </div>
+            </div>
+
+            <!-- VERIFIED STATE (hidden until account verified) -->
+            <div class="p4a-verify-box verified" id="p4aVerifiedBox" style="display:none;">
+                <div class="p4a-verify-icon"><i class="bi bi-patch-check-fill"></i></div>
+                <div>
+                    <div class="p4a-verify-title">Account Verified</div>
+                    <div class="p4a-verify-msg">
+                        Your account is verified. You may now fill in your driver's license details and upload a valid ID below.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DRIVER LICENSE FORM (locked until account is verified) -->
+        <div class="p4a-section-card" id="p4aLicenseCard" style="opacity:0.45; pointer-events:none;">
+            <div class="p4a-section-title">
+                <i class="bi bi-card-text"></i> Driver's License Details
+            </div>
+            <div class="p4a-section-desc">
+                Enter your LTO-issued driver's license information exactly as it appears on your card.
+            </div>
+
+            <div class="p4a-grid-2">
+                <!-- License Number -->
+                <div class="p4a-field" style="grid-column: 1 / -1;">
+                    <label class="p4a-label">License Number</label>
+                    <div class="p4a-input-wrap">
+                        <i class="bi bi-upc-scan p4a-icon"></i>
+                        <input type="text" class="p4a-input" id="p4aLicenseNum"
+                               placeholder="N00-00-000000"
+                               maxlength="14"
+                               oninput="formatLicenseInput(this); validateLicense()">
+                    </div>
+                    <div class="p4a-input-feedback" id="p4aLicenseFeedback"></div>
+                </div>
+
+                <!-- License Code -->
+                <div class="p4a-field">
+                    <label class="p4a-label">DL Codes</label>
+                    <div class="p4a-input-wrap">
+                        <i class="bi bi-tag p4a-icon"></i>
+                        <select class="p4a-input" id="p4aLicenseCode"
+                                style="padding-left:2.6rem; text-transform:none; letter-spacing:normal; cursor:pointer;">
+                            <option value="">Select code...</option>
+                            <option value="1">B — UP TO 5000 KGS GVW/8 SEATS</option>
+                            <option value="2">B1 — UP TO 5000 KGS GVW/9 OR MORE SEATS</option>
+                            <option value="3">B2 — GOODS 3500 KGS GVW</option>
+                            <option value="4">C — GOODS > 3500 KGS GVW</option>
+                            <option value="5">D — BUS 5000 KGS GVW/9 OR MORE SEATS</option>
+                            <option value="6">BE — TRAILERS 3500 KGS</option>
+                            <option value="7">CE — ARTICULATED C> 3500 KGS COMBINED GVW</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Expiry Date -->
+                <div class="p4a-field">
+                    <label class="p4a-label">License Expiry Date</label>
+                    <div class="p4a-input-wrap">
+                        <i class="bi bi-calendar-x p4a-icon"></i>
+                        <input type="date" class="p4a-input no-icon"
+                               id="p4aLicenseExpiry"
+                               style="padding-left:2.6rem;"
+                               onchange="validateExpiry()">
+                    </div>
+                    <div class="p4a-input-feedback" id="p4aExpiryFeedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALID ID UPLOAD (locked until account is verified) -->
+        <div class="p4a-section-card" id="p4aIDCard" style="opacity:0.45; pointer-events:none;">
+            <div class="p4a-section-title">
+                <i class="bi bi-images"></i> Upload Driver's License ID
+            </div>
+            <div class="p4a-section-desc">
+                Upload a clear photo or scan of your driver's license. File must be JPG, PNG, or PDF under 5MB.
+            </div>
+
+            <div class="p4a-grid-2">
+                <!-- Front -->
+                <div>
+                    <label class="p4a-label">ID Front Side</label>
+                    <div class="p4a-upload-area" id="p4aFrontArea" onclick="document.getElementById('p4aFrontFile').click()">
+                        <input type="file" id="p4aFrontFile" accept="image/*,.pdf"
+                               onchange="handleIDUpload(this,'front')" style="display:none;">
+                        <div class="p4a-upload-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+                        <div class="p4a-upload-title" id="p4aFrontTitle">Click to upload front</div>
+                        <div class="p4a-upload-sub">JPG, PNG or PDF — max 5MB</div>
+                        <img src="" alt="" class="p4a-upload-preview" id="p4aFrontPreview">
+                    </div>
+                </div>
+                <!-- Back -->
+                <div>
+                    <label class="p4a-label">ID Back Side</label>
+                    <div class="p4a-upload-area" id="p4aBackArea" onclick="document.getElementById('p4aBackFile').click()">
+                        <input type="file" id="p4aBackFile" accept="image/*,.pdf"
+                               onchange="handleIDUpload(this,'back')" style="display:none;">
+                        <div class="p4a-upload-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+                        <div class="p4a-upload-title" id="p4aBackTitle">Click to upload back</div>
+                        <div class="p4a-upload-sub">JPG, PNG or PDF — max 5MB</div>
+                        <img src="" alt="" class="p4a-upload-preview" id="p4aBackPreview">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECONDARY VALID ID UPLOAD (locked until account is verified) -->
+        <div class="p4a-section-card" id="p4aSecondIDCard" style="opacity:0.45; pointer-events:none;">
+            <div class="p4a-section-title">
+                <i class="bi bi-card-checklist"></i> Upload Secondary Valid ID
+            </div>
+            <div class="p4a-section-desc">
+                Upload one (1) additional government-issued ID as secondary verification. Accepted IDs are listed below.
+            </div>
+
+            <!-- Valid ID list -->
+            <div class="p4a-valid-id-list">
+                <div class="p4a-valid-id-label"><i class="bi bi-info-circle-fill"></i> Accepted Government-Issued IDs in the Philippines:</div>
+                <div class="p4a-valid-id-grid">
+                    <span><i class="bi bi-check2"></i> Passport</span>
+                    <span><i class="bi bi-check2"></i> SSS / UMID Card</span>
+                    <span><i class="bi bi-check2"></i> PhilHealth ID</span>
+                    <span><i class="bi bi-check2"></i> Pag-IBIG / HDMF ID</span>
+                    <span><i class="bi bi-check2"></i> Voter's ID / COMELEC</span>
+                    <span><i class="bi bi-check2"></i> PRC ID</span>
+                    <span><i class="bi bi-check2"></i> Postal ID</span>
+                    <span><i class="bi bi-check2"></i> PhilSys / National ID</span>
+                    <span><i class="bi bi-check2"></i> TIN ID</span>
+                    <span><i class="bi bi-check2"></i> Senior Citizen ID</span>
+                    <span><i class="bi bi-check2"></i> PWD ID</span>
+                    <span><i class="bi bi-check2"></i> OFW / iDOLE Card</span>
+                </div>
+            </div>
+
+            <div class="p4a-field" style="margin-bottom:1rem;">
+                <label class="p4a-label">Select ID Type</label>
+                <div class="p4a-input-wrap">
+                    <i class="bi bi-list-check p4a-icon"></i>
+                    <select class="p4a-input" id="p4aSecondIDType"
+                            style="padding-left:2.6rem; text-transform:none; letter-spacing:normal; cursor:pointer;"
+                            onchange="checkVerifyBtnState()">
+                        <option value="">Choose your secondary ID type...</option>
+                        <option value="passport">Passport</option>
+                        <option value="sss">SSS / UMID Card</option>
+                        <option value="philhealth">PhilHealth ID</option>
+                        <option value="pagibig">Pag-IBIG / HDMF ID</option>
+                        <option value="voters">Voter's ID / COMELEC Card</option>
+                        <option value="prc">PRC ID</option>
+                        <option value="postal">Postal ID</option>
+                        <option value="philsys">PhilSys / National ID</option>
+                        <option value="tin">TIN ID</option>
+                        <option value="senior">Senior Citizen ID</option>
+                        <option value="pwd">PWD ID</option>
+                        <option value="ofw">OFW / iDOLE Card</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="p4a-grid-2">
+                <div>
+                    <label class="p4a-label">ID Front Side</label>
+                    <div class="p4a-upload-area" id="p4aSecondFrontArea" onclick="document.getElementById('p4aSecondFrontFile').click()">
+                        <input type="file" id="p4aSecondFrontFile" accept="image/*,.pdf"
+                               onchange="handleSecondIDUpload(this,'front')" style="display:none;">
+                        <div class="p4a-upload-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+                        <div class="p4a-upload-title" id="p4aSecondFrontTitle">Click to upload front</div>
+                        <div class="p4a-upload-sub">JPG, PNG or PDF — max 5MB</div>
+                        <img src="" alt="" class="p4a-upload-preview" id="p4aSecondFrontPreview">
+                    </div>
+                </div>
+                <div>
+                    <label class="p4a-label">ID Back Side</label>
+                    <div class="p4a-upload-area" id="p4aSecondBackArea" onclick="document.getElementById('p4aSecondBackFile').click()">
+                        <input type="file" id="p4aSecondBackFile" accept="image/*,.pdf"
+                               onchange="handleSecondIDUpload(this,'back')" style="display:none;">
+                        <div class="p4a-upload-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+                        <div class="p4a-upload-title" id="p4aSecondBackTitle">Click to upload back</div>
+                        <div class="p4a-upload-sub">JPG, PNG or PDF — max 5MB</div>
+                        <img src="" alt="" class="p4a-upload-preview" id="p4aSecondBackPreview">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SELFIE WITH BOTH IDs UPLOAD (locked until account is verified) -->
+        <div class="p4a-section-card" id="p4aSelfieCard" style="opacity:0.45; pointer-events:none;">
+            <div class="p4a-section-title">
+                <i class="bi bi-camera-fill"></i> Selfie with Both IDs
+            </div>
+            <div class="p4a-section-desc">
+                Take a clear selfie of yourself holding <strong>both</strong> your Driver's License and your Secondary Valid ID together. Make sure your face and both IDs are clearly visible.
+            </div>
+
+            <div class="p4a-selfie-guide">
+                <div class="p4a-selfie-tip"><i class="bi bi-lightbulb-fill"></i> Tips for a valid selfie photo:</div>
+                <ul class="p4a-selfie-tips-list">
+                    <li><i class="bi bi-check-circle-fill"></i> Hold both IDs side by side facing the camera</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Ensure your full face is clearly visible</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Use good lighting — avoid dark or blurry photos</li>
+                    <li><i class="bi bi-x-circle-fill" style="color:#ef4444;"></i> Do NOT wear sunglasses or face masks</li>
+                    <li><i class="bi bi-x-circle-fill" style="color:#ef4444;"></i> Do NOT use a photo of a photo</li>
+                </ul>
+            </div>
+
+            <div style="max-width: 360px; margin: 0 auto;">
+                <label class="p4a-label">Selfie Photo</label>
+                <div class="p4a-upload-area p4a-selfie-area" id="p4aSelfieArea" onclick="document.getElementById('p4aSelfieFile').click()">
+                    <input type="file" id="p4aSelfieFile" accept="image/*"
+                           onchange="handleSelfieUpload(this)" style="display:none;">
+                    <div class="p4a-upload-icon"><i class="bi bi-person-bounding-box"></i></div>
+                    <div class="p4a-upload-title" id="p4aSelfieTitle">Click to upload selfie</div>
+                    <div class="p4a-upload-sub">JPG or PNG — max 5MB</div>
+                    <img src="" alt="" class="p4a-upload-preview" id="p4aSelfiePreview">
+                </div>
+            </div>
+        </div>
+
+        <!-- VERIFY BUTTON + RESULT (locked until account is verified) -->
+        <div class="p4a-section-card" id="p4aVerifyActionCard" style="opacity:0.45; pointer-events:none;">
+            <div class="p4a-section-title">
+                <i class="bi bi-clipboard2-pulse"></i> Submit for Verification
+            </div>
+            <div class="p4a-section-desc">
+                Once all fields and uploads are complete, click the button below to submit your documents for verification. Our team will review your submission within <strong>24 hours</strong>.
+            </div>
+
+            <!-- Email notice -->
+            <div class="p4a-email-notice">
+                <i class="bi bi-envelope-check-fill"></i>
+                <div>
+                    <div class="p4a-email-notice-title">You will receive an email confirmation</div>
+                    <div class="p4a-email-notice-msg">After submitting, you will receive an email at your registered address within <strong>24 hours</strong> once your verification is approved or if additional documents are needed.</div>
+                </div>
+            </div>
+
+            <button class="p4a-check-btn" id="p4aVerifyBtn" onclick="runLicenseVerification()" disabled>
+                <i class="bi bi-shield-lock-fill"></i> Submit for Verification
+            </button>
+
+            <!-- Pending State -->
+            <div id="p4aPendingResult" style="display:none; margin-top:1rem;">
+                <div class="p4a-verify-box pending">
+                    <div class="p4a-verify-icon"><i class="bi bi-hourglass-split"></i></div>
+                    <div>
+                        <div class="p4a-verify-title">Submitting Documents...</div>
+                        <div class="p4a-verify-msg">Please wait while we upload your documents.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Under Review State (shown after submission) -->
+            <div id="p4aReviewResult" style="display:none; margin-top:1rem;">
+                <div class="p4a-verify-box review">
+                    <div class="p4a-verify-icon"><i class="bi bi-hourglass-top"></i></div>
+                    <div>
+                        <div class="p4a-verify-title">Documents Under Review</div>
+                        <div class="p4a-verify-msg">
+                            Your documents have been submitted and are currently under review by our team. You will receive an email notification within <strong>24 hours</strong>. The Continue to Payment button will be available once your verification is approved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="p4aSuccessResult" style="display:none; margin-top:1rem;">
+                <div class="p4a-verify-box verified">
+                    <div class="p4a-verify-icon"><i class="bi bi-patch-check-fill"></i></div>
+                    <div>
+                        <div class="p4a-verify-title">Verification Approved!</div>
+                        <div class="p4a-verify-msg">
+                            Your documents have been verified. You may now proceed to payment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Failed State -->
+            <div id="p4aFailResult" style="display:none; margin-top:1rem;">
+                <div class="p4a-verify-box unverified">
+                    <div class="p4a-verify-icon"><i class="bi bi-x-circle-fill"></i></div>
+                    <div>
+                        <div class="p4a-verify-title">Verification Failed</div>
+                        <div class="p4a-verify-msg">
+                            We could not verify your documents. Please check that all uploaded files are clear and valid, then try again.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="p4a-actions">
+            <button class="p4a-back-btn" id="p4aBackBtn">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <button class="p4a-pay-btn" id="p4aPayBtn" disabled>
+                <i class="bi bi-credit-card-fill"></i> Continue to Payment
+            </button>
+        </div>
+        <p class="p4a-secure-note">
+            <i class="bi bi-shield-lock-fill" style="color:#028a5d;"></i>
+            Your personal data is encrypted and securely processed
+        </p>
+
+    </div>
+</main>
+<!-- ══════════════════════════════════════
+     PAGE 4B — PAYMENT METHOD
+══════════════════════════════════════ -->
+<main class="main-content page-view" id="page-payment">
+
+    <!-- Top Header Bar -->
+    <div class="header-top-row">
+        <h1 class="page-title">Renter Dashboard</h1>
+        <div class="header-right">
+            <span class="user-name">Maria Santos</span>
+            <div class="user-avatar">MS</div>
+            <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="p4b-wrapper">
+
+        <!-- Header Banner -->
+        <div class="p4b-header-card">
+            <div class="p4b-header-icon"><i class="bi bi-credit-card-2-front-fill"></i></div>
+            <div>
+                <div class="p4b-header-title">Payment Method</div>
+                <div class="p4b-header-sub">Secure your booking with a down payment and set your remaining balance method</div>
+            </div>
+        </div>
+
+        <!-- Step Bar -->
+        <div class="p4b-step-bar">
+            <div class="p4b-step done" id="p4bStep1">
+                <div class="p4b-step-circle"><i class="bi bi-check-lg"></i></div>
+                <span class="p4b-step-label">Details</span>
+            </div>
+            <div class="p4b-step-line done"></div>
+            <div class="p4b-step done" id="p4bStep2">
+                <div class="p4b-step-circle"><i class="bi bi-check-lg"></i></div>
+                <span class="p4b-step-label">Summary</span>
+            </div>
+            <div class="p4b-step-line done"></div>
+            <div class="p4b-step active" id="p4bStep3">
+                <div class="p4b-step-circle">3</div>
+                <span class="p4b-step-label">Payment</span>
+            </div>
+            <div class="p4b-step-line" id="p4bStepLine3"></div>
+            <div class="p4b-step" id="p4bStep4">
+                <div class="p4b-step-circle">4</div>
+                <span class="p4b-step-label">Contract</span>
+            </div>
+        </div>
+
+        <!-- ══ SECTION 1: DOWN PAYMENT ══ -->
+        <div class="p4b-section-card">
+            <div class="p4b-section-title">
+                <i class="bi bi-lock-fill"></i> Required Down Payment (30%)
+            </div>
+            <div class="p4b-section-desc">
+                A <strong>non-refundable 30% down payment</strong> is required to confirm your booking.
+                This amount will be deducted from your total. Bank transfer is the only accepted method for the down payment.
+            </div>
+
+            <div class="p4b-nonrefund-badge">
+                <i class="bi bi-exclamation-triangle-fill"></i> Non-Refundable Down Payment
+            </div>
+
+            <!-- Booking Total Breakdown -->
+            <div class="p4b-breakdown">
+                <div class="p4b-brow highlight">
+                    <span>Booking Total</span>
+                    <span id="p4bGrandTotal">—</span>
+                </div>
+                <div class="p4b-brow downpay">
+                    <span>30% Down Payment (Due Now)</span>
+                    <span id="p4bDownPayAmt">—</span>
+                </div>
+                <div class="p4b-brow remaining">
+                    <span>Remaining Balance (Due on Pick-up)</span>
+                    <span id="p4bRemainingAmt">—</span>
+                </div>
+            </div>
+
+            <!-- Bank Details of Owner -->
+            <div style="font-size:0.78rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.75rem;">
+                <i class="bi bi-bank" style="color:var(--primary);"></i> Owner Bank Details
+            </div>
+
+            <!-- BDO -->
+            <div class="p4b-bank-card" style="margin-bottom:0.85rem;">
+                <div class="p4b-bank-header">
+                    <div class="p4b-bank-logo"><i class="bi bi-bank2"></i></div>
+                    <div>
+                        <div class="p4b-bank-name">BDO Unibank</div>
+                        <div class="p4b-bank-sub">Banco de Oro — Peso Savings Account</div>
+                    </div>
+                </div>
+                <div class="p4b-bank-row">
+                    <span class="pbl">Account Name</span>
+                    <span class="pbv">
+                        Juan Miguel dela Cruz
+                        <button class="p4b-copy-btn" onclick="copyText('Juan Miguel dela Cruz', this)">Copy</button>
+                    </span>
+                </div>
+                <div class="p4b-bank-row">
+                    <span class="pbl">Account Number</span>
+                    <span class="pbv">
+                        0123-4567-8901
+                        <button class="p4b-copy-btn" onclick="copyText('012345678901', this)">Copy</button>
+                    </span>
+                </div>
+                <div class="p4b-bank-row">
+                    <span class="pbl">Bank Branch</span>
+                    <span class="pbv">BDO Makati Ave Branch</span>
+                </div>
+            </div>
+
+            <!-- GCash -->
+            <div class="p4b-bank-card">
+                <div class="p4b-bank-header">
+                    <div class="p4b-bank-logo" style="background:#0070ba;"><i class="bi bi-phone-fill"></i></div>
+                    <div>
+                        <div class="p4b-bank-name">GCash / Maya</div>
+                        <div class="p4b-bank-sub">Mobile Wallet — Instant Transfer</div>
+                    </div>
+                </div>
+                <div class="p4b-bank-row">
+                    <span class="pbl">Account Name</span>
+                    <span class="pbv">
+                        Juan Miguel dela Cruz
+                        <button class="p4b-copy-btn" onclick="copyText('Juan Miguel dela Cruz', this)">Copy</button>
+                    </span>
+                </div>
+                <div class="p4b-bank-row">
+                    <span class="pbl">Mobile Number</span>
+                    <span class="pbv">
+                        0917-123-4567
+                        <button class="p4b-copy-btn" onclick="copyText('09171234567', this)">Copy</button>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Redirect to Online Payment -->
+            <div style="margin-top:1.25rem;padding-top:1.1rem;border-top:1px solid #f1f5f9;">
+                <div style="font-size:0.78rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.75rem;">
+                    <i class="bi bi-globe" style="color:var(--primary);"></i> Or Pay Online
+                </div>
+                <button class="p4b-pay-online-btn" id="p4bPayOnlineBtn" onclick="openPaymentModal()">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                    Proceed to Online Bank Transfer
+                </button>
+                <div class="p4b-paid-pill" id="p4bPaidPill">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Down payment confirmed — Ref No: <strong id="p4bRefDisplay" style="margin-left:0.3rem;"></strong>
+                </div>
+            </div>
+
+            <!-- Upload Proof of Payment -->
+            <div style="margin-top:1.1rem;" id="p4bProofSection">
+                <div style="font-size:0.78rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.6rem;">
+                    <i class="bi bi-image" style="color:var(--primary);"></i> Upload Proof of Payment
+                </div>
+                <div class="p4b-upload-area" id="p4bProofArea" style="border:2px dashed #cbd5e1;border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;transition:all 0.25s;background:#fafafa;position:relative;">
+                    <input type="file" accept="image/*,.pdf" id="p4bProofFile"
+                           onchange="handleProofUpload(this)"
+                           style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+                    <i class="bi bi-cloud-arrow-up-fill" id="p4bProofIcon" style="font-size:1.8rem;color:#cbd5e1;display:block;margin-bottom:0.4rem;"></i>
+                    <div id="p4bProofTitle" style="font-size:0.85rem;font-weight:700;color:#475569;">Click to upload receipt / screenshot</div>
+                    <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem;">PNG, JPG or PDF — max 10MB</div>
+                    <img id="p4bProofPreview" src="" alt="" style="display:none;margin-top:0.75rem;max-height:110px;width:100%;object-fit:cover;border-radius:8px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ SECTION 2: SECURITY DEPOSIT ══ -->
+        <div class="p4b-section-card">
+            <div class="p4b-section-title">
+                <i class="bi bi-shield-lock-fill"></i> Security Deposit
+            </div>
+            <div class="p4b-section-desc">
+                A refundable security deposit is required before vehicle handover.
+                This is held as protection against damage, loss, or policy violations and will be returned after a successful vehicle inspection upon return.
+            </div>
+            <div class="p4b-deposit-card">
+                <div class="p4b-deposit-header">
+                    <div class="p4b-deposit-icon"><i class="bi bi-shield-check"></i></div>
+                    <div>
+                        <div class="p4b-deposit-title">Refundable Security Deposit</div>
+                        <div class="p4b-deposit-sub">Collected on pick-up day — returned after vehicle inspection</div>
+                    </div>
+                </div>
+                <div class="p4b-deposit-amount" id="p4bDepositAmt">&#8369;5,000</div>
+                <div class="p4b-deposit-note">
+                    <i class="bi bi-info-circle-fill"></i>
+                    The deposit is fully refundable within <strong>3–5 business days</strong> after the vehicle
+                    is returned in its original condition. Deductions may apply for damages, excessive cleaning,
+                    or late return fees. The deposit can be paid in <strong>Cash or Bank Transfer</strong> upon pick-up.
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ SECTION 3: REMAINING BALANCE ══ -->
+        <div class="p4b-section-card" id="p4bRemainingSection"
+             style="opacity:0.45;pointer-events:none;transition:opacity 0.35s;">
+            <div class="p4b-section-title">
+                <i class="bi bi-wallet2"></i> Remaining Balance Payment Method
+            </div>
+            <div class="p4b-section-desc">
+                Choose how you will settle the <strong>remaining balance</strong> on the day of pick-up.
+                Select your preferred method below. This section unlocks after your down payment is confirmed.
+            </div>
+
+            <div class="p4b-method-group">
+                <!-- Cash -->
+                <div class="p4b-method-card unlocked" id="p4bMethodCash" onclick="selectRemainMethod('cash')">
+                    <div class="p4b-method-dot"><i class="bi bi-check-lg"></i></div>
+                    <div class="p4b-method-icon"><i class="bi bi-cash-stack"></i></div>
+                    <div class="p4b-method-title">Cash</div>
+                    <div class="p4b-method-sub">Pay on pick-up day</div>
+                </div>
+                <!-- Bank Transfer -->
+                <div class="p4b-method-card unlocked" id="p4bMethodBank" onclick="selectRemainMethod('bank')">
+                    <div class="p4b-method-dot"><i class="bi bi-check-lg"></i></div>
+                    <div class="p4b-method-icon"><i class="bi bi-bank"></i></div>
+                    <div class="p4b-method-title">Bank Transfer</div>
+                    <div class="p4b-method-sub">Transfer before pick-up</div>
+                </div>
+            </div>
+
+            <!-- Cash Instruction -->
+            <div class="p4b-cash-note" id="p4bCashNote">
+                <strong><i class="bi bi-info-circle-fill" style="color:var(--primary);margin-right:0.35rem;"></i>Cash Payment Instructions</strong>
+                Prepare the exact amount of the remaining balance in cash.
+                Payment is collected by the driver or owner upon vehicle handover on your pick-up date.
+                A receipt will be issued upon payment.
+            </div>
+
+            <!-- Bank details for remaining balance -->
+            <div class="p4b-remaining-bank" id="p4bRemainingBank">
+                <div class="p4b-bank-card" style="margin-bottom:0.85rem;">
+                    <div class="p4b-bank-header">
+                        <div class="p4b-bank-logo"><i class="bi bi-bank2"></i></div>
+                        <div>
+                            <div class="p4b-bank-name">BDO Unibank</div>
+                            <div class="p4b-bank-sub">Banco de Oro — Peso Savings Account</div>
+                        </div>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Account Name</span>
+                        <span class="pbv">Juan Miguel dela Cruz
+                            <button class="p4b-copy-btn" onclick="copyText('Juan Miguel dela Cruz', this)">Copy</button>
+                        </span>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Account Number</span>
+                        <span class="pbv">0123-4567-8901
+                            <button class="p4b-copy-btn" onclick="copyText('012345678901', this)">Copy</button>
+                        </span>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Amount to Transfer</span>
+                        <span class="pbv" id="p4bRemainingBankAmt" style="color:var(--primary);">—</span>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Reference</span>
+                        <span class="pbv">Your booking reference number</span>
+                    </div>
+                </div>
+                <div class="p4b-bank-card">
+                    <div class="p4b-bank-header">
+                        <div class="p4b-bank-logo" style="background:#0070ba;"><i class="bi bi-phone-fill"></i></div>
+                        <div>
+                            <div class="p4b-bank-name">GCash / Maya</div>
+                            <div class="p4b-bank-sub">Mobile Wallet — Instant Transfer</div>
+                        </div>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Account Name</span>
+                        <span class="pbv">Juan Miguel dela Cruz
+                            <button class="p4b-copy-btn" onclick="copyText('Juan Miguel dela Cruz', this)">Copy</button>
+                        </span>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Mobile Number</span>
+                        <span class="pbv">0917-123-4567
+                            <button class="p4b-copy-btn" onclick="copyText('09171234567', this)">Copy</button>
+                        </span>
+                    </div>
+                    <div class="p4b-bank-row">
+                        <span class="pbl">Amount to Transfer</span>
+                        <span class="pbv" id="p4bRemainingBankAmt2" style="color:var(--primary);">—</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ SECTION 4: PAYMENT SUMMARY ══ -->
+        <div class="p4b-section-card">
+            <div class="p4b-section-title">
+                <i class="bi bi-receipt"></i> Full Payment Summary
+            </div>
+            <div class="p4b-final-box">
+                <div class="p4b-final-row">
+                    <span>Booking Total</span>
+                    <span id="p4bFinalTotal">—</span>
+                </div>
+                <div class="p4b-final-row" style="color:#c2410c;">
+                    <span>30% Down Payment (Non-refundable)</span>
+                    <span id="p4bFinalDown">—</span>
+                </div>
+                <div class="p4b-final-row" style="color:#028a5d;">
+                    <span>Remaining Balance (on pick-up)</span>
+                    <span id="p4bFinalRemain">—</span>
+                </div>
+                <div class="p4b-final-row" style="color:#92400e;">
+                    <span>Security Deposit (refundable)</span>
+                    <span>&#8369;5,000</span>
+                </div>
+                <div class="p4b-final-row grand">
+                    <span>Total Amount Due on Pick-up</span>
+                    <span id="p4bFinalPickup">—</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="p4b-actions">
+                <button class="p4b-back-btn" id="p4bBackBtn">
+                    <i class="bi bi-arrow-left"></i> Back
+                </button>
+                <button class="p4b-contract-btn" id="p4bContractBtn" disabled>
+                    <i class="bi bi-file-earmark-text-fill"></i> Continue to Contract
+                </button>
+            </div>
+            <div class="p4b-secure-note">
+                <i class="bi bi-shield-lock-fill" style="color:#028a5d;"></i>
+                Your payment info is protected with 256-bit SSL encryption
+            </div>
+        </div>
+
+    </div>
+</main>
+<!-- ══════════════════════════════════════
+     PAGE 5 — DIGITAL CONTRACT
+══════════════════════════════════════ -->
+<main class="main-content page-view" id="page-contract">
+
+    <div class="header-top-row">
+        <h1 class="page-title">Renter Dashboard</h1>
+        <div class="header-right">
+            <span class="user-name">Maria Santos</span>
+            <div class="user-avatar">MS</div>
+            <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="p5-wrapper">
+
+        <!-- Header Banner -->
+        <div class="p5-header-card">
+            <div class="p5-header-icon"><i class="bi bi-file-earmark-check-fill"></i></div>
+            <div>
+                <div class="p5-header-title">Digital Rental Contract</div>
+                <div class="p5-header-sub">Read the full agreement, accept the terms, and sign to confirm your booking.</div>
+            </div>
+        </div>
+
+        <!-- Step Bar -->
+        <div class="p5-step-bar">
+            <div class="p5-step done">
+                <div class="p5-step-circle"><i class="bi bi-check-lg"></i></div>
+                <span class="p5-step-label">Details</span>
+            </div>
+            <div class="p5-step-line done"></div>
+            <div class="p5-step done">
+                <div class="p5-step-circle"><i class="bi bi-check-lg"></i></div>
+                <span class="p5-step-label">Summary</span>
+            </div>
+            <div class="p5-step-line done"></div>
+            <div class="p5-step done">
+                <div class="p5-step-circle"><i class="bi bi-check-lg"></i></div>
+                <span class="p5-step-label">Payment</span>
+            </div>
+            <div class="p5-step-line done"></div>
+            <div class="p5-step active">
+                <div class="p5-step-circle">4</div>
+                <span class="p5-step-label">Contract</span>
+            </div>
+        </div>
+
+        <!-- ══ CONTRACT DETAILS CARD ══ -->
+        <div class="p5-section-card">
+            <div class="p5-section-title"><i class="bi bi-file-text-fill"></i> Rental Agreement Details</div>
+            <div class="p5-section-desc">This agreement is entered into between the Vehicle Owner and the Renter as detailed below. All parties agree to the terms and conditions set forth in this contract.</div>
+
+            <div class="p5-contract-header">
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Contract Reference</span>
+                    <span class="p5-ch-val" id="p5ContractRef">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Date Issued</span>
+                    <span class="p5-ch-val" id="p5ContractDate">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Renter Name</span>
+                    <span class="p5-ch-val">Maria Santos</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Vehicle Owner</span>
+                    <span class="p5-ch-val" id="p5OwnerName">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Vehicle</span>
+                    <span class="p5-ch-val" id="p5ContractCar">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Driver Option</span>
+                    <span class="p5-ch-val" id="p5ContractDriver">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Rental Period</span>
+                    <span class="p5-ch-val" id="p5ContractPeriod">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Duration</span>
+                    <span class="p5-ch-val" id="p5ContractDuration">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Pick-up Location</span>
+                    <span class="p5-ch-val" id="p5ContractPickup">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Drop-off Location</span>
+                    <span class="p5-ch-val" id="p5ContractDropoff">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Total Rental Amount</span>
+                    <span class="p5-ch-val" id="p5ContractTotal" style="color:var(--primary);">—</span>
+                </div>
+                <div class="p5-ch-row">
+                    <span class="p5-ch-label">Down Payment Paid</span>
+                    <span class="p5-ch-val" id="p5ContractDownPay" style="color:#c2410c;">—</span>
+                </div>
+                <div class="p5-ch-row" style="grid-column: 1 / -1;">
+                    <span class="p5-ch-label">Balance Due on Pick-up (incl. Security Deposit)</span>
+                    <span class="p5-ch-val" id="p5ContractPickupDue" style="color:#028a5d;">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TERMS & CONDITIONS CARD ══ -->
+        <div class="p5-section-card">
+            <div class="p5-section-title"><i class="bi bi-journal-text"></i> Rental Terms &amp; Conditions</div>
+            <div class="p5-section-desc">Please read the full agreement carefully. Scroll to the bottom before accepting.</div>
+
+            <div class="p5-tnc-scroll-hint" id="p5TncHint">
+                <i class="bi bi-arrow-down-circle-fill" style="color:var(--primary);"></i>
+                Scroll down to read all terms and conditions
+            </div>
+
+            <div class="p5-tnc-box" id="p5TncBox">
+
+                <div class="p5-tnc-title"><i class="bi bi-1-circle-fill"></i> Definitions</div>
+                <p class="p5-tnc-p">In this agreement, "Renter" refers to the individual who has booked the vehicle through MobiLeasePH; "Owner" refers to the registered vehicle owner listed on this contract; "Vehicle" refers to the specific car described in the booking details; "Platform" refers to MobiLeasePH and its digital services.</p>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-2-circle-fill"></i> Booking Confirmation</div>
+                <ul class="p5-tnc-list">
+                    <li><i class="bi bi-dot"></i>This contract is binding upon the Renter's digital signature and the Owner's confirmation.</li>
+                    <li><i class="bi bi-dot"></i>The Owner reserves the right to cancel the booking within 24 hours of submission with a full refund of the down payment.</li>
+                    <li><i class="bi bi-dot"></i>The Renter will receive an official booking confirmation via email once the Owner approves the reservation.</li>
+                    <li><i class="bi bi-dot"></i>MobiLeasePH acts solely as the booking platform and is not party to the vehicle rental agreement.</li>
+                </ul>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-3-circle-fill"></i> Payment Terms</div>
+                <ul class="p5-tnc-list">
+                    <li><i class="bi bi-dot"></i><strong>Down Payment:</strong> A non-refundable 30% down payment is required to secure the booking. This payment has been acknowledged by the Renter as part of the booking process.</li>
+                    <li><i class="bi bi-dot"></i><strong>Remaining Balance:</strong> The remaining 70% of the rental fee is due on the pick-up date via the method selected by the Renter.</li>
+                    <li><i class="bi bi-dot"></i><strong>Security Deposit:</strong> A refundable deposit of PHP 5,000 is collected on pick-up day. This will be returned within 3-5 business days after the vehicle passes inspection upon return.</li>
+                    <li><i class="bi bi-dot"></i>All payments must be made in Philippine Peso (PHP). Foreign currency is not accepted.</li>
+                    <li><i class="bi bi-dot"></i>Deductions from the security deposit may apply for damages, excessive cleaning, late returns, or policy violations.</li>
+                </ul>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-4-circle-fill"></i> Cancellation &amp; Refund Policy</div>
+                <ul class="p5-tnc-list">
+                    <li><i class="bi bi-dot"></i><strong>Free Cancellation:</strong> Cancel at least 24 hours before the pick-up time to receive a full refund of the remaining balance. The down payment is non-refundable.</li>
+                    <li><i class="bi bi-dot"></i><strong>Late Cancellation:</strong> Cancellations made less than 24 hours before the start of the rental are non-refundable for the full booking amount.</li>
+                    <li><i class="bi bi-dot"></i><strong>No-Show:</strong> If the Renter fails to pick up the vehicle without prior notice, the booking is forfeited and no refund will be issued.</li>
+                    <li><i class="bi bi-dot"></i>Refunds are processed within 5-7 business days to the original payment method.</li>
+                </ul>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-5-circle-fill"></i> Vehicle Use &amp; Renter Obligations</div>
+                <ul class="p5-tnc-list">
+                    <li><i class="bi bi-dot"></i">The Renter must be at least 21 years of age and hold a valid Philippine LTO driver's license for self-drive bookings.</li>
+                    <li><i class="bi bi-dot"></i>The Vehicle must be returned at the agreed drop-off location and time in the same condition as received, with the same fuel level.</li>
+                    <li><i class="bi bi-dot"></i">The Renter is fully responsible for all traffic violations, toll fees, and parking fees incurred during the rental period.</li>
+                    <li><i class="bi bi-dot"></i">The Vehicle must not be driven outside of the agreed territory without prior written consent from the Owner.</li>
+                    <li><i class="bi bi-dot"></i">In the event of an accident or breakdown, the Renter must immediately notify the Owner and relevant authorities.</li>
+                    <li class="not-allowed"><i class="bi bi-x-circle-fill"></i>Smoking inside the vehicle is strictly prohibited at all times.</li>
+                    <li class="not-allowed"><i class="bi bi-x-circle-fill"></i>Pets and animals are not permitted inside the vehicle.</li>
+                    <li class="not-allowed"><i class="bi bi-x-circle-fill"></i>Sub-renting or lending the vehicle to a third party is prohibited.</li>
+                    <li class="not-allowed"><i class="bi bi-x-circle-fill"></i>The Vehicle must not be used for illegal activities, racing, or off-road driving unless specifically permitted by the Owner.</li>
+                </ul>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-6-circle-fill"></i> Late Return Policy</div>
+                <ul class="p5-tnc-list">
+                    <li><i class="bi bi-dot"></i">A late return fee of PHP 200 per hour applies for returns beyond the agreed drop-off time.</li>
+                    <li><i class="bi bi-dot"></i>If the vehicle is returned more than 4 hours late, it will be treated as an additional day's rental and charged accordingly at the full daily rate.</li>
+                    <li><i class="bi bi-dot"></i">The Renter must notify the Owner as early as possible if a late return is anticipated.</li>
+                </ul>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-7-circle-fill"></i> Damage &amp; Liability</div>
+                <ul class="p5-tnc-list">
+                    <li><i class="bi bi-dot"></i">The Renter is fully liable for any damage to the Vehicle caused during the rental period, including damage caused by third parties while the Vehicle is in the Renter's possession.</li>
+                    <li><i class="bi bi-dot"></i">A vehicle inspection will be conducted at both pick-up and drop-off. Any discrepancies will be documented and charges applied accordingly.</li>
+                    <li><i class="bi bi-dot"></i">The basic insurance included in the rental covers third-party liability only. Damage to the Owner's vehicle is the Renter's responsibility.</li>
+                    <li><i class="bi bi-dot"></i">In the event of theft or total loss of the Vehicle, the Renter bears full financial responsibility.</li>
+                </ul>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-8-circle-fill"></i> Fuel Policy</div>
+                <p class="p5-tnc-p">The Vehicle is provided with a full tank of fuel. It must be returned with the same fuel level. Failure to do so will result in a fuel top-up charge plus a PHP 150 refueling service fee deducted from the security deposit.</p>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-9-circle-fill"></i> Privacy &amp; Data</div>
+                <p class="p5-tnc-p">Personal information collected during the booking process, including identification documents, license details, and payment information, is handled in accordance with the MobiLeasePH Privacy Policy and the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Data is used solely for the purpose of completing the rental transaction and will not be shared with third parties without the Renter's consent.</p>
+
+                <hr class="p5-tnc-divider">
+
+                <div class="p5-tnc-title"><i class="bi bi-check-circle-fill"></i> Governing Law</div>
+                <p class="p5-tnc-p">This agreement shall be governed by the laws of the Republic of the Philippines. Any disputes arising from this contract shall be settled through mutual negotiation or, failing that, through the appropriate courts in the Philippines. By signing below, both parties acknowledge that they have read, understood, and voluntarily agree to all terms and conditions outlined in this Rental Agreement.</p>
+
+            </div>
+
+            <!-- Agree Checkbox -->
+            <label class="p5-agree-row" id="p5AgreeRow" onclick="toggleP5Agree()">
+                <input type="checkbox" id="p5AgreeChk">
+                <div class="p5-agree-text">
+                    I, <span>Maria Santos</span>, confirm that I have read and fully understood the MobiLeasePH
+                    Rental Agreement Terms and Conditions. I voluntarily agree to be bound by all terms
+                    stated above and accept full responsibility as the Renter for the duration of the rental period.
+                </div>
+            </label>
+        </div>
+
+        <!-- ══ SIGNATURE CARD ══ -->
+        <div class="p5-section-card" id="p5SigCard" style="opacity:0.45;pointer-events:none;transition:opacity 0.3s;">
+            <div class="p5-section-title"><i class="bi bi-pen-fill"></i> Renter Signature</div>
+            <div class="p5-section-desc">Draw your signature in the box below using your mouse or touchscreen. Your digital signature serves as your legally binding consent to this agreement.</div>
+
+            <div class="p5-sig-wrap" id="p5SigWrap">
+                <canvas class="p5-sig-canvas" id="p5SigCanvas"></canvas>
+                <div class="p5-sig-label" id="p5SigLabel">
+                    <i class="bi bi-pencil"></i>
+                    Sign here
+                </div>
+                <div class="p5-sig-baseline"></div>
+                <div class="p5-sig-actions">
+                    <span class="p5-sig-name-display">Signature of: Maria Santos</span>
+                    <button class="p5-sig-clear-btn" onclick="clearSignature()">
+                        <i class="bi bi-arrow-counterclockwise"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <div style="margin-top:1.25rem;">
+                <button class="p5-back-btn" id="p5BackBtn">
+                    <i class="bi bi-arrow-left"></i> Back to Payment
+                </button>
+                <button class="p5-sign-btn" id="p5SignBtn" disabled>
+                    <i class="bi bi-patch-check-fill"></i> Sign &amp; Confirm Booking
+                </button>
+                <p class="p5-sign-note">
+                    <i class="bi bi-shield-lock-fill" style="color:#028a5d;"></i>
+                    Your digital signature is encrypted and legally binding under Philippine e-Commerce law.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- ══ SUCCESS OVERLAY ══ -->
+<div class="p5-success-overlay" id="p5SuccessOverlay">
+    <div class="p5-success-card">
+        <!-- Confetti dots injected by JS -->
+        <div class="p5-confetti" id="p5Confetti"></div>
+
+        <div class="p5-success-icon-ring">
+            <i class="bi bi-check-lg"></i>
+        </div>
+        <h2>Booking Confirmed!</h2>
+        <div class="p5-ref-badge">
+            <i class="bi bi-hash"></i>
+            <span id="p5SuccessRef">—</span>
+        </div>
+        <p>
+            Your rental agreement has been signed and your booking is confirmed.
+            The car owner will prepare the vehicle for your pick-up date.
+            A copy of this contract has been sent to your registered email.
+        </p>
+
+        <div class="p5-success-details">
+            <div class="p5-sd-row">
+                <span>Vehicle</span>
+                <strong id="p5SucCar">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Pick-up</span>
+                <strong id="p5SucPickup">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Drop-off</span>
+                <strong id="p5SucDropoff">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Duration</span>
+                <strong id="p5SucDuration">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Driver</span>
+                <strong id="p5SucDriver">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Total Amount</span>
+                <strong id="p5SucTotal" style="color:var(--primary);">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Down Payment Paid</span>
+                <strong id="p5SucDown" style="color:#c2410c;">—</strong>
+            </div>
+            <div class="p5-sd-row">
+                <span>Balance Due on Pick-up</span>
+                <strong id="p5SucBalance" style="color:#028a5d;">—</strong>
+            </div>
+        </div>
+
+        <div class="p5-success-actions">
+            <button class="p5-goto-bookings-btn" onclick="goToMyBookings()">
+                <i class="bi bi-calendar-check-fill"></i> Go to My Bookings
+            </button>
+            <button class="p5-goto-dashboard-btn" onclick="goToDashboard()">
+                <i class="bi bi-grid-1x2-fill"></i> Go to Dashboard
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Simulated Online Payment Modal -->
+<div class="p4b-payment-modal-overlay" id="p4bPaymentModal">
+    <div class="p4b-payment-modal">
+        <div class="p4b-modal-bank-header">
+            <div class="p4b-modal-bank-logo">ML</div>
+            <div>
+                <div class="p4b-modal-bank-name">MobiLeasePH Payments</div>
+                <div class="p4b-modal-bank-sub">Secure Bank Transfer Gateway</div>
+            </div>
+        </div>
+        <div class="p4b-modal-amount">
+            <div class="label">Down Payment Amount</div>
+            <div class="value" id="p4bModalAmt">—</div>
+        </div>
+        <div class="p4b-modal-detail-row">
+            <span class="ml">Recipient</span>
+            <span class="mv">Juan Miguel dela Cruz</span>
+        </div>
+        <div class="p4b-modal-detail-row">
+            <span class="ml">Bank</span>
+            <span class="mv">BDO Unibank</span>
+        </div>
+        <div class="p4b-modal-detail-row">
+            <span class="ml">Account No.</span>
+            <span class="mv">0123-4567-8901</span>
+        </div>
+        <div class="p4b-modal-detail-row">
+            <span class="ml">Purpose</span>
+            <span class="mv">Car Rental Down Payment</span>
+        </div>
+        <div class="p4b-modal-ref">
+            <span class="ref-label">Reference No.</span>
+            <span class="ref-val" id="p4bModalRef">—</span>
+        </div>
+        <button class="p4b-modal-confirm-btn" onclick="confirmDownPayment()">
+            <i class="bi bi-check-circle-fill"></i> I Have Completed the Transfer
+        </button>
+        <button class="p4b-modal-cancel-btn" onclick="closePaymentModal()">Cancel</button>
+    </div>
+</div>
+<!-- Booking Confirmation Modal -->
+<div class="confirm-modal-overlay" id="confirmModal">
+    <div class="confirm-modal">
+        <div class="confirm-icon-wrap"><i class="bi bi-check-lg"></i></div>
+        <h2>Booking Confirmed!</h2>
+        <p>Your reservation has been submitted successfully. The car owner will confirm within 24 hours.</p>
+        <div class="confirm-modal-details" id="confirmDetails"></div>
+        <button class="confirm-close-btn" id="confirmCloseBtn">Back to Browse Cars</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="front-end/script/browse-script.js"></script>
+</script>
 </body>
 </html>

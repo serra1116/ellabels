@@ -3,6 +3,16 @@
    MobiLeasePH | feedback-script.js
 ════════════════════════════════════════ */
 
+    /* 2. LOGOUT BUTTON */
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to log out?')) {
+                window.location.href = 'SignIn.html';
+            }
+        });
+    }
 'use strict';
 
 // ── Rating Labels ──

@@ -127,18 +127,12 @@ body {
 }
 
 .sidebar-logout {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.8rem 1rem;
-    color: var(--danger);
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.2s;
+    display:flex; align-items:center; gap:0.75rem;
+    padding:0.8rem 1rem; color:#ef4444;
+    text-decoration:none; border-radius:10px;
+    font-weight:500; font-size:0.9rem; transition:all 0.2s; margin-top:auto;
 }
-.sidebar-logout:hover { background: rgba(239,68,68,0.1); }
+.sidebar-logout:hover { background:rgba(239,68,68,0.1); }
 
 /* ════════════════════════════════════════
    MOBILE HEADER
@@ -181,7 +175,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background: #fff;
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem 1.10rem;
     border-radius: 14px;
     box-shadow: var(--card-shadow);
     margin-bottom: 2rem;
@@ -190,7 +184,7 @@ body {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-main);
-    letter-spacing: -0.4px;
+    letter-spacing: -0.5px;
 }
 .header-right {
     display: flex;
@@ -199,7 +193,7 @@ body {
 }
 .user-name {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 400;
     color: #1e293b;
 }
 .user-avatar {

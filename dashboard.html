@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MobiLeasePH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="front-end/style/dashboard-style.css">
+</head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    <div style="width:36px"></div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img">
+        </div>
+        <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    </div>
+    <nav>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html" class="active"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+            <li><a href="browse.html"><i class="bi bi-search"></i> Browse Cars</a></li>
+            <li><a href="booking.html"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+            <li><a href="feedback.html"><i class="bi bi-star"></i> Feedback</a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li><a href="contracts.html"><i class="bi bi-clipboard-data"></i> Contracts</a></li>
+            <li><a href="safety.html"><i class="bi bi-shield-check"></i> Safety</a></li>
+            <li><a href="rewards.html"><i class="bi bi-award"></i> Points System & Rewards</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+    </nav>
+    <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
+
+<main class="main-content">
+
+    <!-- Top Header Bar -->
+    <div class="header-top-row">
+        <h1 class="page-title">Renter Dashboard</h1>
+        <div class="header-right">
+            <span class="user-name">Maria Santos</span>
+            <div class="user-avatar">MS</div>
+            <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Verification Banner: only shown when IS_ACCOUNT_VERIFIED = false in dashboard-script.js -->
+    <div id="verificationBanner" class="verification-banner">
+        <div class="verification-banner-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+        <div class="verification-banner-body">
+            <div class="verification-banner-title">Account Verification Required</div>
+            <div class="verification-banner-msg">
+                Welcome, Maria! Please complete your profile verification before you can book a car.
+            </div>
+        </div>
+        <button class="verification-banner-btn" onclick="window.location.href='profile.html'">
+            <i class="bi bi-person-check-fill"></i> Verify Now
+        </button>
+    </div>
+
+    <!-- Welcome -->
+    <div class="header-content" style="margin-bottom:1.5rem;">
+        <h2 class="page-title">Welcome back, Maria!</h2>
+        <p class="page-subtitle">Here's your rental overview.</p>
+    </div>
+
+    <!-- Stats — rendered from shared data -->
+    <section class="stats-container" id="dashStatsContainer"></section>
+
+    <!-- My Bookings Shortcut — rendered from shared data -->
+    <section class="data-grid">
+        <div class="my-bookings-container bookings-shortcut-card">
+            <div class="recommendations-header">
+                <h3 class="header-left">My Bookings</h3>
+            </div>
+            <div id="dashBookingsList"><!-- rendered by JS --></div>
+            <div class="booking-card-footer">
+                <a href="booking.html" class="view-all-bookings-link">View All Bookings →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended For You -->
+    <section class="recommendations-section">
+        <div class="recommendations-header">
+            <div class="header-left">
+                <h3>Recommended for You</h3>
+                <div class="location-subtitle">
+                    <i class="bi bi-geo-alt"></i>
+                    <span>Based on your location: Metro Manila</span>
+                </div>
+            </div>
+            <a href="browse.html" class="view-all-link">View All →</a>
+        </div>
+
+        <div class="car-cards-grid">
+
+            <!-- Toyota Vios 2024 -->
+            <div class="car-card">
+                <div class="car-image-wrapper">
+                    <img src="pictures/vios.jpg" alt="Toyota Vios 2024" class="car-img">
+                    <button class="heart-wishlist-btn"><i class="bi bi-heart"></i></button>
+                </div>
+                <div class="car-body">
+                    <h4 class="car-name">Toyota Vios 2024</h4>
+                    <div class="car-rating">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <span class="rating-val">4.7</span>
+                        <span class="review-count">(24 reviews)</span>
+                    </div>
+                    <div class="car-location">
+                        <span class="info-item"><i class="bi bi-geo-alt"></i> Makati City</span>
+                    </div>
+                    <div class="car-specs">
+                        <span class="spec-item">5 seats</span>
+                        <span class="spec-item">• Automatic</span>
+                    </div>
+                    <div class="car-footer-flex">
+                        <div class="price-rating-row">
+                            <span class="car-price">₱1,800</span><span class="day-label">/day</span>
+                        </div>
+                        <button class="book-btn" onclick="bookFromDashboard(1)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Honda CR-V 2023 -->
+            <div class="car-card">
+                <div class="car-image-wrapper">
+                    <img src="pictures/crv.jpg" alt="Honda CR-V 2023" class="car-img">
+                    <button class="heart-wishlist-btn"><i class="bi bi-heart"></i></button>
+                </div>
+                <div class="car-body">
+                    <h4 class="car-name">Honda CR-V 2023</h4>
+                    <div class="car-rating">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <span class="rating-val">4.9</span>
+                        <span class="review-count">(18 reviews)</span>
+                    </div>
+                    <div class="car-location">
+                        <span class="info-item"><i class="bi bi-geo-alt"></i> Quezon City</span>
+                    </div>
+                    <div class="car-specs">
+                        <span class="spec-item">7 seats</span>
+                        <span class="spec-item">• Automatic</span>
+                    </div>
+                    <div class="car-footer-flex">
+                        <div class="price-rating-row">
+                            <span class="car-price">₱3,500</span><span class="day-label">/day</span>
+                        </div>
+                        <button class="book-btn" onclick="bookFromDashboard(2)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mitsubishi Montero Sport 2024 -->
+            <div class="car-card">
+                <div class="car-image-wrapper">
+                    <img src="pictures/montero.jpg" alt="Mitsubishi Montero Sport 2024" class="car-img">
+                    <button class="heart-wishlist-btn"><i class="bi bi-heart"></i></button>
+                </div>
+                <div class="car-body">
+                    <h4 class="car-name">Mitsubishi Montero Sport 2024</h4>
+                    <div class="car-rating">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <span class="rating-val">4.7</span>
+                        <span class="review-count">(31 reviews)</span>
+                    </div>
+                    <div class="car-location">
+                        <span class="info-item"><i class="bi bi-geo-alt"></i> Makati City</span>
+                    </div>
+                    <div class="car-specs">
+                        <span class="spec-item">7 seats</span>
+                        <span class="spec-item">• Automatic</span>
+                    </div>
+                    <div class="car-footer-flex">
+                        <div class="price-rating-row">
+                            <span class="car-price">₱3,800</span><span class="day-label">/day</span>
+                        </div>
+                        <button class="book-btn" onclick="bookFromDashboard(5)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<script src="front-end/script/mobilease-data.js"></script>
+<script src="front-end/script/dashboard-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety - MobiLeasePH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="front-end/style/dashboard-style.css">
+</head>
+
+<body>
+<!-- Mobile Header -->
+<header class="mobile-header">
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    <div style="width:36px"></div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Shared Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+            <div class="brand-icon">
+                <img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img">
+            </div>
+            <span class="brand-text">Mobi<span>Lease</span> PH</span>
+        </div>
+    <nav>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+            <li><a href="browse.html" ><i class="bi bi-search"></i> Browse Cars</a></li>
+            <li><a href="booking.html"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+            <li><a href="feedback.html"><i class="bi bi-star"></i> Feedback</a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li><a href="contracts.html"><i class="bi bi-clipboard-data"></i> Contracts</a></li>
+            <li><a href="safety.html" class="active" id="navBrowse"><i class="bi bi-shield-check"></i> Safety</a></li>
+            <li><a href="rewards.html"><i class="bi bi-award"></i> Points System & Rewards</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+    </nav>
+    <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
+<main class="main-content page-view active" id="page-browse">
+    <div class="page-header">
+        <div class="header-top-row">
+            <h1 class="page-title">Renter Dashboard</h1>
+            <div class="header-right">
+                <span class="user-name">Maria Santos</span>
+                <div class="user-avatar">MS</div>
+            <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+        </div>
+       <div class="header-content">
+            <h2 class="page-title">Safety</h2>
+            <p class="page-subtitle">Important safety information and guidelines.</p>
+        </div>
+    </div>
+        
+            <div class="guidelines-grid">
+    <div class="info-card">
+        <div class="card-header">
+            <div class="icon-box blue-bg">
+                <i class='bi bi-shield'></i> </div>
+            <h3>Safety Guidelines</h3>
+        </div>
+        <ul class="guideline-list">
+            <li>Always inspect the vehicle before driving</li>
+            <li>Check for existing damages and report immediately</li>
+            <li>Wear seatbelts at all times</li>
+            <li>Follow traffic rules and regulations</li>
+            <li>Do not drink and drive</li>
+        </ul>
+    </div>
+
+    <div class="info-card">
+        <div class="card-header">
+            <div class="icon-box red-bg">
+                <i class='bi bi-exclamation-triangle'></i>
+            </div>
+            <h3>In Case of Emergency</h3>
+        </div>
+        <ul class="guideline-list">
+            <li>Contact the owner immediately</li>
+            <li>Call emergency services if needed</li>
+            <li>Document the incident with photos</li>
+            <li>File a police report if applicable</li>
+            <li>Notify your insurance provider</li>
+        </ul>
+    </div>
+
+    <div class="info-card">
+        <div class="card-header">
+            <div class="icon-box green-bg">
+                <i class='bi bi-telephone'></i>
+            </div>
+            <h3>Emergency Contacts</h3>
+        </div>
+        <div class="card-body-text">
+            <p>Platform Support: +63 912 345 6789</p>
+            <p>Emergency Hotline: 911</p>
+            <p>MMDA: 136</p>
+            <p>email: mmobileaseph@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="card-header">
+            <div class="icon-box purple-bg">
+                <i class='bi bi-shield-check'></i>
+            </div>
+            <h3>Insurance Information</h3>
+        </div>
+        <div class="card-body-text">
+            <p>All vehicles are covered by comprehensive insurance. In case of an accident, contact the owner and platform support immediately.</p>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    </main>
+    <script src="front-end/script/dashboard-script.js"></script>
+</body>
