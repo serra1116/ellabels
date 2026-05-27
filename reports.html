@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="front-end/style/reports-style.css">
+    <!-- Export libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
     <style>
         .date-filter-bar {
             display: flex; align-items: center; gap: 12px; background: #fff;
@@ -105,8 +109,8 @@
     <!-- CONTROLS -->
     <div class="controls-stack">
         <div class="export-btns">
-            <button class="btn-export"><i class="bi bi-download"></i> CSV</button>
-            <button class="btn-export"><i class="bi bi-file-earmark-pdf"></i> PDF</button>
+            <button class="btn-export" id="btnExportExcel"><i class="bi bi-download"></i> Export Excel</button>
+            <button class="btn-export" id="btnExportPDF"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
         </div>
         <div class="tab-box">
             <button class="tab-btn active" data-tab="rental">Rental History</button>
@@ -398,6 +402,358 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('noSpendRows').style.display  = 'none';
         document.getElementById('filterInfo').textContent = 'Showing all records';
     });
+
+    /* ════════════════════════════════════════
+       EXPORT HELPERS
+    ════════════════════════════════════════ */
+
+    const RENTER_NAME  = 'Maria Santos';
+    const REPORT_DATE  = new Date().toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
+    const PRIMARY_HEX  = '1e5a6e';
+    const ACCENT_HEX   = 'd4cb92';
+
+    /* Visible (non-date-hidden) bookings only */
+    function visibleBookings() {
+        return bookings.filter(b => {
+            const row = document.querySelector(`#rentalTableBody tr[data-id="${b.id}"]`);
+            return row && !row.classList.contains('date-hidden');
+        });
+    }
+
+    /* ── STATUS label (plain text) ── */
+    function statusLabel(s) {
+        return { confirmed:'Confirmed', pending:'Pending', completed:'Completed', cancelled:'Cancelled' }[s] || s;
+    }
+
+    /* ════════════════════════════════════════
+       EXCEL EXPORT  (SheetJS)
+    ════════════════════════════════════════ */
+    document.getElementById('btnExportExcel').addEventListener('click', () => {
+        const wb = XLSX.utils.book_new();
+        const vb = visibleBookings();
+
+        /* ── Sheet 1: Rental History ── */
+        const rentalHeaders = [['Booking ID','Vehicle','Location','Start Date','End Date','Duration','Driver Type','Add-ons','Amount','Status','Cancel Reason']];
+        const rentalRows = vb.map(b => [
+            b.id, b.vehicle, b.location,
+            b.startDisplay, b.endDisplay, b.duration,
+            b.driveType === 'driver' ? `With Driver (${b.driverName||'—'})` : 'Self-Drive',
+            (b.addons||[]).join(', ') || '—',
+            b.amount, statusLabel(b.status),
+            b.cancelReason || '—'
+        ]);
+        const ws1 = XLSX.utils.aoa_to_sheet([
+            [`MobiLeasePH — Rental History Report`],
+            [`Renter: ${RENTER_NAME}   |   Generated: ${REPORT_DATE}`],
+            [],
+            ...rentalHeaders,
+            ...rentalRows,
+            [],
+            ['SUMMARY'],
+            ['Total Bookings', vb.length],
+            ['Completed', vb.filter(b=>b.status==='completed').length],
+            ['Confirmed / Active', vb.filter(b=>b.status==='confirmed').length],
+            ['Pending', vb.filter(b=>b.status==='pending').length],
+            ['Cancelled', vb.filter(b=>b.status==='cancelled').length],
+            ['Total Amount (Completed + Active)', `₱${vb.filter(b=>['completed','confirmed'].includes(b.status)).reduce((s,b)=>s+b.amountRaw,0).toLocaleString()}`]
+        ]);
+
+        /* Column widths */
+        ws1['!cols'] = [10,25,20,14,14,10,22,20,12,12,35].map(w=>({wch:w}));
+
+        /* Style header row (row 4, index 3) */
+        ws1['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:10} }, { s:{r:1,c:0}, e:{r:1,c:10} }];
+
+        XLSX.utils.book_append_sheet(wb, ws1, 'Rental History');
+
+        /* ── Sheet 2: Feedback Summary ── */
+        const feedbackData = [
+            ['MobiLeasePH — Feedback Report'],
+            [`Renter: ${RENTER_NAME}   |   Generated: ${REPORT_DATE}`],
+            [],
+            ['Car Owner','Vehicle','Booking ID','Date','Rating','Comment'],
+            ['Juan Dela Cruz','Toyota Vios 2024','#B001','Apr 11, 2026','5 / 5','Maria returned the car on time, in perfect condition. Very responsible renter. Would definitely allow again!'],
+            ['Tanggol Dimagiba','Mitsubishi Xpander 2024','#B002','Apr 14, 2026','4 / 5','Great renter, very communicative throughout. Minor delay at drop-off but notified in advance.'],
+            [],
+            ['Rating Summary'],
+            ['Average Rating', '4.8 / 5'],
+            ['Total Reviews', 2],
+            ['5 Stars', '1 (50%)'],
+            ['4 Stars', '1 (50%)'],
+        ];
+        const ws2 = XLSX.utils.aoa_to_sheet(feedbackData);
+        ws2['!cols'] = [22,26,12,14,10,60].map(w=>({wch:w}));
+        ws2['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:5} }, { s:{r:1,c:0}, e:{r:1,c:5} }];
+        XLSX.utils.book_append_sheet(wb, ws2, 'Feedback History');
+
+        /* ── Sheet 3: Spending Summary ── */
+        const totalSpent = vb.filter(b=>['completed','confirmed'].includes(b.status)).reduce((s,b)=>s+b.amountRaw,0);
+        const spendData = [
+            ['MobiLeasePH — Spending Summary Report'],
+            [`Renter: ${RENTER_NAME}   |   Generated: ${REPORT_DATE}`],
+            [],
+            ['Metric','Value'],
+            ['Total Bookings', vb.length],
+            ['Total Amount Paid', `₱${totalSpent.toLocaleString()}`],
+            ['Avg. Booking Duration', '2 days'],
+            ['On-Time Returns', '1 / 1'],
+            ['Cancellations', vb.filter(b=>b.status==='cancelled').length],
+            ['Active Bookings', vb.filter(b=>b.status==='confirmed').length],
+            ['Pending Bookings', vb.filter(b=>b.status==='pending').length],
+            [],
+            ['Spend by Vehicle Type'],
+            ['Type','Amount','Share'],
+            ['SUV (Toyota Fortuner)','₱13,800','60%'],
+            ['MPV (Mitsubishi Xpander)','₱7,600','33%'],
+            ['Sedan (Toyota Vios)','₱1,800','7%'],
+        ];
+        const ws3 = XLSX.utils.aoa_to_sheet(spendData);
+        ws3['!cols'] = [30,18,10].map(w=>({wch:w}));
+        ws3['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:2} }, { s:{r:1,c:0}, e:{r:1,c:2} }];
+        XLSX.utils.book_append_sheet(wb, ws3, 'Spending Summary');
+
+        XLSX.writeFile(wb, `MobiLeasePH_Report_${RENTER_NAME.replace(' ','_')}_${new Date().toISOString().slice(0,10)}.xlsx`);
+    });
+
+    /* ════════════════════════════════════════
+       PDF EXPORT  (jsPDF + autoTable)
+    ════════════════════════════════════════ */
+    document.getElementById('btnExportPDF').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        const vb  = visibleBookings();
+        const pageW = doc.internal.pageSize.getWidth();
+        const totalSpent = vb.filter(b=>['completed','confirmed'].includes(b.status)).reduce((s,b)=>s+b.amountRaw,0);
+
+        /* ── Helpers ── */
+        const primaryRGB  = [30, 90, 110];
+        const accentRGB   = [212, 203, 146];
+        const lightBg     = [241, 245, 249];
+
+        function addHeader(title, subtitle) {
+            /* teal banner */
+            doc.setFillColor(...primaryRGB);
+            doc.rect(0, 0, pageW, 28, 'F');
+            /* accent strip */
+            doc.setFillColor(...accentRGB);
+            doc.rect(0, 28, pageW, 2, 'F');
+            /* brand */
+            doc.setTextColor(212, 203, 146);
+            doc.setFontSize(15); doc.setFont('helvetica','bold');
+            doc.text('MobiLeasePH', 14, 12);
+            doc.setTextColor(255,255,255);
+            doc.setFontSize(9); doc.setFont('helvetica','normal');
+            doc.text('Car Rental Platform', 14, 18);
+            /* right side */
+            doc.setFontSize(8);
+            doc.text(`Generated: ${REPORT_DATE}`, pageW - 14, 12, { align:'right' });
+            doc.text(`Renter: ${RENTER_NAME}`, pageW - 14, 18, { align:'right' });
+            /* page title */
+            doc.setFillColor(...lightBg);
+            doc.rect(0, 30, pageW, 16, 'F');
+            doc.setTextColor(15, 23, 42);
+            doc.setFontSize(14); doc.setFont('helvetica','bold');
+            doc.text(title, 14, 41);
+            if (subtitle) {
+                doc.setFontSize(8); doc.setFont('helvetica','normal');
+                doc.setTextColor(100, 116, 139);
+                doc.text(subtitle, pageW - 14, 41, { align:'right' });
+            }
+        }
+
+        function addFooter(pageNum, totalPages) {
+            const y = doc.internal.pageSize.getHeight() - 8;
+            doc.setDrawColor(...accentRGB);
+            doc.setLineWidth(0.4);
+            doc.line(14, y - 3, pageW - 14, y - 3);
+            doc.setFontSize(7.5); doc.setFont('helvetica','normal');
+            doc.setTextColor(148, 163, 184);
+            doc.text('MobiLeasePH · Confidential Report · For Renter Use Only', 14, y);
+            doc.text(`Page ${pageNum} of ${totalPages}`, pageW - 14, y, { align:'right' });
+        }
+
+        function statBox(x, y, w, h, label, value, iconChar) {
+            doc.setFillColor(255,255,255);
+            doc.setDrawColor(241,245,249);
+            doc.setLineWidth(0.3);
+            doc.roundedRect(x, y, w, h, 3, 3, 'FD');
+            doc.setFontSize(7.5); doc.setFont('helvetica','normal');
+            doc.setTextColor(100,116,139);
+            doc.text(label.toUpperCase(), x + 4, y + 7);
+            doc.setFontSize(15); doc.setFont('helvetica','bold');
+            doc.setTextColor(15,23,42);
+            doc.text(value, x + 4, y + 16);
+        }
+
+        /* ══════════════
+           PAGE 1 — SUMMARY + RENTAL HISTORY
+        ══════════════ */
+        addHeader('Renter Report', 'Rental History & Summary');
+
+        /* Stat boxes row */
+        const bw = (pageW - 28 - 9) / 4;
+        const by = 52;
+        statBox(14,        by, bw, 22, 'Total Bookings',   `${vb.length}`,          '📋');
+        statBox(14+bw+3,   by, bw, 22, 'Total Spent',      `P${totalSpent.toLocaleString()}`, '💰');
+        statBox(14+bw*2+6, by, bw, 22, 'Avg. Rating',      '4.8 / 5',               '⭐');
+        statBox(14+bw*3+9, by, bw, 22, 'Cancellations',    `${vb.filter(b=>b.status==='cancelled').length}`, '✗');
+
+        /* Rental table */
+        doc.autoTable({
+            startY: by + 28,
+            head: [['Booking ID','Vehicle','Date','Duration','Amount','Status']],
+            body: vb.map(b => [b.id, b.vehicle, b.startDisplay, b.duration, b.amount, statusLabel(b.status)]),
+            styles: { font:'helvetica', fontSize:8.5, cellPadding:4, textColor:[51,65,85] },
+            headStyles: { fillColor:primaryRGB, textColor:255, fontStyle:'bold', fontSize:8 },
+            alternateRowStyles: { fillColor:[248,250,252] },
+            columnStyles: { 0:{cellWidth:20}, 1:{cellWidth:52}, 2:{cellWidth:26}, 3:{cellWidth:18}, 4:{cellWidth:22}, 5:{cellWidth:22} },
+            didParseCell: (data) => {
+                if (data.section === 'body' && data.column.index === 5) {
+                    const s = data.cell.raw;
+                    if (s==='Completed')  { data.cell.styles.textColor = [22,163,74];  data.cell.styles.fontStyle='bold'; }
+                    if (s==='Confirmed')  { data.cell.styles.textColor = [37,99,235];  data.cell.styles.fontStyle='bold'; }
+                    if (s==='Cancelled')  { data.cell.styles.textColor = [220,38,38];  data.cell.styles.fontStyle='bold'; }
+                    if (s==='Pending')    { data.cell.styles.textColor = [146,64,14];  data.cell.styles.fontStyle='bold'; }
+                }
+            },
+            tableLineColor: [241,245,249], tableLineWidth: 0.2,
+            margin: { left:14, right:14 },
+        });
+
+        /* Cancellation note if any */
+        const cancelled = vb.filter(b=>b.status==='cancelled' && b.cancelReason);
+        if (cancelled.length) {
+            let y2 = doc.lastAutoTable.finalY + 6;
+            doc.setFillColor(255,245,245);
+            doc.setDrawColor(254,202,202);
+            doc.roundedRect(14, y2, pageW-28, 7 + cancelled.length * 6, 2, 2, 'FD');
+            doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(185,28,28);
+            doc.text('Cancellation Details', 18, y2+5);
+            cancelled.forEach((b,i) => {
+                doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(153,27,27);
+                doc.text(`${b.id} · ${b.vehicle}: ${b.cancelReason}`, 18, y2+11+i*6);
+            });
+        }
+
+        addFooter(1, 3);
+
+        /* ══════════════
+           PAGE 2 — FEEDBACK HISTORY
+        ══════════════ */
+        doc.addPage();
+        addHeader('Feedback History', 'Reviews from Car Owners');
+
+        /* Rating summary boxes */
+        const rby = 52;
+        statBox(14,       rby, 55, 22, 'Average Rating', '4.8 / 5', '⭐');
+        statBox(72,       rby, 55, 22, 'Total Reviews',  '2',       '💬');
+        statBox(130,      rby, 55, 22, '5-Star Reviews', '1 (50%)', '★');
+
+        /* Feedback table */
+        doc.autoTable({
+            startY: rby + 28,
+            head: [['Car Owner','Vehicle','Booking','Date','Rating','Comment']],
+            body: [
+                ['Juan Dela Cruz','Toyota Vios 2024','#B001','Apr 11, 2026','★★★★★ (5/5)','Maria returned the car on time, in perfect condition. Very responsible renter. Would definitely allow again!'],
+                ['Tanggol Dimagiba','Mitsubishi Xpander 2024','#B002','Apr 14, 2026','★★★★☆ (4/5)','Great renter, very communicative throughout. Minor delay at drop-off but notified in advance.'],
+            ],
+            styles: { font:'helvetica', fontSize:8, cellPadding:4, textColor:[51,65,85] },
+            headStyles: { fillColor:primaryRGB, textColor:255, fontStyle:'bold', fontSize:8 },
+            alternateRowStyles: { fillColor:[248,250,252] },
+            columnStyles: { 0:{cellWidth:30}, 1:{cellWidth:38}, 2:{cellWidth:16}, 3:{cellWidth:22}, 4:{cellWidth:22}, 5:{cellWidth:'auto'} },
+            tableLineColor:[241,245,249], tableLineWidth:0.2,
+            margin:{left:14,right:14},
+        });
+
+        /* Star breakdown */
+        let sbY = doc.lastAutoTable.finalY + 10;
+        doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(15,23,42);
+        doc.text('Rating Breakdown', 14, sbY);
+        sbY += 6;
+        const ratings = [['5 Stars',1,50],['4 Stars',1,50],['3 Stars',0,0],['2 Stars',0,0],['1 Star',0,0]];
+        ratings.forEach(([label, count, pct]) => {
+            doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(100,116,139);
+            doc.text(label, 14, sbY+4);
+            doc.setFillColor(241,245,249);
+            doc.roundedRect(50, sbY, 110, 5, 1, 1, 'F');
+            if (pct > 0) {
+                doc.setFillColor(245,158,11);
+                doc.roundedRect(50, sbY, 110*(pct/100), 5, 1, 1, 'F');
+            }
+            doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(30,41,59);
+            doc.text(`${pct}%`, 165, sbY+4);
+            sbY += 9;
+        });
+
+        addFooter(2, 3);
+
+        /* ══════════════
+           PAGE 3 — SPENDING SUMMARY
+        ══════════════ */
+        doc.addPage();
+        addHeader('Spending Summary', 'Cost Breakdown & Analytics');
+
+        /* Spending stat boxes */
+        const sby = 52;
+        const sw  = (pageW - 28 - 9) / 4;
+        statBox(14,       sby, sw, 22, 'Total Spent',    `P${totalSpent.toLocaleString()}`, '💰');
+        statBox(14+sw+3,  sby, sw, 22, 'Total Days',     '6 days',  '📅');
+        statBox(14+sw*2+6,sby, sw, 22, 'Avg per Trip',   `P${Math.round(totalSpent/Math.max(vb.filter(b=>b.status!=='cancelled').length,1)).toLocaleString()}`, '📊');
+        statBox(14+sw*3+9,sby, sw, 22, 'On-Time Returns','1 / 1',   '✓');
+
+        /* Transaction table */
+        doc.autoTable({
+            startY: sby + 28,
+            head: [['Booking ID','Vehicle','Location','Date','Days','Add-ons','Amount','Status']],
+            body: vb.map(b=>[
+                b.id, b.vehicle, b.location, b.startDisplay, b.duration,
+                (b.addons||[]).join(', ')||'—', b.amount, statusLabel(b.status)
+            ]),
+            styles: { font:'helvetica', fontSize:8, cellPadding:3.5, textColor:[51,65,85] },
+            headStyles: { fillColor:primaryRGB, textColor:255, fontStyle:'bold', fontSize:8 },
+            alternateRowStyles: { fillColor:[248,250,252] },
+            columnStyles: { 0:{cellWidth:18}, 1:{cellWidth:40}, 2:{cellWidth:24}, 3:{cellWidth:22}, 4:{cellWidth:10}, 5:{cellWidth:24}, 6:{cellWidth:18}, 7:{cellWidth:'auto'} },
+            tableLineColor:[241,245,249], tableLineWidth:0.2,
+            margin:{left:14,right:14},
+        });
+
+        /* Spend by vehicle type */
+        let spY = doc.lastAutoTable.finalY + 10;
+        doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(15,23,42);
+        doc.text('Spend by Vehicle Type', 14, spY);
+        spY += 6;
+
+        const spendBreakdown = [
+            { label:'SUV (Toyota Fortuner)', amount:'₱13,800', pct:60, color:[245,158,11] },
+            { label:'MPV (Mitsubishi Xpander)', amount:'₱7,600', pct:33, color:[99,102,241] },
+            { label:'Sedan (Toyota Vios)', amount:'₱1,800', pct:7,  color:[34,197,94] },
+        ];
+        spendBreakdown.forEach(item => {
+            doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(100,116,139);
+            doc.text(item.label, 14, spY+4);
+            doc.setFillColor(241,245,249);
+            doc.roundedRect(80, spY, 85, 5, 1, 1, 'F');
+            doc.setFillColor(...item.color);
+            doc.roundedRect(80, spY, 85*(item.pct/100), 5, 1, 1, 'F');
+            doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(30,41,59);
+            doc.text(`${item.amount} (${item.pct}%)`, 170, spY+4);
+            spY += 9;
+        });
+
+        /* Grand total box */
+        spY += 4;
+        doc.setFillColor(...primaryRGB);
+        doc.roundedRect(14, spY, pageW-28, 14, 3, 3, 'F');
+        doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(255,255,255);
+        doc.text('Total Amount Paid (Completed + Active)', 20, spY+9);
+        doc.setTextColor(...accentRGB);
+        doc.text(`P${totalSpent.toLocaleString()}`, pageW-18, spY+9, { align:'right' });
+
+        addFooter(3, 3);
+
+        doc.save(`MobiLeasePH_Report_${RENTER_NAME.replace(' ','_')}_${new Date().toISOString().slice(0,10)}.pdf`);
+    });
+
 });
 </script>
 </body>

@@ -242,5 +242,384 @@
 </div>
 
   <script src="front-end/script/contract-script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+/* ═══════════════════════════════════════════════════════════
+   MobiLeasePH — PDF Contract Generator (client-side, jsPDF)
+═══════════════════════════════════════════════════════════ */
+
+function downloadPDF(id, vehicle) {
+    const c = contracts[id];
+    if (!c) { showToast('Contract data not found.'); return; }
+    showToast(`Generating PDF for ${vehicle}...`);
+    setTimeout(() => {
+        try { buildContractPDF(c); }
+        catch(e) { console.error(e); showToast('PDF generation failed — check console.'); }
+    }, 120);
+}
+
+function buildContractPDF(c) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+    const PW = 210, PH = 297;
+    const ML = 18, MR = 18;
+    const CW = PW - ML - MR;
+
+    const COL = {
+        navy:  [22,  49,  58],
+        teal:  [30,  90, 110],
+        gold:  [212, 203, 146],
+        white: [255, 255, 255],
+        slate: [100, 116, 135],
+        dark:  [15,  23,  42],
+        light: [241, 245, 249],
+        green: [2,   138,  93],
+        amber: [245, 158,  11],
+        sky:   [14,  165, 234],
+    };
+
+    let y = 0;
+
+    /* ────────────────────────────────
+       HEADER BANNER
+    ──────────────────────────────── */
+    doc.setFillColor(...COL.navy);
+    doc.rect(0, 0, PW, 38, 'F');
+
+    doc.setFillColor(...COL.gold);
+    doc.rect(0, 38, PW, 2.5, 'F');
+
+    /* Logo tile */
+    doc.setFillColor(...COL.teal);
+    doc.roundedRect(ML, 7, 22, 22, 3, 3, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...COL.gold);
+    doc.text('ML', ML + 11, 21, { align: 'center' });
+
+    /* Brand */
+    doc.setFontSize(16);
+    doc.setTextColor(...COL.gold);
+    doc.text('MobiLease', ML + 26, 16);
+    doc.setTextColor(...COL.white);
+    doc.text('PH', ML + 26 + doc.getTextWidth('MobiLease') + 1, 16);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...COL.gold);
+    doc.text('Digital Vehicle Rental Platform  \u00b7  Philippines', ML + 26, 24);
+
+    /* Contract ref top-right */
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...COL.white);
+    doc.text('DIGITAL RENTAL CONTRACT', PW - MR, 16, { align: 'right' });
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...COL.gold);
+    doc.text('Ref: ' + c.ref + '  \u00b7  Issued: ' + c.issued, PW - MR, 24, { align: 'right' });
+
+    y = 48;
+
+    /* ────────────────────────────────
+       DOCUMENT TITLE + STATUS PILL
+    ──────────────────────────────── */
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(15);
+    doc.setTextColor(...COL.dark);
+    doc.text('Vehicle Rental Agreement', ML, y + 8);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...COL.slate);
+    doc.text('This agreement is entered into between the Vehicle Owner and the Renter as detailed below.', ML, y + 16);
+    doc.text('All parties agree to the terms and conditions set forth in this contract.', ML, y + 22);
+
+    const statusColor = c.status === 'Signed' ? COL.green
+        : c.status === 'Pending Signature' ? COL.amber : COL.sky;
+    doc.setFillColor(...statusColor);
+    doc.roundedRect(PW - MR - 46, y + 3, 46, 9, 2, 2, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7);
+    doc.setTextColor(...COL.white);
+    doc.text(c.status.toUpperCase(), PW - MR - 23, y + 9, { align: 'center' });
+
+    y += 30;
+
+    /* ────────────────────────────────
+       SECTION: CONTRACT DETAILS
+    ──────────────────────────────── */
+    y = pdfSectionHeader(doc, y, ML, CW, COL, 'CONTRACT DETAILS');
+
+    const details = [
+        ['Contract Reference',  c.ref],
+        ['Booking Reference',   c.booking],
+        ['Date Issued',         c.issued],
+        ['Renter Name',         c.renter],
+        ['Vehicle Owner',       c.owner],
+        ['Vehicle',             c.vehicle],
+        ['Driver Option',       c.driver],
+        ['Rental Period',       c.period],
+        ['Duration',            c.duration],
+        ['Pick-up Location',    c.pickup],
+        ['Drop-off Location',   c.dropoff],
+    ];
+
+    y = pdfDetailTable(doc, y, ML, CW, COL, details);
+
+    /* ────────────────────────────────
+       SECTION: FINANCIAL SUMMARY
+    ──────────────────────────────── */
+    y = pdfSectionHeader(doc, y + 5, ML, CW, COL, 'FINANCIAL SUMMARY');
+
+    doc.setFillColor(...COL.light);
+    doc.setDrawColor(220, 225, 230);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(ML, y, CW, 28, 3, 3, 'FD');
+
+    const finRows = [
+        { label: 'Total Rental Amount',                             value: c.amount,  color: COL.teal },
+        { label: 'Down Payment (30%)',                              value: c.downpay, color: [194, 65, 12] },
+        { label: 'Balance Due on Pick-up (incl. Security Deposit)', value: c.balance, color: COL.green },
+    ];
+    let fy = y + 5.5;
+    finRows.forEach((fr, i) => {
+        if (i > 0) {
+            doc.setDrawColor(200, 210, 220);
+            doc.setLineWidth(0.2);
+            doc.line(ML + 4, fy - 1.5, ML + CW - 4, fy - 1.5);
+        }
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(...COL.slate);
+        doc.text(fr.label, ML + 6, fy + 3.5);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9.5);
+        doc.setTextColor(...fr.color);
+        doc.text(fr.value, ML + CW - 6, fy + 3.5, { align: 'right' });
+        fy += 9;
+    });
+    y += 33;
+
+    /* Notice box */
+    doc.setFillColor(255, 251, 235);
+    doc.setDrawColor(251, 191, 36);
+    doc.setLineWidth(0.4);
+    doc.roundedRect(ML, y, CW, 13, 2, 2, 'FD');
+    doc.setFillColor(245, 158, 11);
+    doc.rect(ML, y, 2, 13, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(146, 64, 14);
+    doc.text('IMPORTANT:', ML + 5, y + 5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(120, 53, 15);
+    doc.text('The down payment is non-refundable. The remaining balance is due in full on the day of pick-up.', ML + 5, y + 10);
+    y += 18;
+
+    /* ────────────────────────────────
+       TERMS AND CONDITIONS
+    ──────────────────────────────── */
+    y = pdfSectionHeader(doc, y, ML, CW, COL, 'TERMS AND CONDITIONS');
+
+    const tnc = [
+        ['1. Definitions',
+         'In this agreement, "Renter" refers to the individual who booked the vehicle through MobiLeasePH; "Owner" refers to the registered vehicle owner; "Vehicle" refers to the specific car described in the booking; "Platform" refers to MobiLeasePH and its digital services.'],
+        ['2. Booking Confirmation',
+         'This contract is binding upon the Renter\'s digital signature and the Owner\'s confirmation. The Owner may cancel within 24 hours of submission with a full refund of the remaining balance. The down payment (30%) is non-refundable. MobiLeasePH acts solely as the booking platform.'],
+        ['3. Payment Terms',
+         'A non-refundable 30% down payment secures the booking. The remaining 70% is due on pick-up day via the Renter\'s chosen method. A refundable PHP 5,000 security deposit is collected at pick-up and returned within 3–5 business days after inspection. All payments must be in Philippine Peso (PHP). Deductions apply for damages, late returns, or policy violations.'],
+        ['4. Cancellation & Refund Policy',
+         'Free Cancellation: Cancel at least 24 hours before pick-up for a full refund of the remaining balance — the down payment is non-refundable. Late Cancellation (under 24 hours): the full booking amount is non-refundable. No-Show: the booking is forfeited with no refund. Refunds are processed within 5–7 business days.'],
+        ['5. Vehicle Use & Renter Obligations',
+         'The Renter must be at least 21 years old with a valid Philippine LTO driver\'s license for self-drive bookings. The vehicle must be returned at the agreed location and time in the same condition with the same fuel level. The Renter is fully responsible for all traffic violations, toll fees, and parking charges. Strictly prohibited: smoking inside the vehicle; pets; sub-renting; illegal activities, racing, or off-road driving unless specifically permitted by the Owner.'],
+        ['6. Late Return Policy',
+         'A late return fee of PHP 200 per hour applies for returns beyond the agreed drop-off time. Returns more than 4 hours late are charged as an additional full day at the daily rate. The Renter must notify the Owner as early as possible if a late return is anticipated.'],
+        ['7. Damage & Liability',
+         'The Renter is fully liable for any damage during the rental period. A vehicle inspection is conducted at both pick-up and drop-off. Basic insurance covers third-party liability only — damage to the Owner\'s vehicle is the Renter\'s responsibility. In the event of theft or total loss, the Renter bears full financial responsibility.'],
+        ['8. Fuel Policy',
+         'The Vehicle is provided with a full tank of fuel and must be returned at the same level. Failure results in a fuel top-up charge plus a PHP 150 refueling service fee deducted from the security deposit.'],
+        ['9. Privacy & Data',
+         'Personal information collected during booking — including identification documents, license details, and payment information — is handled in accordance with the MobiLeasePH Privacy Policy and the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Data is used solely for completing the rental transaction.'],
+        ['10. Governing Law',
+         'This agreement is governed by the laws of the Republic of the Philippines. Disputes shall be resolved through mutual negotiation or, failing that, through the appropriate Philippine courts. By signing, both parties confirm they have read, understood, and voluntarily agree to all terms herein.'],
+    ];
+
+    tnc.forEach(([title, body]) => {
+        if (y > PH - 30) {
+            doc.addPage();
+            y = pdfContinuationHeader(doc, PW, ML, MR, COL, c.ref);
+        }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        doc.setTextColor(...COL.teal);
+        doc.text(title, ML, y);
+        y += 4.5;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.8);
+        doc.setTextColor(...COL.dark);
+        const lines = doc.splitTextToSize(body, CW);
+        lines.forEach(line => {
+            if (y > PH - 25) {
+                doc.addPage();
+                y = pdfContinuationHeader(doc, PW, ML, MR, COL, c.ref);
+            }
+            doc.text(line, ML, y);
+            y += 4.2;
+        });
+        y += 3;
+    });
+
+    /* ────────────────────────────────
+       SIGNATURE BLOCK
+    ──────────────────────────────── */
+    if (y > PH - 75) {
+        doc.addPage();
+        y = pdfContinuationHeader(doc, PW, ML, MR, COL, c.ref);
+    } else {
+        y += 4;
+        doc.setDrawColor(220, 225, 230);
+        doc.setLineWidth(0.3);
+        doc.line(ML, y, ML + CW, y);
+        y += 6;
+    }
+
+    y = pdfSectionHeader(doc, y, ML, CW, COL, 'SIGNATURES & ACKNOWLEDGEMENT');
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(...COL.slate);
+    const ackText = 'By affixing their signatures below, both the Renter and the Vehicle Owner confirm they have read, understood, and voluntarily agree to be bound by all terms and conditions of this MobiLeasePH Digital Rental Agreement. This electronic signature is legally binding under the Philippine Electronic Commerce Act (Republic Act No. 8792).';
+    const ackLines = doc.splitTextToSize(ackText, CW);
+    ackLines.forEach(l => { doc.text(l, ML, y); y += 4.5; });
+
+    y += 6;
+
+    /* Two signature boxes */
+    const sigW = (CW - 8) / 2;
+
+    /* --- Renter box --- */
+    doc.setFillColor(...COL.light);
+    doc.roundedRect(ML, y, sigW, 38, 2, 2, 'F');
+
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor(...COL.teal);
+    doc.text('RENTER', ML + sigW / 2, y + 6, { align: 'center' });
+
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor(...COL.dark);
+    doc.text(c.renter, ML + sigW / 2, y + 12, { align: 'center' });
+
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(...COL.slate);
+    doc.text("Renter's Full Name", ML + sigW / 2, y + 17, { align: 'center' });
+
+    doc.setDrawColor(...COL.slate); doc.setLineWidth(0.3);
+    doc.line(ML + 8, y + 30, ML + sigW - 8, y + 30);
+
+    if (c.status === 'Signed') {
+        doc.setFont('helvetica', 'italic'); doc.setFontSize(10); doc.setTextColor(...COL.teal);
+        doc.text(c.renter, ML + sigW / 2, y + 28, { align: 'center' });
+        doc.setFillColor(...COL.green);
+        doc.roundedRect(ML + sigW / 2 - 17, y + 32, 34, 5.5, 1.5, 1.5, 'F');
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(6.5); doc.setTextColor(...COL.white);
+        doc.text('DIGITALLY SIGNED', ML + sigW / 2, y + 35.8, { align: 'center' });
+    } else {
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(...COL.slate);
+        doc.text('Signature', ML + sigW / 2, y + 33.5, { align: 'center' });
+    }
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(...COL.slate);
+    doc.text('Date: ' + c.issued, ML + sigW / 2, y + 37, { align: 'center' });
+
+    /* --- Owner box --- */
+    const ox = ML + sigW + 8;
+    doc.setFillColor(...COL.light);
+    doc.roundedRect(ox, y, sigW, 38, 2, 2, 'F');
+
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor(...COL.teal);
+    doc.text('VEHICLE OWNER', ox + sigW / 2, y + 6, { align: 'center' });
+
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor(...COL.dark);
+    doc.text(c.owner, ox + sigW / 2, y + 12, { align: 'center' });
+
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(...COL.slate);
+    doc.text("Owner's Full Name", ox + sigW / 2, y + 17, { align: 'center' });
+
+    doc.setDrawColor(...COL.slate); doc.setLineWidth(0.3);
+    doc.line(ox + 8, y + 30, ox + sigW - 8, y + 30);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(...COL.slate);
+    doc.text('Signature', ox + sigW / 2, y + 33.5, { align: 'center' });
+    doc.text('Date: ' + c.issued, ox + sigW / 2, y + 37, { align: 'center' });
+
+    y += 46;
+
+    /* Seal */
+    if (y > PH - 32) { doc.addPage(); y = 20; }
+    doc.setFillColor(...COL.teal);
+    doc.circle(PW / 2, y + 8, 9, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(...COL.gold);
+    doc.text('ML', PW / 2, y + 10, { align: 'center' });
+    doc.setFontSize(7.5); doc.setTextColor(...COL.teal);
+    doc.text('Verified & Processed by MobiLeasePH Digital Platform', PW / 2, y + 23, { align: 'center' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5); doc.setTextColor(...COL.slate);
+    doc.text('MobiLeasePH  \u00b7  Vehicle Rental Platform, Philippines  \u00b7  support@mobileaseph.com', PW / 2, y + 28, { align: 'center' });
+
+    /* ── Page numbers on every page ── */
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let p = 1; p <= totalPages; p++) {
+        doc.setPage(p);
+        doc.setFillColor(...COL.navy);
+        doc.rect(0, PH - 10, PW, 10, 'F');
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(6.5); doc.setTextColor(...COL.gold);
+        doc.text('MobiLeasePH  \u00b7  Digital Rental Platform  \u00b7  Philippines', ML, PH - 4.5);
+        doc.setTextColor(...COL.white);
+        doc.text('Page ' + p + ' of ' + totalPages, PW - MR, PH - 4.5, { align: 'right' });
+    }
+
+    const fname = 'MobiLeasePH_Contract_' + c.ref.replace('#','') + '_' + c.vehicle.replace(/\s+/g,'_') + '.pdf';
+    doc.save(fname);
+    showToast('\u2713 ' + c.vehicle + ' contract downloaded!');
+}
+
+/* ── Section header bar ── */
+function pdfSectionHeader(doc, y, ML, CW, COL, title) {
+    doc.setFillColor(...COL.teal);
+    doc.roundedRect(ML, y, CW, 8, 1.5, 1.5, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...COL.white);
+    doc.text(title, ML + 5, y + 5.3);
+    return y + 12;
+}
+
+/* ── Two-column striped detail table ── */
+function pdfDetailTable(doc, y, ML, CW, COL, rows) {
+    const rowH = 7;
+    rows.forEach((r, i) => {
+        doc.setFillColor(...(i % 2 === 0 ? COL.light : COL.white));
+        doc.rect(ML, y, CW, rowH, 'F');
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(7.8); doc.setTextColor(...COL.slate);
+        doc.text(r[0], ML + 4, y + 4.8);
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(...COL.dark);
+        doc.text(String(r[1]), ML + CW - 4, y + 4.8, { align: 'right' });
+        y += rowH;
+    });
+    doc.setDrawColor(220, 225, 230); doc.setLineWidth(0.2);
+    doc.line(ML, y, ML + CW, y);
+    return y;
+}
+
+/* ── Continuation header on overflow pages ── */
+function pdfContinuationHeader(doc, PW, ML, MR, COL, ref) {
+    doc.setFillColor(...COL.navy);
+    doc.rect(0, 0, PW, 14, 'F');
+    doc.setFillColor(...COL.gold);
+    doc.rect(0, 14, PW, 1.5, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(...COL.gold);
+    doc.text('MobiLeasePH \u2014 Digital Rental Contract', ML, 9);
+    doc.setTextColor(...COL.white); doc.setFontSize(7.5);
+    doc.text('Ref: ' + ref + '  \u00b7  Continued', PW - MR, 9, { align: 'right' });
+    return 22;
+}
+  </script>
 </body>
 </html>

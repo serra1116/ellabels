@@ -681,8 +681,30 @@
             </div>
         </div>
 
+        <!-- WHO WILL DRIVE SELECTION -->
+        <div class="p4a-section-card" id="p4aDriverRoleCard">
+            <div class="p4a-section-title">
+                <i class="bi bi-person-fill-gear"></i> Who Will Drive the Car?
+            </div>
+            <div class="p4a-section-desc">
+                Please select whether you will be driving the car yourself or if another person will be driving on your behalf.
+            </div>
+            <div class="p4a-driver-role-group">
+                <button class="p4a-driver-role-btn" id="p4aRoleSelf" onclick="selectDriverRole('self')">
+                    <div class="p4a-role-btn-icon"><i class="bi bi-person-fill"></i></div>
+                    <div class="p4a-role-btn-title">I will drive the car</div>
+                    <div class="p4a-role-btn-sub">You are the driver for this rental</div>
+                </button>
+                <button class="p4a-driver-role-btn" id="p4aRoleOther" onclick="selectDriverRole('other')">
+                    <div class="p4a-role-btn-icon"><i class="bi bi-people-fill"></i></div>
+                    <div class="p4a-role-btn-title">Another person will drive the car for me</div>
+                    <div class="p4a-role-btn-sub">A different driver will operate the vehicle</div>
+                </button>
+            </div>
+        </div>
+
         <!-- ACCOUNT VERIFICATION STATUS NOTICE -->
-        <div class="p4a-section-card">
+        <div class="p4a-section-card" id="p4aVerifyStatusCard" style="display:none;">
             <div class="p4a-section-title">
                 <i class="bi bi-shield-check"></i> Account Verification Status
             </div>
@@ -716,6 +738,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- ACTION BUTTONS FOR "I WILL DRIVE" (shown when account is verified) -->
+        <div id="p4aSelfDriverActions" style="display:none;">
+            <div class="p4a-actions">
+                <button class="p4a-back-btn" id="p4aSelfBackBtn" onclick="document.getElementById('p4aBackBtn').click()">
+                    <i class="bi bi-arrow-left"></i> Back
+                </button>
+                <button class="p4a-pay-btn" id="p4aSelfPayBtn" disabled>
+                    <i class="bi bi-credit-card-fill"></i> Continue to Payment
+                </button>
+            </div>
+            <p class="p4a-secure-note">
+                <i class="bi bi-shield-lock-fill" style="color:#028a5d;"></i>
+                Your personal data is encrypted and securely processed
+            </p>
+        </div>
+
+        <!-- ANOTHER DRIVER SECTIONS (shown only when "another person will drive" is selected) -->
+        <div id="p4aAnotherDriverSections" style="display:none;">
 
         <!-- DRIVER LICENSE FORM (locked until account is verified) -->
         <div class="p4a-section-card" id="p4aLicenseCard" style="opacity:0.45; pointer-events:none;">
@@ -995,8 +1036,10 @@
             </div>
         </div>
 
-        <!-- ACTION BUTTONS -->
-        <div class="p4a-actions">
+        </div><!-- END p4aAnotherDriverSections -->
+
+        <!-- ACTION BUTTONS (for "Another Driver" flow) -->
+        <div class="p4a-actions" id="p4aAnotherDriverActionBtns" style="display:none;">
             <button class="p4a-back-btn" id="p4aBackBtn">
                 <i class="bi bi-arrow-left"></i> Back
             </button>

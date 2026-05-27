@@ -673,12 +673,60 @@ let isAccountVerified = false;
 /* Tracks whether license verification passed */
 let isLicenseVerified = false;
 
+/* Tracks who will drive: 'self' | 'other' | null */
+let driverRoleChoice = null;
+
 /* Open Page 4a and reset its state */
 function openSelfDriveVerifyPage() {
     isLicenseVerified = false;
+    driverRoleChoice = null;
     resetVerificationUI();
+    // Reset role selection UI
+    document.getElementById('p4aRoleSelf').classList.remove('selected');
+    document.getElementById('p4aRoleOther').classList.remove('selected');
+    document.getElementById('p4aVerifyStatusCard').style.display = 'none';
+    document.getElementById('p4aSelfDriverActions').style.display = 'none';
+    document.getElementById('p4aAnotherDriverSections').style.display = 'none';
+    document.getElementById('p4aAnotherDriverActionBtns').style.display = 'none';
     applyAccountVerifiedState(isAccountVerified);
     showPage('self-drive-verify');
+}
+
+/* Handle driver role button selection */
+function selectDriverRole(role) {
+    driverRoleChoice = role;
+
+    // Update button styles
+    document.getElementById('p4aRoleSelf').classList.toggle('selected', role === 'self');
+    document.getElementById('p4aRoleOther').classList.toggle('selected', role === 'other');
+
+    // Always show account verification status card
+    document.getElementById('p4aVerifyStatusCard').style.display = 'block';
+    applyAccountVerifiedState(isAccountVerified);
+
+    if (role === 'self') {
+        // Show only verification status + self-driver action buttons (if verified)
+        document.getElementById('p4aAnotherDriverSections').style.display = 'none';
+        document.getElementById('p4aAnotherDriverActionBtns').style.display = 'none';
+        updateSelfDriverActions();
+    } else {
+        // Show full license/ID form
+        document.getElementById('p4aSelfDriverActions').style.display = 'none';
+        document.getElementById('p4aAnotherDriverSections').style.display = 'block';
+        document.getElementById('p4aAnotherDriverActionBtns').style.display = 'flex';
+    }
+}
+
+/* Show/hide the self-driver Continue to Payment button based on account verification */
+function updateSelfDriverActions() {
+    const actionsEl = document.getElementById('p4aSelfDriverActions');
+    const payBtn = document.getElementById('p4aSelfPayBtn');
+    if (driverRoleChoice === 'self') {
+        actionsEl.style.display = 'block';
+        payBtn.disabled = !isAccountVerified;
+    } else {
+        actionsEl.style.display = 'none';
+    }
 }
 
 /* Apply locked/unlocked state based on account verification */
@@ -686,12 +734,27 @@ function applyAccountVerifiedState(verified) {
     const cards = ['p4aLicenseCard', 'p4aIDCard', 'p4aSecondIDCard', 'p4aSelfieCard', 'p4aVerifyActionCard'];
     cards.forEach(id => {
         const el = document.getElementById(id);
-        el.style.opacity       = verified ? '1'    : '0.45';
-        el.style.pointerEvents = verified ? 'auto' : 'none';
+        if (el) {
+            el.style.opacity       = verified ? '1'    : '0.45';
+            el.style.pointerEvents = verified ? 'auto' : 'none';
+        }
     });
     document.getElementById('p4aUnverifiedBox').style.display = verified ? 'none'  : 'flex';
     document.getElementById('p4aVerifiedBox').style.display   = verified ? 'flex'  : 'none';
+    // Update the verified message based on role
+    const verifiedMsg = document.querySelector('#p4aVerifiedBox .p4a-verify-msg');
+    if (verifiedMsg) {
+        if (driverRoleChoice === 'self') {
+            verifiedMsg.textContent = 'Your account is verified. You may now proceed to payment.';
+        } else {
+            verifiedMsg.textContent = 'Your account is verified. You may now fill in your driver\'s license details and upload a valid ID below.';
+        }
+    }
     checkVerifyBtnState();
+    // Also update self-driver action button state
+    if (driverRoleChoice === 'self') {
+        updateSelfDriverActions();
+    }
 }
 
 /* "Verify My Account" demo button — simulates account becoming verified */
@@ -699,6 +762,11 @@ function simulateAccountVerified() {
     isAccountVerified = true;
     applyAccountVerifiedState(true);
 }
+
+/* Wire up the self-driver Continue to Payment button */
+document.getElementById('p4aSelfPayBtn').addEventListener('click', function() {
+    document.getElementById('p4aPayBtn').click();
+});
 
 /* Format license input → A00-00-000000 */
 function formatLicenseInput(input) {
@@ -957,6 +1025,13 @@ document.getElementById('p4aBackBtn').addEventListener('click', () => {
 });
 
 document.getElementById('p4aPayBtn').addEventListener('click', () => {
+    // For "self" driver role: only requires account verification
+    if (driverRoleChoice === 'self') {
+        if (!isAccountVerified) return;
+        openPaymentPage();
+        return;
+    }
+    // For "another driver" role: requires license verification
     if (!isLicenseVerified) return;
     /* Navigate to your payment page here when ready */
    openPaymentPage();

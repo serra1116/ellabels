@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points System & Rewards - MobiLeasePH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="front-end/style/rewards-style.css">
+</head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+    <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    <div style="width:36px"></div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Shared Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <img src="pictures/logo.png" alt="MobiLease PH Logo" class="sidebar-logo-img">
+        </div>
+        <span class="brand-text">Mobi<span>Lease</span> PH</span>
+    </div>
+    <nav>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+            <li><a href="browse.html"><i class="bi bi-search"></i> Browse Cars</a></li>
+            <li><a href="booking.html"><i class="bi bi-calendar-check"></i> My Bookings</a></li>
+            <li><a href="feedback.html"><i class="bi bi-star"></i> Feedback</a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li><a href="contracts.html"><i class="bi bi-clipboard-data"></i> Contracts</a></li>
+            <li><a href="safety.html"><i class="bi bi-shield-check"></i> Safety</a></li>
+            <li><a href="rewards.html" class="active" id="navRewards"><i class="bi bi-award"></i> Points System & Rewards</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+    </nav>
+    <a href="#" class="sidebar-logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+</aside>
+
+<main class="main-content page-view active" id="page-rewards">
+    <div class="page-header">
+        <div class="header-top-row">
+            <h1 class="page-title">Renter Dashboard</h1>
+            <div class="header-right">
+                <span class="user-name">Maria Santos</span>
+                <div class="user-avatar">MS</div>
+                <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="header-content">
+            <h2 class="page-title">Points System & Rewards</h2>
+            <p class="page-subtitle">Earn points and unlock rewards with every booking</p>
+        </div>
+    </div>
+
+    <section class="loyalty-page">
+
+        <!-- Fee Banner -->
+        <div class="fee-banner">
+            <div>
+                <h2>Platform Fee Tracker</h2>
+                <p>Track your booking progress and platform fees</p>
+            </div>
+            <div class="fee-progress">
+                <p class="fee-progress-label">Completed Bookings</p>
+                <h3>3/5</h3>
+                <p>2 more for 5% fee</p>
+            </div>
+        </div>
+
+        <!-- Progress Box -->
+        <div class="progress-box">
+            <h3 class="section-heading">Your Progress</h3>
+            <div class="progress-info">
+                <span>Bookings Completed</span>
+                <span class="progress-count">3 of 5 free bookings</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="small-note">
+                You have <strong>2 free bookings</strong> remaining. After that, a 5% platform fee applies.
+            </p>
+        </div>
+
+        <!-- Fee Calculation Example -->
+        <div class="fee-example">
+            <h3>Fee Calculation Example</h3>
+            <div class="example-row">
+                <span>Car Rental (3 days)</span>
+                <strong>₱6,000</strong>
+            </div>
+            <div class="example-row">
+                <span>Add-ons (Pet-friendly + Car wash)</span>
+                <strong>₱550</strong>
+            </div>
+            <div class="example-row">
+                <span>Platform Fee (5%)</span>
+                <strong>₱327.50</strong>
+            </div>
+            <div class="example-row total">
+                <span>Total Amount</span>
+                <strong>₱6,877.50</strong>
+            </div>
+            <p class="small-note"><strong>Note:</strong> Platform fee only applies after your first 5 successful bookings.</p>
+        </div>
+
+        <!-- Membership Tiers -->
+        <div class="tiers-section">
+            <h3 class="tiers-heading">Membership Tiers</h3>
+            <div class="reward-cards">
+
+                <!-- New Renter -->
+                 <div class="reward-card active">
+                    <div class="reward-card-header">
+                        <span class="tier-icon tier-icon--new"><i class="bi bi-award"></i></span>
+                        <h4>New Renter</h4>
+                        <span class="current-badge">Current</span>
+                    </div>
+                    <p class="tier-range">0–5 bookings</p>
+                    <ul class="tier-perks">
+                        <li><i class="bi bi-check2"></i> No platform fees</li>
+                        <li><i class="bi bi-check2"></i> Access to all cars</li>
+                        <li><i class="bi bi-check2"></i> Standard support</li>
+                    </ul>
+                </div>
+
+                <!-- Regular Renter (Current) -->
+                <div class="reward-card">
+                    <div class="reward-card-header">
+                        <span class="tier-icon tier-icon--regular"><i class="bi bi-star"></i></span>
+                        <h4>Regular Renter</h4>
+                        
+                    </div>
+                    <p class="tier-range">6+ bookings</p>
+                    <ul class="tier-perks">
+                        <li><i class="bi bi-check2"></i> 5% platform fee</li>
+                        <li><i class="bi bi-check2"></i> Priority booking</li>
+                        <li><i class="bi bi-check2"></i> Enhanced support</li>
+                    </ul>
+                </div>
+
+                <!-- VIP Renter -->
+                <div class="reward-card">
+                    <div class="reward-card-header">
+                        <span class="tier-icon tier-icon--vip"><i class="bi bi-gem"></i></span>
+                        <h4>VIP Renter</h4>
+                    </div>
+                    <p class="tier-range">20+ bookings</p>
+                    <ul class="tier-perks">
+                        <li><i class="bi bi-check2"></i> 3% platform fee</li>
+                        <li><i class="bi bi-check2"></i> Exclusive deals</li>
+                        <li><i class="bi bi-check2"></i> 24/7 VIP support</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

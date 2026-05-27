@@ -381,8 +381,10 @@ function finishFeedback() {
 
     removeReviewedTrip();
 
+    // Check remaining trips from the data store, not the DOM
+    // (the DOM card is still fading out at this point)
     setTimeout(() => {
-        const remaining = document.querySelectorAll('#tripSelectionView .selectable-trip-card');
+        const remaining = window.MOBILEASE ? window.MOBILEASE.getFeedbackPending() : [];
         if (remaining.length === 0) {
             showEmptyState();
         } else {

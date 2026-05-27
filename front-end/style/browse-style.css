@@ -1831,3 +1831,61 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:#f1f5f9; min-heigh
     .p5-goto-bookings-btn, .p5-goto-dashboard-btn { flex: none; }
     .p5-sig-canvas { height: 140px; }
 }
+/* ════════════════════════════════════════
+   PAGE 4A — DRIVER ROLE SELECTION
+════════════════════════════════════════ */
+.p4a-driver-role-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+@media (max-width: 600px) {
+    .p4a-driver-role-group { grid-template-columns: 1fr; }
+}
+.p4a-driver-role-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.4rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.p4a-driver-role-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: 0 4px 16px rgba(30,90,110,0.12);
+    transform: translateY(-2px);
+}
+.p4a-driver-role-btn.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: 0 4px 16px rgba(30,90,110,0.15);
+}
+.p4a-role-btn-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--primary), #2a7a8e);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: #fff;
+    flex-shrink: 0;
+}
+.p4a-driver-role-btn.selected .p4a-role-btn-icon {
+    background: linear-gradient(135deg, #028a5d, #05b87c);
+}
+.p4a-role-btn-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+}
+.p4a-role-btn-sub {
+    font-size: 0.75rem;
+    color: #64748b;
+}

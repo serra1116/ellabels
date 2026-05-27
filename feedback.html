@@ -325,17 +325,16 @@
         );
     }
 
-    /* After submission, mark done in data store */
+    /* After submission, mark done in data store, then let feedback-script.js
+       handle the rest (it already checks remaining trips and calls showEmptyState). */
     const _origFinish = window.finishFeedback;
     window.finishFeedback = function() {
         if (_currentBookingId) {
             window.MOBILEASE.markFeedbackDone(_currentBookingId);
             _currentBookingId = null;
         }
-        document.getElementById('successOverlay').classList.remove('show');
-        document.getElementById('feedbackFormView').style.display = 'none';
-        renderTripsList();
-        document.getElementById('tripSelectionView').style.display = 'block';
+        /* Delegate entirely to the script — it will show emptyStateView when no trips remain */
+        if (typeof _origFinish === 'function') _origFinish();
     };
     </script>
 </body>

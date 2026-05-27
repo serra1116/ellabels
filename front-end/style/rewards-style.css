@@ -1,0 +1,507 @@
+/* ════════════════════════════════════════
+   REWARDS / POINTS SYSTEM PAGE
+   MobiLeasePH | rewards-style.css
+════════════════════════════════════════ */
+
+:root {
+    --primary: #1e5a6e;
+    --primary-hover: #16455a;
+    --primary-light: #e8f4f8;
+    --sidebar-bg: #16313a;
+    --sidebar-text: #94a3b8;
+    --sidebar-active: #d4cb92;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --card-hover-shadow: 0 16px 40px rgba(0,0,0,0.15);
+    --badge-available: #028a5d;
+    --badge-unavailable: #ef4444;
+    --star-color: #f59e0b;
+    --accent: #d4cb92;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f1f5f9; min-height: 100vh; }
+
+.page-view { display: none; }
+.page-view.active { display: block; }
+
+/* ════════════════════════════════════════
+   SIDEBAR OVERLAY
+════════════════════════════════════════ */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+}
+.sidebar-overlay.show { display: block; }
+
+/* ════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════ */
+.sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 255px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    padding: 1.5rem 1rem;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 1.5rem;
+}
+
+.brand-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #d4cb92;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.sidebar-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.brand-text {
+    color: #d4cb92;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+.brand-text span { color: #d4cb92; }
+
+.sidebar-nav { list-style: none; flex: 1; }
+.sidebar-nav li { margin-bottom: 0.25rem; }
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+.sidebar-nav a:hover {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+}
+.sidebar-nav a.active {
+    background: var(--primary);
+    color: #fff;
+}
+.sidebar-nav a i {
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+.sidebar-logout {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.8rem 1rem; color: #ef4444;
+    text-decoration: none; border-radius: 10px;
+    font-weight: 500; font-size: 0.9rem; transition: all 0.2s; margin-top: auto;
+}
+.sidebar-logout:hover { background: rgba(239,68,68,0.1); }
+
+/* ════════════════════════════════════════
+   MOBILE HEADER
+════════════════════════════════════════ */
+.mobile-header {
+    display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px;
+    background: var(--sidebar-bg); align-items: center; justify-content: space-between;
+    padding: 0 1rem; z-index: 900;
+}
+.mobile-menu-btn {
+    background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer;
+}
+
+/* ════════════════════════════════════════
+   MAIN CONTENT
+════════════════════════════════════════ */
+.main-content {
+    margin-left: 255px;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+/* ════════════════════════════════════════
+   HEADER BAR
+════════════════════════════════════════ */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.header-top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fff; padding: 0.75rem 1.10rem;
+    border-radius: 14px; box-shadow: var(--card-shadow); margin-bottom: 1.5rem;
+}
+.header-content { display: flex; flex-direction: column; gap: 0.2rem; }
+.page-title { font-size: 1.1rem; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
+.page-subtitle { color: #64748b; font-size: 0.9rem; margin-top: 0; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.user-name { font-size: 0.9rem; font-weight: 400; color: #1e293b; }
+.user-avatar {
+    background: var(--primary); color: #fff;
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 0.75rem; font-weight: bold; flex-shrink: 0;
+}
+.logout-btn {
+    background: none; border: none; font-size: 1.2rem; color: #ef4444;
+    cursor: pointer; display: flex; align-items: center;
+    padding: 0.3rem; border-radius: 6px; transition: background 0.2s;
+}
+.logout-btn:hover { background: rgba(239,68,68,0.1); }
+
+/* ════════════════════════════════════════
+   LOYALTY / REWARDS PAGE LAYOUT
+════════════════════════════════════════ */
+.loyalty-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ── FEE BANNER ── */
+.fee-banner {
+    background: linear-gradient(120deg, var(--primary) 0%, #2a7a8e 55%, var(--accent) 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--card-shadow);
+    gap: 1.5rem;
+}
+
+.fee-banner h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 0.35rem;
+}
+
+.fee-banner p {
+    font-size: 0.9rem;
+    opacity: 0.88;
+}
+
+.fee-progress {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 1.1rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    flex-shrink: 0;
+    backdrop-filter: blur(4px);
+}
+
+.fee-progress h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.fee-progress p {
+    font-size: 0.78rem;
+    opacity: 0.85;
+}
+
+/* ── PROGRESS BOX ── */
+.progress-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #f1f5f9;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.progress-bar {
+    background: #e2e8f0;
+    height: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #2a7a8e);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+.small-note {
+    margin-top: 0.85rem;
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+/* ── FEE EXAMPLE ── */
+.fee-example {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #f1f5f9;
+}
+
+.fee-example h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.1rem;
+    letter-spacing: -0.3px;
+}
+
+.example-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0;
+    font-size: 0.88rem;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.example-row:last-child {
+    border-bottom: none;
+}
+
+.example-row strong {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.example-row.total {
+    margin-top: 0.5rem;
+    padding-top: 0.9rem;
+    border-top: 1.5px solid #e2e8f0;
+    border-bottom: none;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.example-row.total strong {
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+/* ── REWARD TIER CARDS ── */
+.reward-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.reward-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.reward-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+}
+
+.reward-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.2px;
+}
+
+.reward-card p {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+}
+
+.reward-card strong {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.reward-card .small-note {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+
+/* Active / current tier card */
+.reward-card.active {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 2px solid var(--accent);
+    box-shadow: 0 4px 20px rgba(212,203,146,0.35);
+}
+
+.reward-card.active h4 { color: #92400e; }
+
+/* ── SECTION HEADINGS ── */
+.section-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+    margin-bottom: 1rem;
+}
+
+.tiers-section { display: flex; flex-direction: column; gap: 1rem; }
+.tiers-heading {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+}
+
+/* ── PROGRESS COUNT ── */
+.progress-count {
+    font-weight: 800;
+    color: #0f172a;
+}
+
+/* ── FEE PROGRESS LABEL ── */
+.fee-progress-label {
+    font-size: 0.78rem;
+    opacity: 0.8;
+    margin-bottom: 0.15rem;
+}
+
+/* ── TIER CARD INTERNALS ── */
+.reward-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.5rem;
+}
+
+.reward-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.2px;
+    margin: 0;
+}
+
+.tier-range {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+.tier-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.tier-icon--new  { background: #dcfce7; color: #16a34a; }
+.tier-icon--regular { background: #fef9c3; color: #ca8a04; }
+.tier-icon--vip  { background: var(--primary-light); color: var(--primary); }
+
+.current-badge {
+    margin-left: auto;
+    background: #fef3c7;
+    border: 1.5px solid var(--accent);
+    color: #92400e;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    letter-spacing: 0.2px;
+}
+
+.tier-perks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+.tier-perks li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #475569;
+}
+.tier-perks li i {
+    color: #16a34a;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.reward-card.active .tier-perks li { color: #78350f; }
+.reward-card.active .tier-perks li i { color: #b45309; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .reward-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-header { display: flex; }
+    .main-content { margin-left: 0; padding: 1.25rem; padding-top: calc(56px + 1.25rem); }
+
+    .fee-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+    .fee-progress { width: 100%; }
+
+    .reward-cards {
+        grid-template-columns: 1fr;
+    }
+}
